@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta hTrạng tháip-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị viên - Happy ship</title>
+    <!-- Include Sidr bundled CSS theme -->
+    <link rel="stylesheet" href="css/jquery.sidr.dark.css">
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="css/style-dashboard.css">
+  </head>
+ <body>
+
+    <div id="other-name">
+      <h2 class="page_name">Happy Ship</h2>
+      <ul>
+          <li><a href="#">All Examples</a></li>
+          <li>
+              <a href="#">Sample link 2</a>
+              <ul>
+                  <li><a href="#">Child link 1</a></li>
+                  <li><a href="#">Child link 2</a></li>
+              </ul>
+          </li>
+          <li><a href="#">Sample link 3</a></li>
+      </ul>
+      <form>
+          <input type="text" placeholder="Search..." />
+      </form>
+      <h2>Sample heading</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mollis sapien non nisi sodales pulvinar. Curabitur odio velit, porta sit amet lobortis sit amet, volutpat ut justo.</p>
+    </div>
+    <div class="nav-menu-block">
+      <div class="nav-menu-dashboard">
+        <a id="only-click" class="menu-button" href="#sidr">Toggle menu</a>
+        <span>Danh mục</span>
+        <div class="nav-left-signin">
+          <span class="welcome">Xin chào Quản trị viên!</span>
+          <a id="log_out" class="logout-buTrạng tháion">Đăng xuất</a>
+        </div>
+      </div>
+
+    </div> 
+    
+
+    <div class="wrapper">
+      <div class="toolbar-wrap filter-block">
+        <div class="toolbar-filter">
+          <p class="filter-btn custombtn"> Bộ lọc</p>
+          <p class="sort-btn custombtn"> Sắp Xếp</p>
+        </div>
+        <div class="contain-filter" style="display: none;">
+          <div class="content-filter">
+            
+            <input id="" type="radio" name="gender" value="male"/>
+            <label for="">Tên shop</label>
+            
+            <input id="" type="radio" name="gender" value="female"/>
+            <label for="">Nhân viên giao hàng</label>
+            
+            <input id="" type="radio" name="gender" value="other"/>
+            <label for="">Trạng thái đơn hàng</label>
+
+            <input id="" type="radio" name="gender" value="other"/>
+            <label for="">Quận / huyện </label>
+          </div>
+          <div class="content-sortby">
+            <input id="" type="radio" name="gender" value="male"> Ngày <br>
+            <input id="" type="radio" name="gender" value="female"> Tháng <br>
+            <input id="" type="radio" name="gender" value="other"> Other
+          </div>
+        </div>
+        <div class="pagnagin-left">
+          <ul>
+            <li clas="current"><span>1</span></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">4</a></li>
+          </ul>
+        </div>
+      </div>
+      <h1>Danh sách đơn hàng trong tháng</h1>
+      <hr class="line-up">
+
+      <div class="grid-box-wrap">
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+        <hr class="line-box">
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+        <div class="box-item">
+          <div class="box-shop-name"><span>Tên shop:</span>Đặng Thị Hương Mơ</div>
+          <div class="shop-info">
+            <dl>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="to-info">
+            <dl>
+              <dt>Đến:</dt>
+              <dd>Nguyễn Yến Nhi</dd>
+              <dt>Điện thoại:</dt>
+              <dd>0901492567</dd>
+              <dt>Địa chỉ:</dt>
+              <dd>93/3 Phùng Tá Chu</dd>
+              <dt>Phường:</dt>
+              <dd>An Lạc</dd>
+              <dt>Quận/huyện:</dt>
+              <dd>Q.Tân Bình</dd>
+              <dt>Mã xác minh:</dt>
+              <dd>0901492567</dd>
+            </dl>
+          </div>
+          <div class="status"> <span>DH140</span>Đang xử lí</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Include the Sidr JS -->
+    <script src="js/jquery.sidr.js"></script>
+    <script>
+
+    $(document).ready(function () {
+      $('#only-click').sidr({
+        name: 'other-name',
+        bind: 'click',
+        onOpen: function () {
+          console.log($.sidr('status'));
+        },
+        onClose: function () {
+          console.log($.sidr('status'));
+        },
+        onOpenEnd: function () {
+          console.log($.sidr('status'));
+        },
+        onCloseEnd: function () {
+          console.log($.sidr('status'));
+        }
+      });
+    });
+
+    $( window ).resize(function () {
+      $.sidr('close', 'sidr');
+    });
+      var pre = jQuery('.grid-box-wrap .box-item');
+      var el = pre.find('.shop-info');
+      jQuery('.box-shop-name').click(function() {
+        parent = jQuery(this).parent('.box-item');
+        parent.toggleClass('onopen');
+        if(parent.hasClass('onopen') == true){
+          parent.children('.shop-info').show(400);
+        }else{
+          parent.children('.shop-info').hide(400);
+        }
+      });
+      
+      el.each(function() {
+        el.hide();
+      });
+
+    </script>
+  </body>
+</html>
