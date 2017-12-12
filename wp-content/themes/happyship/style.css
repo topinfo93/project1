@@ -1,0 +1,571 @@
+/*
+    Theme Name: HTML5 Blank
+    Theme URI: http://html5blank.com
+    Description: HTML5 Blank WordPress Theme
+    Version: 1.4.3
+    Author: Todd Motto (@toddmotto)
+    Author URI: http://toddmotto.com
+    Tags: Blank, HTML5, CSS3
+
+    License: MIT
+    License URI: http://opensource.org/licenses/mit-license.php
+*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    list-style: none;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.topbar{
+    line-height: 70px;
+    background: #fff;
+    border-bottom: 1px solid #8bc028;
+    text-align: center;
+}
+
+.topbar .logo img{
+    max-height: 70px;
+}
+.menu ul li{
+	list-style: none;
+	display: inline-block;
+}
+.menu ul li a{
+	background-color: #8bc028;
+    color: #fff;
+    padding: 10px;
+    line-height: 36px;
+}
+ul.socials li{
+	list-style: none;	
+    margin: 0 2px;
+	display: inline-block;
+}
+ul.socials li img{
+	max-height: 36px;
+}
+ul.socials li{
+	list-style: none;
+    margin: 0 2px;
+    font-size: 18px;
+    color: #8bc028;
+    vertical-align: middle;
+    font-weight: bold;
+    display: inline-block;
+}
+.login-form{
+	height: 100%;
+	background-color: #8bc028;
+    padding: 25px;
+    color: #fff;
+}
+.login-form button a{
+    text-decoration: none;
+    padding: 5px;
+    line-height: 25px;
+}
+.login-form label{
+	margin-bottom: 10px;
+}
+.analysis{
+	background-color: #8bc028;
+    height: 100%;
+    padding: 60px 0;
+    text-align: center;
+}    
+.analysis span{
+	font-size: 80px;
+    color: #fff;
+}
+.analysis p{
+	color: #fff;
+}
+.main-content1{
+	/*height: 300px;*/
+}
+
+.main-content1 .slider img{
+	height: 100%;
+}
+/*.main-content1 .container,
+.main-content2 .col-md-3{
+    padding: 0 5px;
+}*/
+
+/*main2*/
+.main-content2{
+    margin: 10px 0;
+}
+
+.main-content2 .box{
+    position: relative;
+    width: 25%; 
+    float: left;
+    padding-right: 10px;
+}
+.main-content2 .box:last-child{
+    padding-right: 0px;
+}
+
+.main-content2 .box .title{
+    position: relative;
+    line-height: 50px;
+    padding-left: 60px;
+    background-color: #8bc028;
+    color: #fff;
+    font-size: 17px;
+}
+.order .form-info .title{
+    padding: 10px;
+    position: relative;
+    padding-left: 50px;
+    background-color: #d2e7ac;
+    color: #000;
+    font-size: 20px;
+}
+.order .form-info .title .number{
+    color: #fff;
+}
+
+.main-content2 .box .number,
+.order .form-info .number{
+    color: #fff;
+    position: absolute;
+    background: #000;
+    line-height: 50px;
+    width: 50px;
+    top: 0;
+    padding: 0 20px;
+    left: 0;
+}
+
+.main-content2 .box .box-content{
+    height: 215px;
+    padding: 10px;
+    background-color: #ececec;
+}
+.main-content2 .box .box-content ul {
+    position: relative;
+}
+.main-content2 .box .box-content ul li{
+    line-height: 25px;
+}
+.main-content2 .box.create-box .box-content ul li{
+    padding-left: 50px;
+    margin: 30px 0;
+}
+.main-content2 .box.create-box .box-content ul li.icon:before{
+    background: #8bc028;
+    color: #fff;
+    font: normal normal normal 14px/1 FontAwesome;
+    border-radius: 50%;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    left: 0;
+    display: block;
+    height: 40px;
+    position: absolute;
+}
+.main-content2 .box.create-box .box-content ul li.create:before{
+    content: "\f044";
+}
+.main-content2 .box.create-box .box-content ul li.manager:before{
+    content: "\f02d";
+}
+.main-content2 .box.create-box .box-content ul li.money:before{
+    content: "\f0d6";
+}
+.main-content2 .box .box-content ul li .fa{
+    float: right;
+    margin-right: 25px;
+    line-height: 25px;
+}
+
+
+.order {
+    padding-bottom: 40px;
+}
+.order .form-info{
+    border: 3px solid;
+    margin-top: 10px;
+}
+.order .form-info .wrap-form{
+    padding: 0 10px;
+}
+.order .form-info .field:first-child{
+    margin-top: 20px;
+}
+
+.order .form-info .field{
+    position: relative;
+    margin-bottom: 10px;
+}
+.order .form-info input,
+.order .form-info select{
+    background-color: #d2e7ac;
+    line-height: 50px;
+    height: 50px;
+    border: none;
+    color: #000;
+    font-size: 16px;
+    width: 100%;
+    padding-left: 60px;
+    text-align: left;
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #000;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #000;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #000;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #000;
+}
+.order .form-info .title-form{
+    text-transform: uppercase;
+    font-size: 25px;
+    text-align: left;
+    color: #000;
+    background: #a8a8a8;
+    font-weight: bold;
+    padding: 10px;
+}
+.order.success {
+    height: 100%;
+}
+
+
+.order.success .form-info .wrap-form .code{
+    width: 50%; 
+    float: left;
+    text-align: center;
+    padding: 25px;
+}
+.order.success .form-info .wrap-form{
+    padding: 0;
+}
+.order.success .note{
+    background: #d2e7ac;
+    padding: 20px;
+    color: #000;
+    font-size: 20px;
+    margin-top: 20px;
+    line-height: 30px;
+}
+
+.order.success .form-info .wrap-form .sms{
+    width: 50%;
+    float: left;
+    text-align: center;
+    padding: 25px;
+    line-height: 80px;
+    background: #8bc028;
+    color: #fff;
+    text-transform: uppercase;
+}
+.order.success .form-info .wrap-form .sms button{
+    float: left;
+    line-height: 25px;
+    margin-top: 10px;
+    color: #fff;
+    width: 100%;
+    background: #000;
+}
+.order.success .form-info .wrap-form .code h2{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 25px;
+}
+.order.success .form-info .wrap-form .code span{
+    background: #8bc028;
+    padding: 10px;
+    display: block;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.order .title h1{
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    height: 50px;
+    line-height: 50px;
+    text-transform: uppercase;
+    font-size: 30px;
+    font-weight: bold;
+}
+.order .confirm{
+    margin-top: 10px;
+    padding: 10px;
+}
+.order .confirm .fee .left{
+    width: 28%;
+    float: left;
+    background: #8bc028;
+    padding: 10px;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+}
+.order .confirm .fee .right{
+    width: 70%;
+    float: right;
+    background: #8bc028;
+    padding: 10px;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+}
+.order .confirm button{
+    background: #8bc028;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px;
+}
+.statistics-inner .stat .number{
+    font-size: 76px;
+}
+.statistics-inner .stat .fa{
+    display: none;
+}
+.statistics .statistics-inner .stat{
+    margin: 0;
+}
+ .wait{
+    background: yellow;
+    color: #000;
+    text-align: center;
+  }
+  .done{
+    background: green;
+    color: #fff;
+    text-align: center;
+  }
+  .cancel{
+    background: red;
+    color: #fff;
+    text-align: center;
+  }
+  body{
+    background: none!important;
+  }
+  .box-item{
+    padding: 10px 0;
+    width: 24%;
+    margin-right: 1%;
+    float: left;
+    position: relative;
+  }
+  .box-item .left{
+    width: 50%;
+    float: left;
+  }
+  .box-item .right{
+    width: 50%;
+    float: right;
+  }
+  .box-item .client:after{
+    content: " ";
+    clear: both;
+  }
+
+  .box-item .shop .left,
+  .box-item .shop .right{
+    color: #fff;
+  }
+  .box-item .wrap-client{
+    background: gainsboro;
+    position: relative;
+    padding: 10px;
+  }
+  .box-item .wrap-shop{
+    background: gainsboro;
+    position: relative;
+    padding: 10px;
+    background: #8bc028;
+  }
+  .box-item .wrap-status{
+    position: relative;
+    padding: 10px;
+  }
+  .box-item .wrap-status{
+    background: red;
+    color: #fff;
+  }
+  .box-item .wrap-action{
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .wrap-client .client,
+  .wrap-shop .shop{
+    line-height: 24px;
+  }
+
+
+  .box-item .wrap-action .left,
+  .box-item .wrap-action .right{
+    background: #8bc028;
+    width: 145px;
+    padding: 5px 0px;
+    color: #fff;
+  }
+#footer .wrap-footer{	
+    text-align: center;
+	color: #fff;
+    background-color: #262626;    
+    padding: 10px 0;
+}
+#footer p{
+    line-height: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 480px) {
+    
+}
+@media (min-width: 768px) {
+
+}
+@media (min-width: 992px) {
+    .main-content1{
+        height: 300px;
+    }
+}
+@media (max-width: 992px) {
+    .order.success .form-info .wrap-form .sms,
+    .order.success .form-info .wrap-form .code{
+        width: 100%;
+    }
+    .main-content2 .box{
+        width: 100%;
+        padding: 0;
+    }
+}
+

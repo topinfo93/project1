@@ -1,0 +1,91 @@
+table.table tr th, table.table tr td{
+	border: 1px solid #000;
+	padding: 0 25px;
+}
+    .wait{
+    background: yellow;
+    color: #000;
+    text-align: center;
+    }
+    .done{
+    background: green;
+    color: #fff;
+    text-align: center;
+    }
+    .cancel{
+    background: red;
+    color: #fff;
+    text-align: center;
+    }
+    body{
+    background: none!important;
+    }
+    .box-item{
+    padding: 10px;
+    width: 25%;
+    float: left;
+    position: relative;
+    }
+    .box-item .left{
+    width: 50%;
+    float: left;
+    }
+    .box-item .right{
+    width: 50%;
+    float: right;
+    }
+    .box-item .client:after{
+    content: " ";
+    clear: both;
+    }
+    .box-item .shop .left,
+    .box-item .shop .right{
+    color: #fff;
+    }
+    .box-item .wrap-client{
+    background: gainsboro;
+    position: relative;
+    padding: 10px;
+    }
+    .box-item .wrap-shop{
+    background: gainsboro;
+    position: relative;
+    padding: 10px;
+    background: #8bc028;
+    }
+    .box-item .wrap-status{
+    position: relative;
+    padding: 10px;
+    }
+    .box-item .wrap-status{
+    background: red;
+    color: #fff;
+    }
+    .box-item .wrap-action{
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 10px;
+    }
+    .wrap-client .client,
+    .wrap-shop .shop{
+    line-height: 24px;
+    }
+    .box-item .wrap-action .left,
+    .box-item .wrap-action .right{
+    background: #8bc028;
+    width: 120px;
+    padding: 5px 0px;
+    color: #fff;
+    }
+
+
+.happy-edit .form-group{
+    width: 33.33%;
+    float: left;
+    padding: 0px 15px;
+}
+.form-group{
+    padding: 0px 15px;
+}
+
+ 

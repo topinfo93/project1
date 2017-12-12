@@ -1,0 +1,307 @@
+@font-face {
+  font-family: 'porta';
+  src: url('../fonts/pluton.eot?49924914');
+  src: url('../fonts/pluton.eot?49924914#iefix') format('embedded-opentype'),
+       url('../fonts/pluton.woff?49924914') format('woff'),
+       url('../fonts/pluton.ttf?49924914') format('truetype'),
+       url('../fonts/pluton.svg?49924914#porta') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'porta';
+    src: url('../font/porta.svg?49924914#porta') format('svg');
+  }
+}
+*/
+ 
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "porta";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+     
+  /* fix buttons height, for twitter bootstrap */
+  
+ 
+  /* you can be more comfortable with increased icons size */
+   /*font-size: 120%; */
+
+
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-plus:before { content: '\e826'; } /* '' */
+.icon-email:before { content: '\e825'; } /* '' */
+.icon-cog:before { content: '\e823'; } /* '' */
+.icon-ok:before { content: '\e80a'; } /* '' */
+.icon-cancel:before { content: '\e80b'; } /* '' */
+.icon-calendar:before { content: '\e10b'; } /* '' */
+.icon-help-circled:before { content: '\e81a'; } /* '' */
+.icon-location:before { content: '\e81b'; } /* '' */
+.icon-left-open:before { content: '\e804'; } /* '' */
+.icon-right-open:before { content: '\e803'; } /* '' */
+.icon-up-open:before { content: '\e805'; } /* '' */
+.icon-menu-1:before { content: '\e800'; } /* '' */
+.icon-link-ext:before { content: '\e822'; } /* '' */
+.icon-menu:before { content: '\e801'; } /* '' */
+.icon-mail-alt:before { content: '\e81c'; } /* '' */
+.icon-angle-left:before { content: '\e81e'; } /* '' */
+.icon-angle-right:before { content: '\e81f'; } /* '' */
+.icon-angle-up:before { content: '\e820'; } /* '' */
+.icon-angle-down:before { content: '\e821'; } /* '' */
+.icon-desktop:before { content: '\e814'; } /* '' */
+.icon-mobile:before { content: '\e81d'; } /* '' */
+.icon-calendar-empty:before { content: '\e802'; } /* '' */
+.icon-github-circled:before { content: '\e811'; } /* '' */
+.icon-vimeo-circled:before { content: '\e808'; } /* '' */
+.icon-twitter-circled:before { content: '\e807'; } /* '' */
+.icon-facebook-circled:before { content: '\e80e'; } /* '' */
+.icon-gplus-circled:before { content: '\e80d'; } /* '' */
+.icon-pinterest-circled:before { content: '\e809'; } /* '' */
+.icon-linkedin-circled:before { content: '\e806'; } /* '' */
+.icon-dribbble-circled:before { content: '\e80f'; } /* '' */
+.icon-stumbleupon-circled:before { content: '\e810'; } /* '' */
+.icon-lastfm-circled:before { content: '\e812'; } /* '' */
+.icon-skype-circled:before { content: '\e813'; } /* '' */
+.icon-globe:before { content: '\e815'; } /* '' */
+.icon-award:before { content: '\e816'; } /* '' */
+.icon-user:before { content: '\e818'; } /* '' */
+.icon-users:before { content: '\e819'; } /* '' */
+.icon-chart-bar:before { content: '\e80c'; } /* '' */
+.icon-phone:before { content: '\e824'; } /* '' */
+.icon-megaphone:before { content: '\e817'; } /* '' */
+.footer_background{position: relative;}
+.footer_background:before {
+    background-color: #222;
+}
+.footer_background:before {
+    content: '';
+    background-color: #222;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+.footer a, .footer, .themesflat-before-footer .custom-info > div, .footer-widgets ul li a, .footer-widgets .company-description p{
+      color: #888;
+}
+.footer {
+    padding: 64px 0 0;
+}
+.footer {
+    text-align: left;
+}
+.footer {
+    border-color: #353535;
+    border-style: solid;
+    border-width: 0;
+    position: relative;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+.footer-widgets .widget-title{
+  color: #fff;
+  margin-bottom: 31px;
+  letter-spacing: -0.5px;
+  font-size: 17px;
+  font-weight: 500;
+}
+.widget .widget-title {
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 17px;
+    padding-right: 32px;
+    display: inline-block;
+}
+.footer-widgets .widget .widget-title:after, .footer-widgets .widget .widget-title:before {
+    background: #fff;
+}
+.widget .widget-title:before {
+    bottom: 7px;
+    right: 11px;
+    width: 12px;
+    height: 1px;
+    position: absolute;
+    content: "";
+    background-color: #222;
+}
+.widget .widget-title:after{
+    width: 23px;
+    height: 1px;
+    position: absolute;
+    content: "";
+    bottom: 4px;
+    right: 0;
+    background-color: #222;
+}
+.widget ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.footer-widgets .widget ul li {
+    margin-bottom: 0;
+}
+.footer-widgets .themesflat-shortcode-socials li {
+    padding-left: 32px;
+    position: relative;
+}
+.footer-widgets ul li a {
+    color: #888;
+    line-height: 36px;
+    font-size: 14px;
+    letter-spacing: -0.5px;
+}
+.footer-widgets .themesflat-shortcode-socials .icon-fa {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    font-size: 14px;
+}
+.price-column-1{
+  background: url("../images/services/noi_thanh_tiet_kiem.png") no-repeat center;
+  height: 250px;
+  background-size: contain;
+}
+.price-column-2{
+  background: url("../images/services/noi_thanh_toc_hanh.png") no-repeat center;
+  height: 250px;
+  background-size: contain;
+}
+.price-column-3{
+  background: url("../images/services/kv_huyen_toc_hanh.png") no-repeat center;
+  height: 250px;
+  background-size: contain;
+}
+.price-column-4{
+  background: url("../images/services/ngoai_thanh_toc_hanh.png") no-repeat center;
+  height: 250px;
+  background-size: contain;
+}
+.da-slide1{
+  background: url(../images/banner/Slide1.png) no-repeat center;
+  background-position: center;
+  background-size: cover;
+}
+.da-slide2{
+  background: url(../images/banner/Slide2.jpg) no-repeat center;
+  background-position: center;
+  background-size: cover;
+}
+.box-control.create-new .title {
+    background: #497c5e;
+}
+.box-control.manager .title {
+    background: #427255;
+}
+#get-service .box-control{
+  position: relative;
+}
+#get-service .box-control .title{
+  text-align: left;
+  padding-left: 120px;
+}
+#get-service .box-control .title:before{
+  width: 0;
+  height: 80%;
+  content: '';
+  position: relative;
+  left: 0;
+  border: 1px solid #fff;
+}
+#get-service .box-control .title h1{
+  font-size: 18px;
+  text-transform: uppercase;
+}
+#get-service .box-control .circle-border{
+  width: 50px;
+  position: absolute;
+  height: 50px;
+  top: 27px;
+  left: 34px
+}
+.widget_infomation p{
+  padding: 0;
+  color: #888;
+  font-size: 14px;
+}
+footer .bottom{
+  padding-top: 15px;
+  text-align: center;
+  padding-bottom: 15px; 
+}
+.main-contain{
+  padding: 30px 0;
+}
+/* register page */
+.register-page .main-contain{
+  background: #8bc028;
+}
+.breadcum-block{
+  margin: 0 0 25px;
+}
+.form-style{
+  border: 1px solid #356649;
+  border-radius: 5px;
+  position: relative;
+  padding: 0 20px;
+  margin-top: 25px;
+}
+.form-style > h2 {
+    font-weight: bold;
+    font-size: 24px;
+    position: absolute;
+    top: -20px;
+    margin: 0 auto;
+    text-align: center;
+    height: 35px;
+    background: #8bc028;
+    padding: 0 10px;
+    color: #356649;
+}
+input.input-style{
+  height: 35px;
+  outline: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  box-shadow: none;
+}
+form.customer-form{
+  padding: 25px 0;
+  width: 50%;
+  color: #356649;
+  margin-bottom: 0;
+}
+.forgot-link{
+  margin-bottom: 15px;
+}
+.forgot-link a{
+  text-decoration: none;
+  font-size: 14px;
+}
+label.required:after{
+  content: '*';
+  color: red;
+  padding-left: 5px;
+}
