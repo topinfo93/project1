@@ -108,6 +108,7 @@
         <!-- ScrollUp button end -->
         <!-- Include javascript -->
         <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.validate.js"></script>
         <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.mixitup.js"></script>
         <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/bootstrap.js"></script>
         <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/modernizr.custom.js"></script>
@@ -122,5 +123,6 @@
             <script src="js/respond.min.js"></script>
         <![endif]-->
         <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/app.js"></script>
+        <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/happyship.js"></script>
     </body>
 </html>

@@ -3,7 +3,7 @@ get_header(); ?>
 <?php 
 /* nếu khách hàng chưa đăng nhập sẽ chuyển đến trang đăng nhập */
 	if ( !is_user_logged_in() ) {
-	   wp_redirect( home_url().'/dang-nhap' );
+	   wp_redirect( home_url('tai-khoan') );
 	}
 ?>
 <div class="order">
