@@ -56,24 +56,9 @@ function my_plugin_create_db() {
         ngay_sua_don varchar(255)  NULL,
         UNIQUE KEY id (id)
       ) $charset_collate;";
-    $sql_member = "CREATE TABLE $happyship_member (
-        mid bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-        user_name varchar(100) NOT NULL,
-        user_pass varchar(255) NOT NULL,
-        shop_name varchar(100) NOT NULL,
-        user_email varchar(255) NOT NULL,
-        shop_address varchar(255) DEFAULT NULL,
-        shop_phone varchar(12) NOT NULL,
-        status tinyint(1) NOT NULL DEFAULT '1',
-        user_registered datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-        display_name varchar(150) NOT NULL,
-        PRIMARY KEY  (mid)
-        
-    ) $charset_collate;";
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql );
     dbDelta( $sql2 );
-    dbDelta( $sql_member );
 }
 
 require_once( HAPPY_PATH . 'inc/init.php' );

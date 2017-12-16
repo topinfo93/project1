@@ -253,7 +253,7 @@ footer .bottom{
 }
 .main-contain{
   padding: 30px 0;
-  background: #8bc028;
+  background: #f1f1f1;
 }
 /* register page */
 .register-page .main-contain{
@@ -280,13 +280,6 @@ footer .bottom{
     background: #8bc028;
     padding: 0 10px;
     color: #356649;
-}
-input.input-style{
-  height: 35px;
-  outline: none;
-  border-radius: 0;
-  box-sizing: border-box;
-  box-shadow: none;
 }
 form.customer-form{
   padding: 25px 0;

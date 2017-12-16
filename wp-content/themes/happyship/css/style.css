@@ -206,15 +206,17 @@ p {
 **********/
  .button,  .button:visited, .button:focus {
     display:inline-block;
-    border:1px solid #181A1C;
-    color:#181A1C;
+    border:1px solid #356649;
+    color:#356649;
     background-color:transparent;
-    padding:15px 30px;
+    padding:0 20px;
     font-size:17px;
-    line-height:auto;
+    height:40px;
+    line-height: 40px;
+    box-sizing: border-box;
 }
 .button:hover, .button:active{
-    background-color:#181A1C;
+    background-color:#356649;
     color:#fff;
 }
 .button-sp, .button-sp:visited, .button-sp:focus {
@@ -975,4 +977,59 @@ p {
     clear: right;
     width: 33.33%;
     float: left;
+}
+/* style input */
+input.style-happy,.login-form-container input[type="text"],.login-form-container input[type="password"],select.style-happy{
+    background-color: #f7f7f7;
+    border-radius: 0;
+    font-size: 16px;
+    line-height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    height: 40px;
+    border-color: #356649;
+}
+.login-form-container input:focus{
+    outline: 0;
+    border-color: #356649;
+}
+.login-form-container,.customer_register_form{
+    background: #8bc028;
+}
+ h2.form_tittle{
+    text-align: center;
+    color: #356649;
+}
+#customer_login_form{
+    margin-bottom: 10px;
+}
+#customer_login_form label,#customer_signup_form label{
+    color: #356649;
+    font-weight: bold;
+}
+.login-remember input[type="checkbox"]{
+    width: 15px;
+    height: 15px;
+    margin-top: -3px;
+}
+.login-form-container .forgot-password{
+    display: block;
+    margin: 15px auto ;
+    width: 95%; 
+
+}
+.breadcum-block a.home{
+    color: #356649;
+}
+.breadcum-block a.home:hover{
+    color:#FECE1A;
+}
+.breadcum-block span.current{
+    color: #8bc028;
+}
+span.form_note{
+    padding-left: 10px;
+    font-size: 14px;
+    font-style: italic ;
 }
