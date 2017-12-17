@@ -1,11 +1,6 @@
 <?php /* Template Name: Order */ 
 get_header(); ?>
-<?php 
-/* nếu khách hàng chưa đăng nhập sẽ chuyển đến trang đăng nhập */
-	if ( !is_user_logged_in() ) {
-	   wp_redirect( home_url('tai-khoan') );
-	}
-?>
+
 <div class="order">
 	<form action="/build-order" method="post">
 		<div class="title"><h1>TẠO ĐƠN HÀNG</h1></div>

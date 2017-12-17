@@ -31,6 +31,7 @@ class HappyShip_Login_Plugin {
 		add_shortcode( 'custom-password-reset-form', array( $this, 'render_password_reset_form' ) );
 		add_action( 'login_form_rp', array( $this, 'do_password_reset' ) );
 		add_action( 'login_form_resetpass', array( $this, 'do_password_reset' ) );
+		add_shortcode( 'account-info', array( $this, 'render_creatorder_form' ) );
     }
     
     public static function plugin_activated() {
@@ -442,7 +443,7 @@ class HappyShip_Login_Plugin {
 		    }
 		}
 
-	    $default_attributes = array( 'show_title' => false );
+	    $default_attributes = array( 'show_title' => true );
 	    $attributes = shortcode_atts( $default_attributes, $attributes );
 	 
 	    if ( is_user_logged_in() ) {
@@ -505,7 +506,7 @@ class HappyShip_Login_Plugin {
 	
 	public function render_password_reset_form( $attributes, $content = null ) {
 	    
-	    $default_attributes = array( 'show_title' => false );
+	    $default_attributes = array( 'show_title' => true );
 	    $attributes = shortcode_atts( $default_attributes, $attributes );
 	 
 	    if ( is_user_logged_in() ) {
@@ -581,6 +582,29 @@ class HappyShip_Login_Plugin {
 	 
 	        exit;
 	    }
+	}
+	// render create new order
+	public function render_creatorder_form( $attributes, $content = null ) {
+		// $attributes['errors'] = array();
+		// if ( isset( $_REQUEST['register-errors'] ) ) {
+		//     $error_codes = explode( ',', $_REQUEST['register-errors'] );
+		 
+		//     foreach ( $error_codes as $error_code ) {
+		//         $attributes['errors'] []= $this->get_error_message( $error_code );
+		//     }
+		// }
+	    
+	    $default_attributes = array( 'show_title' => true );
+	    $attributes = shortcode_atts( $default_attributes, $attributes );
+	 
+	    // if ( is_user_logged_in() ) {
+	    //     return __( 'Bạn đã đăng nhập.', 'happyship-member' );
+	    // } elseif ( ! get_option( 'users_can_register' ) ) {
+	    //     return __( 'Quản trị không cho phép người dùng đăng ký, vui lòng liên hệ quản trị viên', 'happyship-member' );
+	    // } else {
+	    //     return $this->get_template_html( 'register_form', $attributes );
+	    // }
+	    return $this->get_template_html( 'create_order_form', $attributes );
 	}
 }
 // Initialize the plugin

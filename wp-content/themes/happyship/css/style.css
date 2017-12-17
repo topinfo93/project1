@@ -994,7 +994,7 @@ input.style-happy,.login-form-container input[type="text"],.login-form-container
     outline: 0;
     border-color: #356649;
 }
-.login-form-container,.customer_register_form{
+.login-form-container,.customer_register_form,#password-lost-form,#resetpassform,.create_new_order_form{
     background: #8bc028;
 }
  h2.form_tittle{
@@ -1004,7 +1004,7 @@ input.style-happy,.login-form-container input[type="text"],.login-form-container
 #customer_login_form{
     margin-bottom: 10px;
 }
-#customer_login_form label,#customer_signup_form label{
+#customer_login_form label,#customer_signup_form label,#password-lost-form label,#resetpassform label,.create_new_order_form label{
     color: #356649;
     font-weight: bold;
 }
@@ -1032,4 +1032,106 @@ span.form_note{
     padding-left: 10px;
     font-size: 14px;
     font-style: italic ;
+}
+/* Header info-bar */
+.head-infobar{
+    background: #336246;
+}
+.head-infobar:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.header-bar-left{
+    float: left;
+}
+ul.contact {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background: transparent;
+}
+ul.contact li {
+    display: inline-block;
+    line-height: 30px;
+}
+ul.contact li .zalo-chat{
+    padding-left: 55px;
+    position: relative;
+}
+ul.contact li .icon-phone{
+    margin-right: 5px;
+}
+ul.contact li .icon-phone:before{
+    font-size: 24px;
+    color: #fff;
+}
+.header-bar-right {
+    float: right;
+}
+.header-bar-right ul.social{
+    display: inline-block;
+    margin: 0 5px;
+}
+.header-bar-right ul.social li{
+    font-size: 24px;
+}
+span.icon-zalo:before{
+    content: '';
+    background: url('../images/zalologo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 50px;
+    height: 30px;
+    position: absolute;
+    top: -2px;
+    left: 0;
+}
+.member-action{
+    display: inline-block;
+}
+.create_new_order_form .confirm-order{
+    background: #5d8316;
+}
+.create_new_order_form .confirm-order > p{
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 0;
+    border: 1px solid #336246;
+}
+.order_content p{
+    border-bottom: 1px solid #336246;
+    margin-bottom: 0;
+}
+.order_content p:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.order_content p span{
+    display: block;
+    width: 50%;
+    float: right;
+}
+.widget-area.span4{
+    background: #fff;
+    color: #000;
+}
+.wiget-menu .customer_menu li{
+    padding-left: 20px;
+    margin-bottom: 2px;
+}
+.wiget-menu .customer_menu li.current-menu,.wiget-menu .customer_menu li:hover{
+   background: #336246;
+}
+.wiget-menu .customer_menu li a{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: block;
+    position: relative;
+    z-index: 10;
+}
+.wiget-follow-order label,.wiget-shop-info p{
+    color: #336246;
 }

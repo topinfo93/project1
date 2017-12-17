@@ -44,6 +44,15 @@ function blankslate_widgets_init()
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
     ) );
+
+    register_sidebar( array (
+        'name' => esc_html__( 'Sidebar Manager Order', 'iseo' ),
+        'id' => 'manager-order-widget',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => "</div>",
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ) );
 }
 
 register_nav_menus( array(
@@ -105,4 +114,23 @@ function myStartSession() {
 function myEndSession() {
     session_destroy ();
 }
-
+/* render template creat new order*/
+function get_template_html($template_name, $attributes = null )
+{
+    if ( ! $attributes ) {
+            $attributes = array();
+        }
+     
+        ob_start();
+     
+        do_action( 'personalize_login_before_' . $template_name );
+     
+        require( 'templates/' . $template_name . '.php');
+     
+        do_action( 'personalize_login_after_' . $template_name );
+     
+        $html = ob_get_contents();
+        ob_end_clean();
+     
+        return $html;
+}

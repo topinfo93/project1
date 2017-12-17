@@ -17,7 +17,42 @@
       <?php wp_head(); ?>
    </head>
    <body <?php body_class(); ?>>
-      
+      <div class="head-infobar">
+        <div class="container">
+          <div class="header-bar-left">
+            <ul class="contact">
+              <li><a href="tel: 0901231234"><span class="icon-phone"></span>0901231234</a></li>
+              <li><a href="" class='zalo-chat'><span class="icon-zalo"></span>0901231234</a></li>
+            </ul>
+          </div>
+          <div class="header-bar-right">
+            <ul class="social">
+              <li class="facebook">
+                  <a href="http://facebook.com/themesflat" target="_blank" rel="alternate" title="facebook.com/"><span class="icon-fa icon-facebook-circled"></span></a>
+              </li>
+              <li class="twitter">
+                  <a href="#" target="_blank" rel="alternate" title="#"><span class="icon-fa icon-twitter-circled"></span></a>
+              </li>
+              <li class="instagram">
+                  <a href="#" target="_blank" rel="alternate" title="#"><span class="icon-fa icon-linkedin-circled"></span></a>
+              </li>
+              <li class="rss">
+                  <a href="#" target="_blank" rel="alternate" title="#"><span class="icon-fa icon-gplus-circled"></span></a>
+              </li>
+            </ul>
+            <div class="member-action">
+              <span>Xin Chào!</span>
+              <?php if(is_user_logged_in()) { ?>
+              <a href="<?php echo wp_logout_url(); ?>" class="signout">Đăng Xuất</a>
+              <?php } else { ?>
+              <a href="<?php echo home_url( 'member-login' ); ?>" class="signin">Đăng Nhập</a>
+              <a href="<?php echo wp_registration_url(); ?> " class="signin">Đăng Ký</a>
+              <?php }?>
+              
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="navbar">
          <div class="navbar-inner">
              <div class="container">

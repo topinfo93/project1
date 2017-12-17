@@ -106,6 +106,7 @@
             </a>
         </div>
         <!-- ScrollUp button end -->
+        <?php wp_footer(); ?>
         <!-- Include javascript -->
         <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.js"></script>
         <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.validate.js"></script>
