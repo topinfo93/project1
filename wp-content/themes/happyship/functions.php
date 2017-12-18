@@ -124,3 +124,11 @@ function blockusers_init() {
     exit;
     }
 }
+
+function happy_get_meta($meta_name){
+    if ( is_user_logged_in() ) {
+
+        return get_user_meta(get_current_user_id(),$meta_name,true );
+
+    }
+}
