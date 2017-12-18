@@ -6,7 +6,25 @@
  * Author:            CatKing 18
  * Text Domain:       happyship-member
  */
- 
+// // Required files for registering the post type and taxonomies.
+// require plugin_dir_path( __FILE__ ) . 'includes/class-post-type.php';
+// require plugin_dir_path( __FILE__ ) . 'includes/class-post-type-registrations.php';
+// require plugin_dir_path( __FILE__ ) . 'includes/class-post-type-metaboxes.php';
+
+
+// // Instantiate registration class, so we can add it as a dependency to main plugin class.
+// $post_type_registrations = new Team_Post_Type_Registrations;
+// // Instantiate main plugin file, so activation callback does not need to be static.
+// $post_type = new Team_Post_Type( $post_type_registrations );
+// // Register callback that is fired when the plugin is activated.
+// register_activation_hook( __FILE__, array( $post_type, 'activate' ) );
+// // Initialize registrations for post-activation requests.
+// $post_type_registrations->init();
+// // Initialize metaboxes
+// $post_type_metaboxes = new Team_Post_Type_Metaboxes;
+// $post_type_metaboxes->init();
+
+
 class HappyShip_Login_Plugin {
  
     public function __construct() {
@@ -32,6 +50,12 @@ class HappyShip_Login_Plugin {
 		add_action( 'login_form_rp', array( $this, 'do_password_reset' ) );
 		add_action( 'login_form_resetpass', array( $this, 'do_password_reset' ) );
 		add_shortcode( 'account-info', array( $this, 'render_creatorder_form' ) );
+		//add_action( 'widgets_init', 'happyship_widgets_init' );
+		add_action( 'init', array( 'HappyShip_Login_Plugin', 'register_my_post_types' ) );// register custom post type
+		add_action( 'create_new_order', array( $this, 'do_create_new_order' ) );
+		// add_action( 'add_meta_boxes', array( $this, 'team_meta_boxes' ) );
+		// add_action( 'save_post', array( $this, 'save_meta_boxes' ),  10, 2 );
+		
     }
     
     public static function plugin_activated() {
@@ -585,27 +609,126 @@ class HappyShip_Login_Plugin {
 	}
 	// render create new order
 	public function render_creatorder_form( $attributes, $content = null ) {
-		// $attributes['errors'] = array();
-		// if ( isset( $_REQUEST['register-errors'] ) ) {
-		//     $error_codes = explode( ',', $_REQUEST['register-errors'] );
-		 
-		//     foreach ( $error_codes as $error_code ) {
-		//         $attributes['errors'] []= $this->get_error_message( $error_code );
-		//     }
-		// }
-	    
+		if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
+	    	if( isset($_GET['action']) && $_GET['action'] == 'create'){
+	    		do_action('create_new_order');
+	    	}
+	    }
+
 	    $default_attributes = array( 'show_title' => true );
 	    $attributes = shortcode_atts( $default_attributes, $attributes );
 	 
-	    // if ( is_user_logged_in() ) {
-	    //     return __( 'Bạn đã đăng nhập.', 'happyship-member' );
-	    // } elseif ( ! get_option( 'users_can_register' ) ) {
-	    //     return __( 'Quản trị không cho phép người dùng đăng ký, vui lòng liên hệ quản trị viên', 'happyship-member' );
-	    // } else {
-	    //     return $this->get_template_html( 'register_form', $attributes );
-	    // }
-	    return $this->get_template_html( 'create_order_form', $attributes );
+	    if ( is_user_logged_in() ) {
+	        return $this->get_template_html( 'create_order_form', $attributes );
+	    } else {
+	     	$login_url = home_url( 'member-login' );
+	        wp_redirect( $login_url );
+	     	exit;
+	    }
+	    
+	}
+
+	/**
+	 * Register a book post type.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_post_type
+	 */
+
+	function register_my_post_types(){
+		$labels = array(
+			'name'               => __( 'Order', 'happyship-member' ),
+			'singular_name'      => __( 'Order', 'happyship-member' ),
+			'menu_name'          => __( 'Ship Order', 'happyship-member' ),
+			'name_admin_bar'     => __( 'Ship Order', 'happyship-member' ),
+			'add_new'            => __( 'Add New Order', 'happyship-member' ),
+			'add_new_item'       => __( 'Add New Order', 'happyship-member' ),
+			'new_item'           => __( 'New Order', 'happyship-member' ),
+			'edit_item'          => __( 'Edit Order', 'happyship-member' ),
+			'view_item'          => __( 'View Order', 'happyship-member' ),
+			'all_items'          => __( 'All Order', 'happyship-member' ),
+			'search_items'       => __( 'Search Order', 'happyship-member' ),
+			'parent_item_colon'  => __( 'Parent Order:', 'happyship-member' ),
+			'not_found'          => __( 'No Order found.', 'happyship-member' ),
+			'not_found_in_trash' => __( 'No Order found in Trash.', 'happyship-member' )
+		);
+		
+		$args = array(
+			'labels'             => $labels,
+            'description'        => __( 'Description.', 'happyship-member' ),
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'order' ),
+			'capability_type'    => 'post',
+			'has_archive'        => true,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'supports'           => array( 'title'=> false, 'editor' => false, 'author', 'thumbnail'=> false, 'excerpt'=> false, 'comments'=> false )
+		);
+
+		register_post_type( 'order', $args );
+	}
+
+	function do_create_new_order(){
+		$post_information = array(
+		    'post_title' => 'OD-',
+		    'post_content' => 'OD-',
+		    'post_type' => 'order',
+		    'post_author'  => get_current_user_id(),
+		    'post_status' => 'publish'
+		);
+		 
+		$id = wp_insert_post( $post_information );
+		if($id){
+			$post_id = $id;
+			if(isset($_POST['kh_ten']) && $_POST['kh_ten']!=null){
+				add_post_meta($post_id, 'kh_ten', $_POST['kh_ten']);
+			}
+			if(isset($_POST['kh_sdt']) && $_POST['kh_sdt']!=null){
+				add_post_meta($post_id, 'kh_sdt', $_POST['kh_sdt']);
+			}
+			if(isset($_POST['kh_dc']) && $_POST['kh_dc']!=null){
+				add_post_meta($post_id, 'kh_dc', $_POST['kh_dc']);
+			}
+			if(isset($_POST['kh_quan']) && $_POST['kh_quan']!=null){
+				add_post_meta($post_id, 'kh_quan', $_POST['kh_quan']);
+			}
+			if(isset($_POST['kh_hanghoa']) && $_POST['kh_hanghoa']!=null){
+				add_post_meta($post_id, 'kh_hanghoa', $_POST['kh_hanghoa']);
+			}
+			if(isset($_POST['kh_kl']) && $_POST['kh_kl']!=null){
+				add_post_meta($post_id, 'kh_kl', $_POST['kh_kl']);
+			}
+			if(isset($_POST['kh_tth']) && $_POST['kh_tth']!=null){
+				add_post_meta($post_id, 'kh_tth', $_POST['kh_tth']);
+			}
+			if(isset($_POST['kh_goi']) && $_POST['kh_goi']!=null){
+				add_post_meta($post_id,'kh_goi', $_POST['kh_goi']);
+			}
+			if(isset($_POST['uppon_code']) && $_POST['uppon_code']!=null){
+				add_post_meta($post_id, 'uppon_code', $_POST['uppon_code']);
+			}
+			$location = home_url('member-account?success=true'); 
+			echo "<meta http-equiv='refresh' content='0;url=$location' />"; exit;
+			
+		}
+		die(get_current_user_id());
+	}
+	
+	function happyship_widgets_init() {
+		register_sidebar( array(
+	        'name'          => 'Ship Manager Widget Area',
+	        'id'            => 'ship-manager-widget',
+	        'before_widget' => '<div class="ship-manager-widget">',
+	        'after_widget'  => '</div>',
+	        'before_title'  => '<h2 class="ship-manager-tittle">',
+	        'after_title'   => '</h2>',
+	    ) );
 	}
 }
 // Initialize the plugin
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();
+
+

@@ -1,8 +1,11 @@
 <div class="span6 create_new_order_form">
 	<div class="form-info">
 		<h2 class="form_tittle">Tạo đơn hàng</h2>
+		<?php if( isset($_GET['success']) && $_GET['success'] == 'true'){ ?>
+	    		<p class="messenger"> Bạn đã tạo đơn hàng thành công</p>
+	    <?php } ?>
 		<div class="wrap-form">
-			<form id="customer_create_form" action="" method="post">
+			<form id="customer_create_form" action="<?php echo site_url( 'member-account?action=create' );?>" method="post">
 				<p class="form-row">
 					<label for="kh_ten">Tên người nhận hàng</label>
 					<input type="text" name="kh_ten" id="kh_ten" class="style-happy" placeholder="Nhập tên người nhận hàng">
@@ -83,6 +86,7 @@
 						<p class="order-footer"><strong>Tổng cước phí :</strong><span id="total_cost"></span></p>
 					</div>
 				</div>
+				<?php wp_nonce_field( 'post_nonce', 'post_nonce_field' ); ?>
 				 <p class="signup-submit">
 		            <input type="submit" name="submit" class="button register-button"
 		                   value="<?php _e( 'Tạo đơn hàng', 'happyship-member' ); ?>"/>

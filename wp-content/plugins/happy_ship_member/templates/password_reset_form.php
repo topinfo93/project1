@@ -1,6 +1,6 @@
 <div id="password-reset-form" class="span6">
     <?php if ( $attributes['show_title'] ) : ?>
-        <h3><?php _e( 'Pick a New Password', 'happyship-member' ); ?></h3>
+        <h3><?php _e( 'Thay đổi Mật khẩu', 'happyship-member' ); ?></h3>
     <?php endif; ?>
  
     <form name="resetpassform" id="resetpassform" action="<?php echo site_url( 'wp-login.php?action=resetpass' ); ?>" method="post" autocomplete="off">
@@ -16,11 +16,11 @@
         <?php endif; ?>
  
         <p>
-            <label for="pass1"><?php _e( 'New password', 'happyship-member' ) ?></label>
+            <label for="pass1"><?php _e( 'Mật khẩu mới', 'happyship-member' ) ?></label>
             <input type="password" name="pass1" id="pass1" class="input style-happy required" size="20" value="" autocomplete="off" />
         </p>
         <p>
-            <label for="pass2"><?php _e( 'Repeat new password', 'happyship-member' ) ?></label>
+            <label for="pass2"><?php _e( 'Nhập lại mật khẩu mới', 'happyship-member' ) ?></label>
             <input type="password" name="pass2" id="pass2" class="input style-happy required" size="20" value="" autocomplete="off" />
         </p>
          
