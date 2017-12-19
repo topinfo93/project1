@@ -37,8 +37,9 @@ body {
 	background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
 	background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
 }
-.panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
-	height: 45px;
+.panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"],.panel-login .style-happy {
+	height: 35px;
+	border-radius: 0;
 	border: 1px solid #ddd;
 	font-size: 16px;
 	-webkit-transition: all 0.1s linear;
@@ -105,23 +106,23 @@ body {
 	color: #eec32a;
 }
 /** style form login **/
-#customer_login_form p label{
+.contain-form p label{
 	display: block;
 }
-#customer_login_form p input[type="text"],#customer_login_form p input[type="password"]{
+.contain-form p input[type="text"],.contain-form p input[type="password"],.contain-form .style-happy{
 	width: 100%;
 	padding: 0 5px;
 }
-p.login-submit{
+p.login-submit,p.signup-submit{
 	text-align: center;
 }
-#login-submit{
-	height: 40px;
+#login-submit,.contain-form input[type="submit"]{
+	height: 35px;
     padding: 0px 25px;
     outline: 0;
     border: 0;
 }
-#login-submit:hover{
+#login-submit:hover,.contain-form input[type="submit"]:hover{
     box-shadow: none;
     border: 1px solid #ccc;
     background-color: #265238;
@@ -133,14 +134,28 @@ p.login-submit{
  	font-weight: normal;
  	margin-top: 10px;
  }
- #customer_login_form p input.error{
+ #customer_login_form p input.error,.contain-form p input.error{
  	border: 1px solid #c55555;
  	box-sizing: border-box;
  }
- #show-messenger p{
+ #show-messenger p,#show-register-messenger p,.contain-form .show-mess p{
  	padding: 10px;
  	background: #aad657;
  	font-size: 16px;
  	font-weight: bold;
  	color: #e02020;
+ }
+ #login-form-content input[type="submit"],.contain-form input[type="submit"]{
+	height: 35px;
+	border: 0;
+	padding: 0 25px;
+	text-transform: uppercase;
+	background-color: #356649;
+	color: #000;
+ }
+ #login-form-content input[type="submit"]:hover,.contain-form input[type="submit"]:hover{
+ 	box-shadow: none;
+    border: 1px solid #ccc;
+    background-color: #356649;
+    font-weight: bold;
  }

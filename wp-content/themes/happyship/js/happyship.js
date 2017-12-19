@@ -20,8 +20,8 @@ jQuery.extend(jQuery.validator.messages, {
     min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
 });
 jQuery(document).ready(function ($) {
-	$("#customer-login").validate();
-	$("#customer-forgot").validate();
-	$("#customer-register").validate();
+	// $("#customer-login").validate();
+	// $("#customer-forgot").validate();
+	// $("#customer-register").validate();
 	
 });

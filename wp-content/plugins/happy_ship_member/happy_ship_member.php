@@ -259,7 +259,7 @@ class HappyShip_Login_Plugin {
 	            return __( 'Vui lòng nhập Email đã đăng ký', 'happyship-member' );
 
 	 		case 'invalid_email':
-	            return __( "Email này không đúng", 'happyship-member' );
+	            return __( "Email này chưa từng đăng ký", 'happyship-member' );
 
 	        case 'empty_password':
 	            return __( 'Vui lòng nhập mật khẩu để đăng nhập.', 'happyship-member' );
@@ -332,7 +332,10 @@ class HappyShip_Login_Plugin {
 	}
 
 	public function render_register_form( $attributes, $content = null ) {
-		$attributes['errors'] = array();
+		
+	    $default_attributes = array( 'show_title' => true );
+	    $attributes = shortcode_atts( $default_attributes, $attributes );
+	    $attributes['errors'] = array();
 		if ( isset( $_REQUEST['register-errors'] ) ) {
 		    $error_codes = explode( ',', $_REQUEST['register-errors'] );
 		 
@@ -340,10 +343,7 @@ class HappyShip_Login_Plugin {
 		        $attributes['errors'] []= $this->get_error_message( $error_code );
 		    }
 		}
-	    
-	    $default_attributes = array( 'show_title' => true );
-	    $attributes = shortcode_atts( $default_attributes, $attributes );
-	 
+	 	
 	    if ( is_user_logged_in() ) {
 	        return __( 'Bạn đã đăng nhập.', 'happyship-member' );
 	    } elseif ( ! get_option( 'users_can_register' ) ) {
@@ -359,7 +359,7 @@ class HappyShip_Login_Plugin {
 	        if ( is_user_logged_in() ) {
 	            $this->redirect_logged_in_user();
 	        } else {
-	            wp_redirect( home_url( 'member-register' ) );
+	            wp_redirect( home_url( 'member-login?action=register' ) );
 	        }
 	        exit;
 	    }
@@ -389,7 +389,7 @@ class HappyShip_Login_Plugin {
 
 	public function do_register_user() {
 	    if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
-	        $redirect_url = home_url( 'member-register' );
+	        $redirect_url = home_url( 'member-login?action=register' );
 	 
 	        if ( ! get_option( 'users_can_register' ) ) {
 	            $redirect_url = add_query_arg( 'register-errors', 'closed', $redirect_url );
@@ -419,7 +419,7 @@ class HappyShip_Login_Plugin {
 
 	            } else {
 
-	            	$redirect_url = home_url( 'member-login' );
+	            	$redirect_url = home_url( 'member-login?action="register"' );
 	                $redirect_url = add_query_arg( 'registered', $email, $redirect_url );
             	
 	            }
@@ -457,8 +457,10 @@ class HappyShip_Login_Plugin {
 	}
 	
 	public function render_password_lost_form( $attributes, $content = null ) {
-	    
-	    $attributes['errors'] = array();
+
+	    $default_attributes = array( 'show_title' => true );
+	    $attributes = shortcode_atts( $default_attributes, $attributes );
+	 	$attributes['errors'] = array();
 		if ( isset( $_REQUEST['errors'] ) ) {
 		    $error_codes = explode( ',', $_REQUEST['errors'] );
 		 
@@ -467,11 +469,8 @@ class HappyShip_Login_Plugin {
 		    }
 		}
 
-	    $default_attributes = array( 'show_title' => true );
-	    $attributes = shortcode_atts( $default_attributes, $attributes );
-	 
 	    if ( is_user_logged_in() ) {
-	        return __( 'You are already signed in.', 'happyship-member' );
+	        return __( 'Hiện tại bạn đã đăng nhập!.', 'happyship-member' );
 	    } else {
 	        return $this->get_template_html( 'password_lost_form', $attributes );
 	    }
@@ -482,7 +481,7 @@ class HappyShip_Login_Plugin {
 	    if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
 	        $errors = retrieve_password();
 	        if ( is_wp_error( $errors ) ) {
-	            $redirect_url = home_url( 'member-password-lost' );
+	            $redirect_url = home_url( 'member-login?action=lostpass' );
 	            $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
 	        } else {
 	            $redirect_url = home_url( 'member-login' );

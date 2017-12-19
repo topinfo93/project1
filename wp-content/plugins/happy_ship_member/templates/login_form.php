@@ -1,5 +1,5 @@
 <div class="login-form-container span6">
-    <div id="show-messenger">
+    <div class="show-mess" id="show-messenger">
     <!-- Show errors if there are any -->
         <?php if ( count( $attributes['errors'] ) > 0 ) : ?>
             <?php foreach ( $attributes['errors'] as $error ) : ?>

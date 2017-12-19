@@ -19,27 +19,13 @@ jQuery(document).ready(function ($) {
 	$('#user_password').attr( 'placeholder', 'Nhập mật khẩu' );
 	$('#user_email').addClass('required');
 	$('#user_password').addClass( 'required');
-	$(function() {
-
-	    $('#login-form-link').click(function(e) {
-			$("#customer_login_form").delay(100).fadeIn(100);
-	 		$("#register-form").fadeOut(100);
-			$('#register-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		$('#register-form-link').click(function(e) {
-			$("#register-form").delay(100).fadeIn(100);
-	 		$("#customer_login_form").fadeOut(100);
-			$('#login-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-
-	});
+	$('#customer_register_form').hide();
+	$('#password-lost-form').hide();
 	$("#customer_login_form").validate();
-	$("#register-form").validate();
+	$("#lostpasswordform").validate();
+	$("#customer_signup_form").validate();
 	setTimeout(function(){
-	   jQuery("#show-messenger p").fadeOut(800);
-	}, 3000);
+	   jQuery("#show-messenger p,#show-register-messenger p,#lostpass_errors p").fadeOut(800);
+	}, 5000);
+
 });
