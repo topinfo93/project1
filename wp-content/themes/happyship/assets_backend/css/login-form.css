@@ -104,3 +104,43 @@ body {
 	background: #356649;
 	color: #eec32a;
 }
+/** style form login **/
+#customer_login_form p label{
+	display: block;
+}
+#customer_login_form p input[type="text"],#customer_login_form p input[type="password"]{
+	width: 100%;
+	padding: 0 5px;
+}
+p.login-submit{
+	text-align: center;
+}
+#login-submit{
+	height: 40px;
+    padding: 0px 25px;
+    outline: 0;
+    border: 0;
+}
+#login-submit:hover{
+    box-shadow: none;
+    border: 1px solid #ccc;
+    background-color: #265238;
+}
+ p label.error{
+ 	color: #e02020;
+ 	font-style: italic;
+ 	font-size: 14px;
+ 	font-weight: normal;
+ 	margin-top: 10px;
+ }
+ #customer_login_form p input.error{
+ 	border: 1px solid #c55555;
+ 	box-sizing: border-box;
+ }
+ #show-messenger p{
+ 	padding: 10px;
+ 	background: #aad657;
+ 	font-size: 16px;
+ 	font-weight: bold;
+ 	color: #e02020;
+ }

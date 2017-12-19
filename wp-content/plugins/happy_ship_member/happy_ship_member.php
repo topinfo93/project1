@@ -265,7 +265,7 @@ class HappyShip_Login_Plugin {
 	            return __( 'Vui lòng nhập mật khẩu để đăng nhập.', 'happyship-member' );
 	 
 	        case 'invalid_username':
-	            return __( "Email này chưa được đăng ký.?", 'happyship-member' );
+	            return __( "Tên đăng nhập hoặc email không đúng.", 'happyship-member' );
 	 	
 	        case 'incorrect_password':
 	            $err = __( "Mật khẩu không đúng. <a href='%s'>Bạn quên mật khẩu</a>?",'happyship-member'  );
