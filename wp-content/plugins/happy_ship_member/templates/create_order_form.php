@@ -1,27 +1,35 @@
-<div class="span6 create_new_order_form">
+<?php $showForm = true;?>
+<div class="create_new_order_form">
 	<div class="form-info">
 		<h2 class="form_tittle">Tạo đơn hàng</h2>
-		<?php if( isset($_GET['success']) && $_GET['success'] == 'true'){ ?>
-	    		<p class="messenger"> Bạn đã tạo đơn hàng thành công</p>
+		<div id="show_create_mess">
+		<?php 
+		if( isset($_GET['success']) && $_GET['success'] == "true" && isset($_GET['orderid'])){ ?>
+    		<p class="messenger create_succ"> Bạn đã tạo đơn hàng thành công! Mã đơn hàng của bạn là <strong><?php echo $_GET['orderid']; ?></strong></p>
+	    <?php $showForm = false; } elseif( isset($_GET['success']) && $_GET['success'] == "false") {?>
+	    	<p class="messenger create_error"> Tạo đơn hàng thất bại! Vui lòng thử lại.</p>
 	    <?php } ?>
+	    </div>
+	    <!-- show error -->
+	    <?php if($showForm):?>
 		<div class="wrap-form">
 			<form id="customer_create_form" action="<?php echo site_url( 'member-account?action=create' );?>" method="post">
 				<p class="form-row">
 					<label for="kh_ten">Tên người nhận hàng</label>
-					<input type="text" name="kh_ten" id="kh_ten" class="style-happy" placeholder="Nhập tên người nhận hàng">
+					<input type="text" name="kh_ten" id="kh_ten" class="style-happy required" placeholder="Nhập tên người nhận hàng">
 				</p>
 				
 				<p class="form-row">
 					<label for="kh_sdt">Số điện thoại người nhận</label>
-					<input type="text" required="" name="kh_sdt" id="kh_sdt" class="style-happy" placeholder="Nhập sđt người nhận hàng">
+					<input type="text" name="kh_sdt" id="kh_sdt" class="style-happy required" placeholder="Nhập sđt người nhận hàng">
 				</p>
 				<p class="form-row">
 					<label for="kh_dc">Địa chỉ nhận hàng</label>
-					<input type="text" name="kh_dc" id="kh_dc" class="style-happy" placeholder="Nhập địa chỉ nhận hàng">
+					<input type="text" name="kh_dc" id="kh_dc" class="style-happy required" placeholder="Nhập địa chỉ nhận hàng">
 				</p>
 				<p class="form-row">
 					<label for="kh_quan">Quận/Huyện người nhận</label>
-					<select name="kh_quan" id="kh_quan" class="style-happy selectpicker" required="">
+					<select name="kh_quan" id="kh_quan" class="style-happy selectpicker required">
 						<option value="" selected="" disabled="">Quận / Huyện</option>
 						<option value="Quan-1">Quận 1</option>
 						<option value="Quan-2">Quận 2</option>
@@ -54,7 +62,7 @@
 				</p>
 				<p class="form-row">
 					<label for="kh_kl">Trọng lượng hàng</label>
-					<select name="kh_kl" id="kh_kl" class="style-happy selectpicker" required="">
+					<select name="kh_kl" id="kh_kl" class="style-happy selectpicker required">
 						<option value="" selected="" disabled="">Chọn khối lượng</option>
 						<option value="duoi-3kg">Dưới 3kg</option>
 					</select>
@@ -65,8 +73,8 @@
 				</p>
 				<p class="form-row">
 					<label for="">Gói dịch vụ chuyển hàng</label>
-					<select name="kh_goi" class="style-happy selectpicker" required="">
-						<option value="" name="kh_goi" selected="" disabled="">Gói dịch vụ</option>
+					<select name="kh_goi" class="style-happy selectpicker required">
+						<option value="" name="kh_goi">Gói dịch vụ</option>
 						<option value="tiet-kiem">Tiết kiệm</option>
 						<option value="toc-hanh">Tốc hành</option>
 					</select>
@@ -75,24 +83,23 @@
 					<label for="uppon_code"></label>
 					<input type="text" name="uppon_code" id="uppon_code" class="style-happy" placeholder="Mã giảm giá">
 				</p>
-				<div class="field confirm-order">
-					<p>Thông tin đơn hàng</p>
-					<div class="order_content">
-						<p><strong>Người nhận:</strong><span id="name_receiver"> name will changed here</span></p>
-						<p><strong>Số điện thoại:</strong><span id="phone_receiver">000-000-0000</span></p>
-						<p><strong>Địa chỉ :</strong><span id="add_receiver"> address will change here</span></p>
-						<p><strong>(Gói) Chuyển hàng :</strong><span id="type_service"> type 1</span></p>
-						<p><strong>Số tiền thu hộ :</strong><span id="money_receiver"> 000.000đ</span></p>
-						<p class="order-footer"><strong>Tổng cước phí :</strong><span id="total_cost"></span></p>
-					</div>
-				</div>
+
+				<p class="form-row" style="display: none;">
+					<label for="status_order"></label>
+					<input type="hidden" name="status_order" id="status_order" class="style-happy" value="pending">
+				</p>
+				
 				<?php wp_nonce_field( 'post_nonce', 'post_nonce_field' ); ?>
-				 <p class="signup-submit">
-		            <input type="submit" name="submit" class="button register-button"
-		                   value="<?php _e( 'Tạo đơn hàng', 'happyship-member' ); ?>"/>
+				<p class="signup-submit" style="display: none;">
+		            <input type="submit" id="create_form_submit" name="submit" class="button register-button" value="<?php _e( 'Tạo đơn hàng', 'happyship-member' ); ?>"/>
 		        </p>
+				<p>
+					<button id="btn-type" class="button confirm-button">Tạo đơn hàng</button>
+				</p>
+				
 			</form>
 		</div>
+		<?php endif;?>
 	</div>
 
 </div>

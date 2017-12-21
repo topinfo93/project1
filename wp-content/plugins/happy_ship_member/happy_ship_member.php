@@ -53,8 +53,6 @@ class HappyShip_Login_Plugin {
 		//add_action( 'widgets_init', 'happyship_widgets_init' );
 		add_action( 'init', array( 'HappyShip_Login_Plugin', 'register_my_post_types' ) );// register custom post type
 		add_action( 'create_new_order', array( $this, 'do_create_new_order' ) );
-		// add_action( 'add_meta_boxes', array( $this, 'team_meta_boxes' ) );
-		// add_action( 'save_post', array( $this, 'save_meta_boxes' ),  10, 2 );
 		
     }
     
@@ -237,8 +235,9 @@ class HappyShip_Login_Plugin {
 	}
 
 	function maybe_redirect_at_authenticate( $user, $username, $password ) {
-
+		
 	    if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+	    	
 	        if ( is_wp_error( $user ) ) {
 	            $error_codes = join( ',', $user->get_error_codes() );
 	 
@@ -312,12 +311,14 @@ class HappyShip_Login_Plugin {
 	}
 
 	public function redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
+
 	    $redirect_url = home_url();
-	 
+	    var_dump($requested_redirect_to);
 	    if ( ! isset( $user->ID ) ) {
 	        return $redirect_url;
+	        exit;
 	    }
-	 
+	 	var_dump(user_can( $user, 'manage_options' ));
 	    if ( user_can( $user, 'manage_options' ) ) {
 	        if ( $requested_redirect_to == '' ) {
 	            $redirect_url = admin_url();
@@ -327,7 +328,6 @@ class HappyShip_Login_Plugin {
 	    } else {
 	        $redirect_url = home_url( 'member-account' );
 	    }
-	 
 	    return wp_validate_redirect( $redirect_url, home_url() );
 	}
 
@@ -429,8 +429,7 @@ class HappyShip_Login_Plugin {
 	        exit;
 	    }
 	}
-	public function _addMetaData($user_id)
-    {
+	public function _addMetaData($user_id){
         $postdata=array(
         	'user_phone' 	=> $_POST['user_phone'],
         	'shop_address'  => $_POST['shop_address'],
@@ -451,7 +450,7 @@ class HappyShip_Login_Plugin {
 	            exit;
 	        }
 	 
-	        wp_redirect( home_url( 'member-password-lost' ) );
+	        wp_redirect( home_url( 'member-login?action=lostpass' ) );
 	        exit;
 	    }
 	}
@@ -616,15 +615,11 @@ class HappyShip_Login_Plugin {
 
 	    $default_attributes = array( 'show_title' => true );
 	    $attributes = shortcode_atts( $default_attributes, $attributes );
-	 
+	 	$attributes['errors'] = array();
+
 	    if ( is_user_logged_in() ) {
 	        return $this->get_template_html( 'create_order_form', $attributes );
-	    } else {
-	     	$login_url = home_url( 'member-login' );
-	        wp_redirect( $login_url );
-	     	exit;
-	    }
-	    
+	    } 
 	}
 
 	/**
@@ -678,7 +673,6 @@ class HappyShip_Login_Plugin {
 		    'post_author'  => get_current_user_id(),
 		    'post_status' => 'publish'
 		);
-		 
 		$id = wp_insert_post( $post_information );
 		if($id){
 			$post_id = $id;
@@ -709,11 +703,25 @@ class HappyShip_Login_Plugin {
 			if(isset($_POST['uppon_code']) && $_POST['uppon_code']!=null){
 				add_post_meta($post_id, 'uppon_code', $_POST['uppon_code']);
 			}
-			$location = home_url('member-account?success=true'); 
+			if(isset($_POST['status_order']) && $_POST['status_order']!=null){
+				add_post_meta($post_id, 'status_order', $_POST['status_order']);
+			}
+
+			$my_post = array(
+			    'ID'           => $id,
+			    'post_title'   => 'OD'.$id,
+			    'post_content' => 'Order OD'.$id,
+			);
+			$post_id = wp_update_post( $my_post );
+			if(!is_wp_error($post_id)){
+				$post_title = $my_post['post_title'];
+			}
+			$location = home_url('member-account?success=true&orderid='.$post_title); 
 			echo "<meta http-equiv='refresh' content='0;url=$location' />"; exit;
-			
+		}else{
+			$location = home_url('member-account?success=false'); 
+			echo "<meta http-equiv='refresh' content='0;url=$location' />"; exit;
 		}
-		die(get_current_user_id());
 	}
 	
 	function happyship_widgets_init() {
@@ -726,6 +734,7 @@ class HappyShip_Login_Plugin {
 	        'after_title'   => '</h2>',
 	    ) );
 	}
+
 }
 // Initialize the plugin
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();

@@ -132,3 +132,8 @@ function happy_get_meta($meta_name){
 
     }
 }
+function starter_scripts() {
+    wp_enqueue_style( 'jquery_popup_style', get_template_directory_uri() .'/css/jquery-confirm.min.css' );
+     wp_enqueue_script( 'jquery_popup_master', get_template_directory_uri() . '/js/jquery-confirm.min.js', array('jquery'), '3.0.0', true );
+    }
+add_action('wp_enqueue_scripts', 'starter_scripts');

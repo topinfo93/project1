@@ -27,5 +27,5 @@ jQuery(document).ready(function ($) {
 	setTimeout(function(){
 	   jQuery("#show-messenger p,#show-register-messenger p,#lostpass_errors p").fadeOut(800);
 	}, 5000);
-
+	
 });

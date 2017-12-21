@@ -1,5 +1,11 @@
-<?php get_header(); 
+<?php 
+if ( !is_user_logged_in() ) {
+    $login_url = home_url( 'member-login' );
+	wp_redirect( $login_url );
+}
 ?>
+<?php get_header();?>
+
 <?php if ( is_active_sidebar( 'manager-order-widget' )) {
 	$mainClass = 'span8';
 	$sidebarClass = 'sidrbar-right span4';
@@ -9,9 +15,7 @@
 	 }
 
 ?>
-<?php if(isset($_SESSION['logged'])){
-	var_dump($_SESSION['logged']);
-}?>
+
 <div class="main-contain">
 
 	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>

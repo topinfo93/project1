@@ -133,6 +133,8 @@ p.login-submit,p.signup-submit{
  	font-size: 14px;
  	font-weight: normal;
  	margin-top: 10px;
+ 	border: 0;
+ 	background: transparent;
  }
  #customer_login_form p input.error,.contain-form p input.error{
  	border: 1px solid #c55555;

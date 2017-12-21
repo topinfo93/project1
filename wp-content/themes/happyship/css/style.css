@@ -994,7 +994,7 @@ input.style-happy,.login-form-container input[type="text"],.login-form-container
     outline: 0;
     border-color: #356649;
 }
-.login-form-container,.customer_register_form,#password-lost-form,#resetpassform,.create_new_order_form{
+.login-form-container,.customer_register_form,#password-lost-form,#resetpassform{
     background: #8bc028;
 }
  h2.form_tittle{
@@ -1114,9 +1114,9 @@ span.icon-zalo:before{
     width: 50%;
     float: right;
 }
-.widget-area.span4{
+.widget-area.span4,.content-area.span8{
     background: #fff;
-    color: #000;
+    color: #356649;
 }
 .wiget-menu .customer_menu li{
     padding-left: 20px;
@@ -1134,4 +1134,8 @@ span.icon-zalo:before{
 }
 .wiget-follow-order label,.wiget-shop-info p{
     color: #336246;
+}
+.create_new_order_form {
+    width: 80%;
+    margin: 0 auto;
 }

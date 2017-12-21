@@ -299,3 +299,50 @@ label.required:after{
   color: red;
   padding-left: 5px;
 }
+/* style box popup */
+button.confirm-button{
+  background: #428b60;
+  color: #fff;
+}
+button.confirm-button:focus{
+  background-color: #356649;
+  color: #fff;
+}
+.jconfirm-content p{
+  color: #356649;
+}
+.jconfirm .jconfirm-box .jconfirm-buttons button.btn-agree.button{
+  border-radius: 0;
+  background: #356649;
+  text-shadow: none;
+  color: #fff;
+}
+.jconfirm .jconfirm-box .jconfirm-buttons button.btn-cancel.button{
+  border-radius: 0;
+  background: #cfcfcf;
+  text-shadow: none;
+  color: #356649;
+}
+.jconfirm .jconfirm-box .jconfirm-buttons button.btn-cancel.button:hover{
+  color: #356649;
+}
+.create_new_order_form form label.error{
+  color: #CF0000;
+  font-weight: normal;
+  font-style: italic;
+}
+form input.error,form select.error{
+  border-color: #CF0000;
+  color: #555555;
+  display: block;
+}
+#show_create_mess p.messenger{
+  color: #356649;
+}
+#show_create_mess p.create_succ{
+  background: #89c789;
+}
+#show_create_mess p.messenger.create_error{
+  background: #f34e4e;
+  color: #fff;
+}

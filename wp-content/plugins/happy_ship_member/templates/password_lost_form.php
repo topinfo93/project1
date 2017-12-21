@@ -20,8 +20,8 @@
  
     <form id="lostpasswordform" action="<?php echo wp_lostpassword_url(); ?>" method="post">
         <p class="form-row">
-            <label for="user_login"><?php _e( 'Email', 'happyship-member' ); ?>
-            <input placeholder="Nhập email" type="email" name="user_login" id="user_login" class="style-happy required">
+            <label for="user_login1"><?php _e( 'Email', 'happyship-member' ); ?>
+            <input placeholder="Nhập email" type="email" name="user_login" id="user_login1" class="style-happy required">
         </p>
  
         <p class="lostpassword-submit">
