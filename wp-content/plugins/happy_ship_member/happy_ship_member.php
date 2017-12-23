@@ -32,7 +32,9 @@ class HappyShip_Login_Plugin {
 		add_action( 'login_form_resetpass', array( $this, 'do_password_reset' ) );
 		add_shortcode( 'create_order', array( $this, 'render_creatorder_form' ) );
 		add_action( 'create_new_order', array( $this, 'do_create_new_order' ) );
-		add_action( 'add_meta_boxes', array( 'HappyShip_Login_Plugin','add_order_meta_boxes' ));
+		//add_action( 'add_meta_boxes', array( 'HappyShip_Login_Plugin','add_order_meta_boxes' ));
+		add_action( 'admin_init', array( 'HappyShip_Login_Plugin','add_order_meta_boxes' ) );
+		add_action( 'save_post', array( 'HappyShip_Login_Plugin','save_order_happyship' ), 10, 2 );
     }
     
     public static function plugin_activated() {
@@ -668,7 +670,7 @@ class HappyShip_Login_Plugin {
 	 */
 	function add_order_meta_boxes() {
 		
-	    add_meta_box( 'thong-tin', 'Thông tin đơn hàng', array('HappyShip_Login_Plugin','wpdocs_my_display_callback'), 'order' );
+	    add_meta_box( 'thong-tin', 'Thông tin đơn hàng', array('HappyShip_Login_Plugin','wpdocs_my_display_callback'), 'happyship' );
 	}
 	
 	/**
@@ -751,7 +753,8 @@ class HappyShip_Login_Plugin {
 	                	'pending'=> 'đang xử lý',
 	                	'processing'=> 'đang chuyển hàng',
 	                	'transformed' => 'đã chuyển hàng',
-	                	'processed' => 'xử lý xong'
+	                	'processed' => 'xử lý xong',
+	                	'cancel' => 'Hủy đơn hàng'
 	                );
 	                foreach ($status as $sts => $value) { ?>
 	                 	<option value="<?php echo $sts; ?>" <?php echo selected( $sts, $status_order ); ?>>
@@ -762,7 +765,36 @@ class HappyShip_Login_Plugin {
 	    </table>
  		<?php
 	}
-	
+	function save_order_happyship($orderid , $order){
+		//die();
+		if ( $order->post_type == 'happyship' ) {
+	        // Store data in post meta table if present in post data
+	        if ( isset( $_POST['kh_ten'] ) && $_POST['kh_ten'] != '' ) {
+	            update_post_meta( $orderid, 'kh_ten', $_POST['kh_ten'] );
+	        }
+	        if ( isset( $_POST['kh_sdt'] ) && $_POST['kh_sdt'] != '' ) {
+	            update_post_meta( $orderid, 'kh_quan', $_POST['kh_quan'] );
+	        }
+	        if ( isset( $_POST['kh_quan'] ) && $_POST['kh_quan'] != '' ) {
+	            update_post_meta( $orderid, 'kh_ten', $_POST['kh_ten'] );
+	        }
+	        if ( isset( $_POST['kh_hanghoa'] ) && $_POST['kh_hanghoa'] != '' ) {
+	            update_post_meta( $orderid, 'kh_hanghoa', $_POST['kh_hanghoa'] );
+	        }
+	        if ( isset( $_POST['kh_kl'] ) && $_POST['kh_kl'] != '' ) {
+	            update_post_meta( $orderid, 'kh_kl', $_POST['kh_kl'] );
+	        }
+	        if ( isset( $_POST['kh_tth'] ) && $_POST['kh_tth'] != '' ) {
+	            update_post_meta( $orderid, 'kh_tth', $_POST['kh_tth'] );
+	        }
+	        if ( isset( $_POST['kh_goi'] ) && $_POST['kh_goi'] != '' ) {
+	            update_post_meta( $orderid, 'kh_goi', $_POST['kh_goi'] );
+	        }
+	        if ( isset( $_POST['status_order'] ) && $_POST['status_order'] != '' ) {
+	            update_post_meta( $orderid, 'status_order', $_POST['status_order'] );
+	        }
+	    }
+	}
 
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();

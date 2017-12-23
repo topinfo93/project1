@@ -69,8 +69,34 @@ jQuery(document).ready(function ($) {
             });
         }
     });
-	$("#btn-type").click(function(e){
-
-    }
-	
+	$( 'select[name="status_order_update"]' ).change(function() {
+        $(this).closest('.order-content').find('p.foot-action').show(400);
+    });
+    setTimeout(function(){
+       jQuery(".messenger_alert").fadeOut(800);
+    }, 5000);
+    //
+    // function gridheight(){
+    //     var order_items = $('.content-area').find('.order-items');
+    //     if(order_items.length > 2){
+    //         var i=0;
+    //         var maxheight = 0;
+    //         order_items.each(function(index) {
+    //             i++;
+    //             if($(this).height() > maxheight){
+    //                 maxheight = $(this).height();
+    //             }
+    //             if(i% 2 == 0){
+    //                 i=0;
+    //                 $(this).height(maxheight);
+    //                 maxheight = 0;
+    //             }
+    //         });
+    //     }
+    // }
+    // gridheight();
+    // $(window).resize(function(){
+    //     gridheight();
+    // });
+    
 });

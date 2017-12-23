@@ -22,7 +22,7 @@
 				
 				<p class="form-row">
 					<label for="kh_sdt">Số điện thoại người nhận</label>
-					<input type="text" name="kh_sdt" id="kh_sdt" class="style-happy required" placeholder="Nhập sđt người nhận hàng">
+					<input type="text" name="kh_sdt" id="kh_sdt" class="style-happy required digits" placeholder="Nhập sđt người nhận hàng">
 				</p>
 				<p class="form-row">
 					<label for="kh_dc">Địa chỉ nhận hàng</label>
@@ -70,7 +70,7 @@
 				</p>
 				<p class="form-row">
 					<label for="kh_tth">Số tiền thu hộ (nếu có)</label>
-					<input type="number" name="kh_tth" id="kh_tth" class="style-happy" placeholder="Nhập tiền thu hộ">
+					<input type="text" name="kh_tth" id="kh_tth" class="style-happy number" placeholder="Nhập tiền thu hộ">
 				</p>
 				<p class="form-row">
 					<label for="">Gói dịch vụ chuyển hàng</label>
@@ -81,7 +81,7 @@
 					</select>
 				</p>
 				<p class="form-row">
-					<label for="uppon_code"></label>
+					<label for="uppon_code">Mã giảm giá</label>
 					<input type="text" name="uppon_code" id="uppon_code" class="style-happy" placeholder="Mã giảm giá">
 				</p>
 

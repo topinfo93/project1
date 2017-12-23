@@ -1114,7 +1114,7 @@ span.icon-zalo:before{
     width: 50%;
     float: right;
 }
-.widget-area,.content-area{
+.widget-area .widget,.content-area{
     background: #fff;
     color: #356649;
 }
@@ -1122,8 +1122,11 @@ span.icon-zalo:before{
     padding-left: 20px;
     margin-bottom: 2px;
 }
-.widget_nav_menu .menu li.current-menu,.widget_nav_menu .menu li:hover{
+.widget_nav_menu .menu li.current-menu-item,.widget_nav_menu .menu li:hover{
    background: #336246;
+}
+.widget_nav_menu .menu li.current-menu-item a,.widget_nav_menu .menu li:hover a{
+    color: #fff;
 }
 .widget_nav_menu .menu li a{
     padding-top: 15px;
@@ -1196,10 +1199,9 @@ span.icon-zalo:before{
 p.form-row{
     padding: 0;
 }
-.widget-area{
-    padding-left: 15px;
-}
 .widget-area  h2.widgettitle{
+    margin-top: 0;
+    padding-left: 15px;
     font-size: 18px;
     font-weight: bold;
 }
@@ -1209,6 +1211,22 @@ p.form-row{
     font-size: 14px;
 }
 .widget-area .widget{
-    padding-bottom: 15px;
+    margin-bottom: 15px;
     border-bottom: 1px solid #356649;
+}
+.order-content .foot-action{
+    display: none;
+    text-align: center;
+}
+.widget_wpb_widget p{
+    padding-left: 15px;
+}
+.widget_wpb_widget a{
+    margin-left: 15px;
+}
+.mem_update_storder{
+    margin-bottom: 0;
+}
+.content-area{
+    padding-top: 10px;
 }
