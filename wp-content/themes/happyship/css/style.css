@@ -51,7 +51,7 @@ h1 {
 p {
     padding: 10px;
     font-weight: 100;
-    color: #fff;
+    color: #356649;
 }
 .navbar {
     background: #fff;
@@ -1114,18 +1114,18 @@ span.icon-zalo:before{
     width: 50%;
     float: right;
 }
-.widget-area.span4,.content-area.span8{
+.widget-area,.content-area{
     background: #fff;
     color: #356649;
 }
-.wiget-menu .customer_menu li{
+.widget_nav_menu .menu li{
     padding-left: 20px;
     margin-bottom: 2px;
 }
-.wiget-menu .customer_menu li.current-menu,.wiget-menu .customer_menu li:hover{
+.widget_nav_menu .menu li.current-menu,.widget_nav_menu .menu li:hover{
    background: #336246;
 }
-.wiget-menu .customer_menu li a{
+.widget_nav_menu .menu li a{
     padding-top: 15px;
     padding-bottom: 15px;
     display: block;
@@ -1138,4 +1138,77 @@ span.icon-zalo:before{
 .create_new_order_form {
     width: 80%;
     margin: 0 auto;
+}
+.order-items{
+    width: 48%;
+    float: left;
+    margin-right: 1%;
+    margin-left: 1%;
+    box-sizing: border-box;
+    border: 1px solid #356649;
+    margin-bottom: 15px;
+}
+.order-items:after,.order-items:before{
+    content: '';
+    display: block;
+    clear: both;
+}
+.order-content p{
+    color: #356649;
+    font-size: 14px;
+    padding: 5px;
+    margin-bottom: 1px;
+    background: #f5f5f5;
+}
+.order-content p{
+
+}
+.order-content .order_tittle{
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: #356649;
+}
+.order-content p strong{
+    width: 40%;
+    display: inline-block;
+}
+.order-content p span{
+    display: inline-block;
+    width: 60%;
+}
+.pagination{
+    clear: both;
+    text-align: center;
+    padding-top: 25px;
+}
+.pagination a,.pagination span{
+    padding: 5px 10px;
+    display: inline-block;
+    background: #f5f5f5;
+    border: 
+}
+.pagination span{
+    background: #356649;
+    border: 1px solid #356649;
+    color: #fff;
+}
+p.form-row{
+    padding: 0;
+}
+.widget-area{
+    padding-left: 15px;
+}
+.widget-area  h2.widgettitle{
+    font-size: 18px;
+    font-weight: bold;
+}
+.widget-area p{
+    color: #356649;
+    padding: 0;
+    font-size: 14px;
+}
+.widget-area .widget{
+    padding-bottom: 15px;
+    border-bottom: 1px solid #356649;
 }

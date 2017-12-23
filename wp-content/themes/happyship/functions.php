@@ -137,3 +137,104 @@ function starter_scripts() {
      wp_enqueue_script( 'jquery_popup_master', get_template_directory_uri() . '/js/jquery-confirm.min.js', array('jquery'), '3.0.0', true );
     }
 add_action('wp_enqueue_scripts', 'starter_scripts');
+
+function pagination_bar( $custom_query ) {
+
+    $total_pages = $custom_query->max_num_pages;
+    $big = 999999999; // need an unlikely integer
+
+    if ($total_pages > 1){
+        $current_page = max(1, get_query_var('paged'));
+
+        echo paginate_links(array(
+            'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+            'format' => '?paged=%#%',
+            'current' => $current_page,
+            'total' => $total_pages,
+        ));
+    }
+}
+add_action( 'widgets_init', 'theme_slug_widgets_init' );
+function theme_slug_widgets_init() {
+    register_sidebar( array(
+        'name' => __( 'Order Sidebar', 'theme-happyship' ),
+        'id' => 'sidebar-order-page',
+        'description' => __( 'Widgets in this area will be shown on all posts order.', 'theme-happyship' ),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widgettitle">',
+        'after_title'   => '</h2>',
+    ) );
+}
+
+// Register and load the widget
+function wpb_load_widget() {
+    register_widget( 'wpb_widget' );
+}
+add_action( 'widgets_init', 'wpb_load_widget' );
+ 
+// Creating the widget 
+class wpb_widget extends WP_Widget {
+ 
+    function __construct() {
+        parent::__construct(
+         
+        // Base ID of your widget
+        'wpb_widget', 
+         
+        // Widget name will appear in UI
+        __('WPBeginner Widget', 'wpb_widget_domain'), 
+         
+        // Widget description
+        array( 'description' => __( 'Hiển thị thông tin khách hàng', 'wpb_widget_domain' ), ) 
+        );
+    }
+     
+    // Creating widget front-end
+     
+    public function widget( $args, $instance ) {
+    $title = apply_filters( 'widget_title', $instance['title'] );
+     
+    // before and after widget arguments are defined by themes
+    echo $args['before_widget'];
+    if ( ! empty( $title ) )
+    echo $args['before_title'] . $title . $args['after_title'];
+    $current_user = wp_get_current_user();$id = $current_user->ID;
+    $ten = $current_user->user_nicename;
+    $email = $current_user->user_email;
+    $mobile = get_user_meta($id,user_phone,true);
+    $shop_name = $current_user->display_name;
+    $shop_address = get_user_meta($id,shop_address,true);
+    echo "<p><strong>Họ tên:</strong><span> ".$ten." </span></p>";
+    echo "<p><strong>Email:</strong><span> ".$email." </span></p>";
+    echo "<p><strong>Phone:</strong><span> ".$mobile." </span></p>";
+    echo "<p><strong>Tên Shop:</strong><span> ".$shop_name." </span></p>";
+    echo "<p><strong>Địa chỉ:</strong><span> ".$shop_address." </span></p>";
+    echo '<a href="" class="link_change_info"> Đổi Thông tin</a>';
+    echo $args['after_widget'];
+    }
+             
+    // Widget Backend 
+    public function form( $instance ) {
+    if ( isset( $instance[ 'title' ] ) ) {
+    $title = $instance[ 'title' ];
+    }
+    else {
+    $title = __( 'New title', 'wpb_widget_domain' );
+    }
+    // Widget admin form
+    ?>
+    <p>
+    <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+    <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+    </p>
+    <?php 
+    }
+         
+    // Updating widget replacing old instances with new
+    public function update( $new_instance, $old_instance ) {
+    $instance = array();
+    $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+    return $instance;
+    }
+} // Class wpb_widget ends here

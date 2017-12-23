@@ -6,6 +6,7 @@
 		<?php 
 		if( isset($_GET['success']) && $_GET['success'] == "true" && isset($_GET['orderid'])){ ?>
     		<p class="messenger create_succ"> Bạn đã tạo đơn hàng thành công! Mã đơn hàng của bạn là <strong><?php echo $_GET['orderid']; ?></strong></p>
+    		<p> Đến trang <a href="<?php echo site_url( 'member-list-order' );?>">danh sách đơn hàng </a></p>
 	    <?php $showForm = false; } elseif( isset($_GET['success']) && $_GET['success'] == "false") {?>
 	    	<p class="messenger create_error"> Tạo đơn hàng thất bại! Vui lòng thử lại.</p>
 	    <?php } ?>
@@ -13,7 +14,7 @@
 	    <!-- show error -->
 	    <?php if($showForm):?>
 		<div class="wrap-form">
-			<form id="customer_create_form" action="<?php echo site_url( 'member-account?action=create' );?>" method="post">
+			<form id="customer_create_form" action="<?php echo site_url( 'member-create-order?action=create' );?>" method="post">
 				<p class="form-row">
 					<label for="kh_ten">Tên người nhận hàng</label>
 					<input type="text" name="kh_ten" id="kh_ten" class="style-happy required" placeholder="Nhập tên người nhận hàng">

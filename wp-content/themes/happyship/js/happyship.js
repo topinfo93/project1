@@ -22,9 +22,8 @@ jQuery.extend(jQuery.validator.messages, {
 jQuery(document).ready(function ($) {
     $("#customer_create_form").validate();
     $("#btn-type").click(function(e){
-        e.preventDefault();
-       var valid = $("#customer_create_form").valid();
-       if(valid){
+        var valid = $("#customer_create_form").valid();
+        if(valid){
             var tnn = $('#kh_ten').val();
             var dtnn = $('#kh_sdt').val();
             var dcnn = $('#kh_dc').val();
@@ -70,6 +69,8 @@ jQuery(document).ready(function ($) {
             });
         }
     });
-	
+	$("#btn-type").click(function(e){
+
+    }
 	
 });

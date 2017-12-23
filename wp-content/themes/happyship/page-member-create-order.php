@@ -6,14 +6,13 @@ if ( !is_user_logged_in() ) {
 ?>
 <?php get_header();?>
 
-<?php if ( is_active_sidebar( 'manager-order-widget' )) {
-	$mainClass = 'span8';
-	$sidebarClass = 'sidrbar-right span4';
-	}else{
-	 	$mainClass = '';
-		$sidebarClass = '';
-	 }
-
+<?php if ( is_active_sidebar( 'sidebar-order-page' )) {
+  	$mainClass = 'span9';
+  	$sidebarClass = 'sidebar-right span3';
+  	}else{
+    	$mainClass = '';
+    	$sidebarClass = '';
+   	}
 ?>
 
 <div class="main-contain">
@@ -33,7 +32,7 @@ if ( !is_user_logged_in() ) {
 			<section class="main-content">
 				<div class="container">
                     <div class="row-fluid">
-                    	<div class="widget-area span4">
+                    	<!-- <div class="widget-area span4">
 							<div class="widget wiget-menu">
 								<h3 class="wiget-menu-tittle">Danh mục</h3>
 								<ul class="customer_menu">
@@ -64,18 +63,17 @@ if ( !is_user_logged_in() ) {
 									<p><a href="/update-info" id="change_info">Thay đổi thông tin</a></p>
 								</div>
 							</div>
-						</div>
+						</div> -->
+						<?php if ( is_active_sidebar( 'sidebar-order-page' )) : ?>
+                        <div class="widget-area <?php echo $sidebarClass; ?>">
+                            <?php dynamic_sidebar('sidebar-order-page'); ?>
+                        </div>  
+                        <?php endif; ?>
                     	<div class="content-area <?php echo $mainClass; ?>">
 							<?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
 							<?php the_content(); ?>
 							<div class="entry-links"><?php wp_link_pages(); ?></div>
 						</div>
-						<!-- <?php if ( is_active_sidebar( 'manager-order-widget' )) :?>
-						<div class="widget-area <?php echo $sidebarClass; ?>">
-							<?php get_sidebar('manager-order-widget'); ?>
-						</div>	
-						<?php endif;?> -->
-						
 					</div>
 				</div>
 			</section>

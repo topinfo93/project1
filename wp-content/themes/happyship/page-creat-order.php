@@ -1,11 +1,17 @@
+<?php 
+if ( !is_user_logged_in() ) {
+    $login_url = home_url( 'member-login' );
+	wp_redirect( $login_url );
+}
+?>
 <?php get_header(); ?>
-<?php if ( is_active_sidebar( 'manager-order-widget' )) {
-	$mainClass = 'span8';
-	$sidebarClass = 'sidrbar-right span4';
-	}else{
-	 	$mainClass = '';
-		$sidebarClass = '';
-	 }
+<?php if ( is_active_sidebar( 'sidebar-order-page' )) {
+  	$mainClass = 'span9';
+  	$sidebarClass = 'sidebar-right span3';
+  	}else{
+    	$mainClass = '';
+    	$sidebarClass = '';
+   	}
 ?>
 <div class="main-contain">
 
@@ -24,6 +30,11 @@
 			<section class="main-content">
 				<div class="container">
                     <div class="row-fluid">
+                    	<?php if ( is_active_sidebar( 'sidebar-order-page' )) : ?>
+                        <div class="widget-area <?php echo $sidebarClass; ?>">
+                            <?php dynamic_sidebar('sidebar-order-page'); ?>
+                        </div>  
+                        <?php endif; ?>
                     	<div class="content-area <?php echo $mainClass; ?>">
 							<?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
 							<?php the_content(); ?>
