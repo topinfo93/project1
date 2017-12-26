@@ -21,54 +21,72 @@ jQuery.extend(jQuery.validator.messages, {
 });
 jQuery(document).ready(function ($) {
     $("#customer_create_form").validate();
-    $("#btn-type").click(function(e){
-        var valid = $("#customer_create_form").valid();
-        if(valid){
-            var tnn = $('#kh_ten').val();
-            var dtnn = $('#kh_sdt').val();
-            var dcnn = $('#kh_dc').val();
-            var dvch = $('#kh_goi').val();
-            var tth = ($('#kh_tth').val()) ? $('#kh_tth').val() : 0;
-            console.log(tth);
-            $.confirm({
-                title: 'Thông tin đơn hàng',
-                content: '<div class="field confirm-order">'+
-                            '<div class="order_content">'+
-                                '<p><strong>Người nhận:</strong><span id="name_receiver">'+tnn+'</span></p>'+
-                                '<p><strong>Số điện thoại:</strong><span id="phone_receiver">'+dtnn+'</span></p>'+
-                                '<p><strong>Địa chỉ :</strong><span id="add_receiver"> '+dcnn+'</span></p>'+
-                                '<p><strong>(Gói) Chuyển hàng :</strong><span id="type_service"> '+dvch+'</span></p>'+
-                                '<p><strong>Số tiền thu hộ :</strong><span id="money_receiver"> '+tth+'đ</span></p>'+
-                                '<p class="order-footer"><strong>Tổng cước phí :</strong><span id="total_cost"></span></p>'+
-                            '</div>'+
-                        '</div>',
-                icon: 'fa fa-warning',
-                type: 'orange',
-                animation: 'zoom',
-                closeIcon : true,
-                columnClass : 'my-class',
-                closeAnimation: 'scale',
-                useBootstrap : false,
-                boxWidth: '50%',
-                bgOpacity : 0.8,
-                theme : 'material',
-                buttons: {
-                    omg: {
-                        text: 'Xác nhận',
-                        btnClass: 'btn-agree button',
-                        action: function(){
-                            $('#create_form_submit').trigger('click');
-                        }
-                    },
-                    close:{
-                        text: 'Hủy',
-                        btnClass: 'btn-cancel button',
+    // $("#btn-confirm-createnew").click(function(e){
+    //     e.preventDefault();
+    //     var valid = $("#customer_create_form").valid();
+    //     var valueOption = $('select[name="kh_goi"]').find(":selected").text();
+    //     var Qhuyen = $('select#kh_quan').find(":selected").val();
+    //     var nhan_hang = 'Quan-3';
+    //     var giao_hang = 'Quan-1';
+    //     // $.ajax({
+    //     //     type: "post",
+    //     //     dataType: "json",
+    //     //     url: my_ajax_object.ajax_url,
+    //     //     data: {
+    //     //         action : 'get_price',
+    //     //         nhan_hang : nhan_hang,
+    //     //         giao_hang : giao_hang
+    //     //     },
+    //     //     success: function(data){
+    //     //         console.log(data);
+    //     //     }
+    //     // });
+    //     if(valid){
+    //         var tnn = $('#kh_ten').val();
+    //         var dtnn = $('#kh_sdt').val();
+    //         var dcnn = $('#kh_dc').val();
+    //         var dvch = valueOption;
+    //         var tth = ($('#kh_tth').val()) ? $('#kh_tth').val() : 0;
+    //         console.log(tth);
+    //         $.confirm({
+    //             title: 'Thông tin đơn hàng',
+    //             content: '<div class="field confirm-order">'+
+    //                         '<div class="order_content">'+
+    //                             '<p><strong>Người nhận:</strong><span id="name_receiver">'+tnn+'</span></p>'+
+    //                             '<p><strong>Số điện thoại:</strong><span id="phone_receiver">'+dtnn+'</span></p>'+
+    //                             '<p><strong>Địa chỉ :</strong><span id="add_receiver"> '+dcnn+'</span></p>'+
+    //                             '<p><strong>(Gói) Chuyển hàng :</strong><span id="type_service"> '+dvch+'</span></p>'+
+    //                             '<p><strong>Số tiền thu hộ :</strong><span id="money_receiver"> '+tth+'đ</span></p>'+
+    //                             '<p class="order-footer"><strong>Tổng cước phí :</strong><span id="total_cost"></span></p>'+
+    //                         '</div>'+
+    //                     '</div>',
+    //             icon: 'fa fa-warning',
+    //             type: 'orange',
+    //             animation: 'zoom',
+    //             closeIcon : true,
+    //             columnClass : 'my-class',
+    //             closeAnimation: 'scale',
+    //             useBootstrap : false,
+    //             boxWidth: '50%',
+    //             bgOpacity : 0.8,
+    //             theme : 'material',
+    //             buttons: {
+    //                 omg: {
+    //                     text: 'Xác nhận',
+    //                     btnClass: 'btn-agree button',
+    //                     action: function(){
+    //                         $('#create_form_submit').trigger('click');
+    //                     }
+    //                 },
+    //                 close:{
+    //                     text: 'Hủy',
+    //                     btnClass: 'btn-cancel button',
                         
-                    }
-                }
-            });
-        }
-    });
+    //                 }
+    //             }
+    //         });
+    //     }
+    // });
 	$( 'select[name="status_order_update"]' ).change(function() {
         $(this).closest('.order-content').find('p.foot-action').show(400);
     });
@@ -98,5 +116,23 @@ jQuery(document).ready(function ($) {
     // $(window).resize(function(){
     //     gridheight();
     // });
-    
+    // $('select#kh_quan').on('change', function() {
+    //     var giao_hang = this.value;
+    //     var nhan_hang = "Quan-1";
+    //     var kh_goi = "";
+    //     $.ajax({
+    //         type: "post",
+    //         url: my_ajax_object.ajax_url,
+    //         //url: '/getprice.php',
+    //         data: {
+    //             action : 'get_price',
+    //             nhan_hang : nhan_hang,
+    //             giao_hang : giao_hang
+    //             //kh_goi    : kh_goi
+    //         },
+    //         success: function(data){
+    //             console.log(data);
+    //         }
+    //     });
+    // })
 });

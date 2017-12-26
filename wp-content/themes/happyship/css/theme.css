@@ -346,3 +346,6 @@ form input.error,form select.error{
   background: #f34e4e;
   color: #fff;
 }
+.order-items.canceled{
+  opacity: 0.2;
+}

@@ -35,6 +35,10 @@ class HappyShip_Login_Plugin {
 		//add_action( 'add_meta_boxes', array( 'HappyShip_Login_Plugin','add_order_meta_boxes' ));
 		add_action( 'admin_init', array( 'HappyShip_Login_Plugin','add_order_meta_boxes' ) );
 		add_action( 'save_post', array( 'HappyShip_Login_Plugin','save_order_happyship' ), 10, 2 );
+ 		add_action( 'wp_enqueue_scripts', array( 'HappyShip_Login_Plugin','my_enqueue' ) );
+ 		add_action( 'wp_ajax_nopriv_get_price', array( 'HappyShip_Login_Plugin','get_price' ) );
+		add_action( 'wp_ajax_get_price', array( 'HappyShip_Login_Plugin','get_price' )  );
+
     }
     
     public static function plugin_activated() {
@@ -795,7 +799,28 @@ class HappyShip_Login_Plugin {
 	        }
 	    }
 	}
-
+	function my_enqueue() {
+	  	wp_enqueue_script( 'ajax-script', get_template_directory_uri() . '/js/my-ajax-script.js', array('jquery') );
+	  	wp_localize_script( 'ajax-script', 'my_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+	}
+	function get_price() {
+		global $wpdb;
+		$price = 0;
+		$usID = get_current_user_id();
+		$nhan_hang = get_user_meta($usID,'shop_state', true);
+		if ( isset($_POST) ) {
+	     	$kh_goi = $_POST['kh_goi'];
+			$giao_hang = $_POST['giao_hang'];
+	    }
+	    $results = $wpdb->get_results( 'SELECT * FROM `wp_price_manager` WHERE `nhan_hang` = "'.$nhan_hang.'" AND `giao_hang` ="'.$giao_hang. '"');
+	    if(($results[0]->id)+0 > 0){
+			$price = $results[0]->$kh_goi;
+		} 
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) { 
+			echo number_format($price);
+		}
+		die();
+	}
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();
 

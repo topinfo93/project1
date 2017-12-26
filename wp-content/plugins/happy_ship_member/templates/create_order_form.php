@@ -76,8 +76,9 @@
 					<label for="">Gói dịch vụ chuyển hàng</label>
 					<select name="kh_goi" class="style-happy selectpicker required">
 						<option value="" name="kh_goi">Gói dịch vụ</option>
-						<option value="tiet-kiem">Tiết kiệm</option>
-						<option value="toc-hanh">Tốc hành</option>
+						<option value="gia_tiet_kiem">Tiết kiệm</option>
+						<option value="gia_nhanh">Tốc hành</option>
+						<option value="super_happy">Siêu tốc</option>
 					</select>
 				</p>
 				<p class="form-row">
@@ -95,7 +96,7 @@
 		            <input type="submit" id="create_form_submit" name="submit" class="button register-button" value="<?php _e( 'Tạo đơn hàng', 'happyship-member' ); ?>"/>
 		        </p>
 				<p>
-					<button id="btn-type" class="button confirm-button">Tạo đơn hàng</button>
+					<button id="btn-confirm-createnew" class="button confirm-button">Tạo đơn hàng</button>
 				</p>
 				
 			</form>

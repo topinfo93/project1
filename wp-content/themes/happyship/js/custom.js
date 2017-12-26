@@ -20,31 +20,31 @@
             // });
 
 
-        $("select[name='kh_quan'], select[name='kh_goi']").on('change', function() {
+        // $("select[name='kh_quan']").on('change', function() {
             
-            var kh_quan = $("select[name='kh_quan']").val(),
-                kh_goi = $("select[name='kh_goi']").val();
+        //     var kh_quan = $("select[name='kh_quan']").val(),
+        //         kh_goi = $("select[name='kh_goi']").val();
 
-            if (kh_quan != null && kh_goi != null) {
-                var data = {
-                    'action': 'sb_test_ajax',
-                    'kh_quan': kh_quan,
-                    'kh_goi': kh_goi
-                };
+        //     if (kh_quan != null && kh_goi != null) {
+        //         var data = {
+        //             'action': 'sb_test_ajax',
+        //             'kh_quan': kh_quan,
+        //             'kh_goi': kh_goi
+        //         };
 
-                var ajaxurl = '/wp-admin/admin-AJAX.php';
+        //         var ajaxurl = '/wp-admin/admin-AJAX.php';
 
 
-                $.post(ajaxurl, data, function(response){
-                    console.log(response);
+        //         $.post(ajaxurl, data, function(response){
+        //             console.log(response);
 
-                    $('.fee .right').empty().append(response+'đ');
-                    $('.fee input[name="fee"]').val(response);
+        //             $('.fee .right').empty().append(response+'đ');
+        //             $('.fee input[name="fee"]').val(response);
 
-                });
-            }
+        //         });
+        //     }
 
-        });
+        // });
 
 
 })(jQuery);

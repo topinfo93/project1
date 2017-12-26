@@ -83,7 +83,7 @@ if ( !is_user_logged_in() ) {
                                     $status_order = get_post_meta( $Id, 'status_order', true );
                                     ?>
                                 
-                                    <div class="order-items">
+                                    <div class="order-items <?php if($status_order == 'cancel'){echo 'canceled';}?>">
                                         <div class="order-content">
                                             <p class="order_tittle"><?php echo $ODtittle;?></p>
                                             <p><strong>Người nhận :</strong><span><?php echo $kh_ten;?></span></p>
