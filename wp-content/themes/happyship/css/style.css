@@ -1143,15 +1143,17 @@ span.icon-zalo:before{
     margin: 0 auto;
 }
 .order-items{
-    width: 48%;
-    float: left;
-    margin-right: 1%;
-    margin-left: 1%;
     box-sizing: border-box;
     border: 1px solid #356649;
     margin-bottom: 15px;
 }
-.order-items:after,.order-items:before{
+@media (min-width: 1200px){
+    .row-fluid .order-items:nth-child(3n+1) {
+        margin-left: 0;
+    }
+}
+
+.order-items:after,.order-items:before,.content-area:after,.content-area:before {
     content: '';
     display: block;
     clear: both;
@@ -1229,4 +1231,7 @@ p.form-row{
 }
 .content-area{
     padding-top: 10px;
+}
+.main-content .content-area > p{
+    margin-bottom: 0;
 }

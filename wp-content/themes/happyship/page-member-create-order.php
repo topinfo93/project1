@@ -4,34 +4,24 @@ if ( !is_user_logged_in() ) {
 	wp_redirect( $login_url );
 }
 ?>
-<?php get_header();?>
+<?php get_header('order');?>
 
-<?php if ( is_active_sidebar( 'sidebar-order-page' )) {
-  	$mainClass = 'span9';
-  	$sidebarClass = 'sidebar-right span3';
-  	}else{
-    	$mainClass = '';
-    	$sidebarClass = '';
-   	}
-?>
+
 
 <div class="main-contain">
-
+	
 	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 	<div class="main-content">
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			
-			<div class="breadcum-block">
-	            <div class="container">
-	                <div class="row-fluid">
-	                    <a href="<?php echo home_url();?>" class="home">Trang chủ </a><span class="current"> > <?php the_title(); ?></span>
-	                </div>
-	            </div>
-	        </div>
-
 			<section class="main-content">
 				<div class="container">
                     <div class="row-fluid">
+                    	<div class="content-area">
+					        <p>
+					            <a href="<?php echo home_url('member-list-order');?>" class="button"> Danh sách đơn hàng</a>
+					        </p>
+					    </div>
                     	<!-- <div class="widget-area span4">
 							<div class="widget wiget-menu">
 								<h3 class="wiget-menu-tittle">Danh mục</h3>
@@ -64,12 +54,8 @@ if ( !is_user_logged_in() ) {
 								</div>
 							</div>
 						</div> -->
-						<?php if ( is_active_sidebar( 'sidebar-order-page' )) : ?>
-                        <div class="widget-area <?php echo $sidebarClass; ?>">
-                            <?php dynamic_sidebar('sidebar-order-page'); ?>
-                        </div>  
-                        <?php endif; ?>
-                    	<div class="content-area <?php echo $mainClass; ?>">
+						
+                    	<div class="content-area">
 							<?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
 							<?php the_content(); ?>
 							<div class="entry-links"><?php wp_link_pages(); ?></div>
@@ -84,4 +70,4 @@ if ( !is_user_logged_in() ) {
 
 </div>
 
-<?php get_footer(); ?>
+<?php get_footer('order'); ?>

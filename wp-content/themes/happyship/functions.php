@@ -20,8 +20,12 @@ function blankslate_setup()
 add_action('wp_enqueue_scripts', 'blankslate_load_scripts');
 function blankslate_load_scripts()
 {
+    wp_enqueue_style( 'happyship', get_template_directory_uri() . '/css/style.css', array(), '3.2' );
+    wp_enqueue_style( 'happyship-theme', get_template_directory_uri() . '/css/theme.css', array(), '3.2' );
     wp_enqueue_script('jquery');
     wp_enqueue_script( 'custom', HAPPYSHIP_LINK . '/js/custom.js', array(), '1.0.0', true );
+    wp_enqueue_script( 'jquery.validate', HAPPYSHIP_LINK . '/js/jquery.validate.js', array(), '1.0.0', true );
+    wp_enqueue_script( 'jquery.happyship', HAPPYSHIP_LINK . '/js/happyship.js', array(), '1.0.0', true );
 }
 
 add_action('widgets_init', 'blankslate_widgets_init');

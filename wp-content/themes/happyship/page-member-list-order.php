@@ -4,7 +4,7 @@ if ( !is_user_logged_in() ) {
     wp_redirect( $login_url );
 }
 ?>
-<?php get_header(); ?>
+<?php get_header('order'); ?>
 <?php if ( is_active_sidebar( 'sidebar-order-page' )) {
   $mainClass = 'span9';
   $sidebarClass = 'sidebar-right span3';
@@ -45,29 +45,55 @@ if ( !is_user_logged_in() ) {
   <div class="main-content">
    
       
-        <div class="breadcum-block">
+        <!-- <div class="filter-block">
             <div class="container">
                 <div class="row-fluid">
-                    <a href="<?php echo home_url();?>" class="home">Trang chủ </a><span class="current"> > <?php the_title(); ?></span>
+                    <p class="filter-box span4">
+                        <label for="filterby-status">Tình trạng</label>
+                        <select name="filterby-status" id="filterby-status">
+                            <option value="all">Tất cả</option>
+                            <option value="pending">Đang xử lý</option>
+                            <option value="transformed">Đã giao</option>
+                            <option value="processed">Hoàn thành</option>
+                            <option value="cancel">Đã hủy</option>
+                        </select>
+                    </p>
+                    <p class="filter-box span4">
+                        <label for="filterby-date">Thời gian</label>
+                        <select name="filterby-date" id="filterby-date">
+                            <option value="">Chọn ngày / tháng)</option>
+                            <option value="pending">Đang xử lý</option>
+                            <option value="transformed">Đã giao</option>
+                            <option value="processed">Hoàn thành</option>
+                            <option value="cancel">Đã hủy</option>
+                        </select>
+                    </p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <section class="main-content">
             <div class="container">
                     <div class="row-fluid">
-                        
-                        <?php if ( is_active_sidebar( 'sidebar-order-page' )) : ?>
-                        <div class="widget-area <?php echo $sidebarClass; ?>">
-                            <?php dynamic_sidebar('sidebar-order-page'); ?>
-                        </div>  
-                        <?php endif; ?>
-                        <div class="content-area <?php echo $mainClass; ?>">
+                        <div class="content-area">
+                            <p>
+                                <a href="<?php echo home_url('member-create-order');?>" class="button"> Tạo đơn hàng</a>
+                            </p>
+                        </div>
+                        <?php //if ( is_active_sidebar( 'sidebar-order-page' )) : ?>
+                       <!--  <div class="widget-area <?php //echo $sidebarClass; ?>">
+                            <?php //dynamic_sidebar('sidebar-order-page'); ?>
+                        </div>   -->
+                        <?php //endif; ?>
+                        <div class="content-area <?php //echo $mainClass; ?>">
                             <?php if(isset($alermessenger) && $alermessenger!=''):?>
                                 <div class="messenger_alert">
                                     <p class="alert"><?php echo $alermessenger;?></p>
                                 </div>
                             <?php endif;?>
+                            <!-- <p>
+                                <a href="<?php// echo home_url('member-create-order');?>" class="button"> Tạo đơn hàng</a>
+                            </p> -->
                             <?php if ( $author_posts->have_posts() ) : 
                                 while( $author_posts->have_posts() ) : $author_posts->the_post(); 
                                     $Id = get_the_ID();
@@ -83,7 +109,7 @@ if ( !is_user_logged_in() ) {
                                     $status_order = get_post_meta( $Id, 'status_order', true );
                                     ?>
                                 
-                                    <div class="order-items <?php if($status_order == 'cancel'){echo 'canceled';}?>">
+                                    <div class="order-items span4 <?php if($status_order == 'cancel'){echo 'canceled';}?>">
                                         <div class="order-content">
                                             <p class="order_tittle"><?php echo $ODtittle;?></p>
                                             <p><strong>Người nhận :</strong><span><?php echo $kh_ten;?></span></p>
@@ -147,4 +173,4 @@ if ( !is_user_logged_in() ) {
     endif; ?>
 </div>
 
-<?php get_footer(); ?>
+<?php get_footer('order'); ?>

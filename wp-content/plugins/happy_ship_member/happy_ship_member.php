@@ -38,7 +38,10 @@ class HappyShip_Login_Plugin {
  		add_action( 'wp_enqueue_scripts', array( 'HappyShip_Login_Plugin','my_enqueue' ) );
  		add_action( 'wp_ajax_nopriv_get_price', array( 'HappyShip_Login_Plugin','get_price' ) );
 		add_action( 'wp_ajax_get_price', array( 'HappyShip_Login_Plugin','get_price' )  );
+		// add menu and submenu
+		add_action("admin_menu", array( "HappyShip_Login_Plugin","add_Happyship_Menu"));
 
+		
     }
     
     public static function plugin_activated() {
@@ -820,6 +823,28 @@ class HappyShip_Login_Plugin {
 			echo number_format($price);
 		}
 		die();
+	}
+	function add_Happyship_Menu(){
+		add_submenu_page(
+	        'edit.php?post_type=happyship',
+	        __( 'Books Shortcode Reference', 'happyship-member' ),
+	        __( 'Quản lý giá', 'happyship-member' ),
+	        'manage_options',
+	        'price_manager',
+	        array("HappyShip_Login_Plugin",'books_ref_page_callback')
+	    );
+	    add_submenu_page( 'my-top-level-slug', 'My Custom Page', 'My Custom Page',
+	    'manage_options', 'my-top-level-slug');
+		add_submenu_page( 'my-top-level-slug', 'My Custom Submenu Page', 'My Custom Submenu Page',
+	    'manage_options', 'my-secondary-slug');
+	}
+	function books_ref_page_callback() { 
+	    ?>
+	    <div class="wrap">
+	        <h1><?php _e( 'Books Shortcode Reference', 'textdomain' ); ?></h1>
+	        <p><?php _e( 'Helpful stuff here', 'textdomain' ); ?></p>
+	    </div>
+	    <?php
 	}
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();
