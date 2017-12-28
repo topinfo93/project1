@@ -58,7 +58,7 @@ hr.line-box{
 .wrapper {
     max-width: 100%;
     margin: auto;
-    padding: 30px 20px 30px;
+    padding: 0px 20px 30px;
 }
 
 h1 {
@@ -237,14 +237,7 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
 .status span{
     float: left;
 }
-.box-shop-name:after{
-    content: "\25BC";
-    position: relative;
-    right: -5px;
-    top: 0;
-    width: 15px;
-    height: 15px;
-}
+
 .onopen .box-shop-name:after{
     content: "\25B2";
 }
@@ -263,6 +256,7 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
 .box-item dl dd{
     float: left;
     width: 55%;
+    min-height: 20px;
 }
 .box-item dl:after{
     clear: both;
@@ -272,4 +266,44 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
 .box-item .to-info{
     padding: 10px;
     background: #8bc028; 
+}
+.box-item dl dd select{
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
+}
+form.mem_update_storder{
+    position: relative;
+}
+form.mem_update_storder select{
+    max-width: 50%;
+    margin-bottom: 0;
+    padding: 0;
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    border-radius: 0;
+}
+form.mem_update_storder .foot-action{
+    background: #fff;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    padding: 1px;
+    width: auto;
+    display: none;
+    margin-bottom: 0;
+    text-align: center;
+}
+.grid-box-wrap:after,.grid-box-wrap:before{
+    content: '';
+    display: block;
+    clear: both;
+}
+.box-item.canceled{
+    opacity: 0.3;
+}
+.content-area > p{
+    margin-bottom: 0;
 }

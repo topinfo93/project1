@@ -1148,7 +1148,7 @@ span.icon-zalo:before{
     margin-bottom: 15px;
 }
 @media (min-width: 1200px){
-    .row-fluid .order-items:nth-child(3n+1) {
+    .row-fluid .order-items:nth-child(4n+1) {
         margin-left: 0;
     }
 }
@@ -1234,4 +1234,36 @@ p.form-row{
 }
 .main-content .content-area > p{
     margin-bottom: 0;
+}
+.nav-menu-dashboard {
+    padding: 15px;
+    background: #8bc028;
+}
+.nav-menu-dashboard:after, .toolbar-wrap:after, .foot-action:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.nav-left-signin {
+    float: right;
+}
+.nav-left-signin a#log_out {
+    line-height: 29px;
+    display: inline-block;
+    border: 1px solid #356649;
+    padding: 0 5px;
+    cursor: pointer;
+}
+.nav-left-signin .welcome {
+    margin-right: 10px;
+}
+.nav-menu-dashboard span {
+    display: inline-block;
+    padding-left: 10px;
+    float: left;
+    line-height: 31px;
+}
+a#log_out:hover, a#log_out:focus, a#log_out:active, a#log_out:visited {
+    color: #eec32a;
+    background: #356649;
 }

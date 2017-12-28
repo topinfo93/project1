@@ -803,6 +803,7 @@ class HappyShip_Login_Plugin {
 	    }
 	}
 	function my_enqueue() {
+		wp_enqueue_style('admin-styles', get_template_directory_uri().'/assets_backend/css/style-dashboard.css');
 	  	wp_enqueue_script( 'ajax-script', get_template_directory_uri() . '/js/my-ajax-script.js', array('jquery') );
 	  	wp_localize_script( 'ajax-script', 'my_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 	}
@@ -825,26 +826,83 @@ class HappyShip_Login_Plugin {
 		die();
 	}
 	function add_Happyship_Menu(){
-		add_submenu_page(
-	        'edit.php?post_type=happyship',
-	        __( 'Books Shortcode Reference', 'happyship-member' ),
-	        __( 'Quản lý giá', 'happyship-member' ),
-	        'manage_options',
-	        'price_manager',
-	        array("HappyShip_Login_Plugin",'books_ref_page_callback')
-	    );
-	    add_submenu_page( 'my-top-level-slug', 'My Custom Page', 'My Custom Page',
-	    'manage_options', 'my-top-level-slug');
-		add_submenu_page( 'my-top-level-slug', 'My Custom Submenu Page', 'My Custom Submenu Page',
-	    'manage_options', 'my-secondary-slug');
+		add_menu_page(__('Happy Oders Ships'), __('Order Ship'), 'edit_themes', 'happy_order', array("HappyShip_Login_Plugin",'my_menu_render'), 'dashicons-external', 7);
+		add_submenu_page('happy_order', __('Quản lí cước'), __('Quản lí cước'), 'edit_themes', 'my_new_submenu', array("HappyShip_Login_Plugin",'my_submenu_render'));
 	}
-	function books_ref_page_callback() { 
+	function my_menu_render() { 
+		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+	    $allorder_query = array(
+	      'posts_per_page' => '20',
+	      'post_type'=> 'happyship',
+	      'paged' => $paged
+	    );
+	    $happyships = new WP_Query($allorder_query);
 	    ?>
 	    <div class="wrap">
-	        <h1><?php _e( 'Books Shortcode Reference', 'textdomain' ); ?></h1>
-	        <p><?php _e( 'Helpful stuff here', 'textdomain' ); ?></p>
+	        <h1><?php _e( 'Danh sách đơn hàng', 'happyship-member' ); ?></h1>
+	        <p><?php _e( 'Helpful stuff here', 'happyship-member' ); ?></p>
+	        <div class="order-list">
+	        	<?php if ( $happyships->have_posts() ) : 
+                        while( $happyships->have_posts() ) : $happyships->the_post();
+                        	$authorID =  get_the_author_id(); 
+                        	$shop = get_the_author_meta('display_name');
+                        	$author_phone = get_user_meta($authorID ,'user_phone',true);
+                        	$author_addr = get_user_meta($authorID ,'user_address',true);
+                        	$author_state = get_user_meta($authorID ,'shop_state',true);
+                        	$Id = get_the_ID();
+                            $ODtittle = get_the_title();
+                            $kh_ten = get_post_meta( $Id, 'kh_ten', true );
+                            $kh_sdt = get_post_meta( $Id, 'kh_sdt', true );
+                            $kh_dc = get_post_meta( $Id, 'kh_dc', true );
+                            $kh_quan = get_post_meta( $Id, 'kh_quan', true );
+                            $kh_hanghoa = get_post_meta( $Id, 'kh_hanghoa', true );
+                            $kh_kl = get_post_meta( $Id, 'kh_kl', true );
+                            $kh_tth = get_post_meta( $Id, 'kh_tth', true );
+                            $kh_goi = get_post_meta( $Id, 'kh_goi', true );
+                            $status_order = get_post_meta( $Id, 'status_order', true );
+                        	?>
+                        <div class="box-item <?php if($status_order =='cancel'){ echo "canceled";}?>">
+				          <div class="box-shop-name"><span>Tên shop: </span><?php echo $shop;?></div>
+				          <div class="shop-info">
+				            <dl>
+				              <dt>Điện thoại:</dt>
+				              <dd><?php echo $author_phone;?></dd>
+				              <dt>Địa chỉ:</dt>
+				              <dd><?php echo $author_phone;?></dd>
+				              <dt>Quận/huyện:</dt>
+				              <dd><?php echo $author_state;?></dd>
+				              <dt>Địa chỉ:</dt>
+				              <dd><?php echo $author_addr;?></dd>
+				            </dl>
+				          </div>
+				          <div class="to-info">
+				            <dl>
+				              <dt>Đến:</dt>
+				              <dd><?php echo $kh_ten;?></dd>
+				              <dt>Điện thoại:</dt>
+				              <dd><?php echo $kh_sdt;?></dd>
+				              <dt>Địa chỉ:</dt>
+				              <dd><?php echo $kh_dc;?></dd>
+				              <dt>Quận/huyện:</dt>
+				              <dd>Q.Tân Bình</dd>
+				              <dt>Hàng hóa:</dt>
+				              <dd><?php echo $kh_hanghoa;?></dd>
+				              <dt>Khối lượng:</dt>
+				              <dd><?php echo $kh_kl;?></dd>
+				              <dt>tiền thu hộ:</dt>
+				              <dd><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></dd>
+				            </dl>
+				          </div>
+				          <div class="status"> <span><?php echo  $ODtittle;?></span><?php echo $status_order;?></div>
+				        </div>
+               	<?php endwhile;endif; ?>
+	        </div>
 	    </div>
 	    <?php
+	}
+	function my_submenu_render() {
+        // Render our theme options page here ...
+        echo "123";
 	}
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();

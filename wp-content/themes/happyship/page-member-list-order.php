@@ -39,138 +39,108 @@ if ( !is_user_logged_in() ) {
         }
     }
 }?>
-<div class="main-contain">
 
-  
-  <div class="main-content">
-   
       
-        <!-- <div class="filter-block">
-            <div class="container">
+       
+
+            <div class="wrapper">
                 <div class="row-fluid">
-                    <p class="filter-box span4">
-                        <label for="filterby-status">Tình trạng</label>
-                        <select name="filterby-status" id="filterby-status">
-                            <option value="all">Tất cả</option>
-                            <option value="pending">Đang xử lý</option>
-                            <option value="transformed">Đã giao</option>
-                            <option value="processed">Hoàn thành</option>
-                            <option value="cancel">Đã hủy</option>
-                        </select>
-                    </p>
-                    <p class="filter-box span4">
-                        <label for="filterby-date">Thời gian</label>
-                        <select name="filterby-date" id="filterby-date">
-                            <option value="">Chọn ngày / tháng)</option>
-                            <option value="pending">Đang xử lý</option>
-                            <option value="transformed">Đã giao</option>
-                            <option value="processed">Hoàn thành</option>
-                            <option value="cancel">Đã hủy</option>
-                        </select>
-                    </p>
-                </div>
-            </div>
-        </div> -->
-
-        <section class="main-content">
-            <div class="container">
-                    <div class="row-fluid">
-                        <div class="content-area">
-                            <p>
-                                <a href="<?php echo home_url('member-create-order');?>" class="button"> Tạo đơn hàng</a>
-                            </p>
-                        </div>
-                        <?php //if ( is_active_sidebar( 'sidebar-order-page' )) : ?>
-                       <!--  <div class="widget-area <?php //echo $sidebarClass; ?>">
-                            <?php //dynamic_sidebar('sidebar-order-page'); ?>
-                        </div>   -->
-                        <?php //endif; ?>
-                        <div class="content-area <?php //echo $mainClass; ?>">
-                            <?php if(isset($alermessenger) && $alermessenger!=''):?>
-                                <div class="messenger_alert">
-                                    <p class="alert"><?php echo $alermessenger;?></p>
-                                </div>
-                            <?php endif;?>
-                            <!-- <p>
-                                <a href="<?php// echo home_url('member-create-order');?>" class="button"> Tạo đơn hàng</a>
-                            </p> -->
-                            <?php if ( $author_posts->have_posts() ) : 
-                                while( $author_posts->have_posts() ) : $author_posts->the_post(); 
-                                    $Id = get_the_ID();
-                                    $ODtittle = get_the_title();
-                                    $kh_ten = get_post_meta( $Id, 'kh_ten', true );
-                                    $kh_sdt = get_post_meta( $Id, 'kh_sdt', true );
-                                    $kh_dc = get_post_meta( $Id, 'kh_dc', true );
-                                    $kh_quan = get_post_meta( $Id, 'kh_quan', true );
-                                    $kh_hanghoa = get_post_meta( $Id, 'kh_hanghoa', true );
-                                    $kh_kl = get_post_meta( $Id, 'kh_kl', true );
-                                    $kh_tth = get_post_meta( $Id, 'kh_tth', true );
-                                    $kh_goi = get_post_meta( $Id, 'kh_goi', true );
-                                    $status_order = get_post_meta( $Id, 'status_order', true );
-                                    ?>
-                                
-                                    <div class="order-items span4 <?php if($status_order == 'cancel'){echo 'canceled';}?>">
-                                        <div class="order-content">
-                                            <p class="order_tittle"><?php echo $ODtittle;?></p>
-                                            <p><strong>Người nhận :</strong><span><?php echo $kh_ten;?></span></p>
-                                            <p><strong>Số ĐT nhận :</strong><span><?php echo $kh_sdt;?></span></p>
-                                            <p><strong>Địa chỉ nhận :</strong><span><?php echo $kh_dc;?></span></p>
-                                            <p><strong>Thuộc Quận/Huyện :</strong><span><?php echo $kh_quan;?></span></p>
-                                            <p><strong>Loại hàng :</strong><span><?php echo $kh_hanghoa;?></span></p>
-                                            <p><strong>Khối lượng :</strong><span><?php echo $kh_kl;?></span></p>
-                                            <p><strong>Số tiền thu hộ :</strong><span><?php echo $kh_tth;?></span></p>
-                                            <p><strong>Gói vận chuyển :</strong><span><?php echo $kh_goi;?></span></p>
-                                            <?php if($status_order == 'pending'):?>
-                                            <form action="<?php echo home_url("member-list-order");?>" class="mem_update_storder" method="POST">
-                                                <p><strong>Tình trạng :</strong><span>
-                                                    <select style="width: 60%" id="status_order_update" name="status_order_update">
-                                                    <?php
-                                                    $status = array(
-                                                        'pending'=> 'đang xử lý',
-                                                        'cancel'=> 'Hủy đơn hàng'
-                                                    );
-                                                    foreach ($status as $sts => $value) { ?>
-                                                        <option value="<?php echo $sts; ?>" <?php echo selected( $sts, $status_order ); ?>>
-                                                        <?php echo $value; ?> <?php } ?></option>
-                                                    </select>
-                                                </span></p>
-                                                <input type="hidden" name="id_order_update" value="<?php echo $Id; ?>">
-                                                <p class="foot-action">
-                                                    <input type="submit" name="update_status_od" class="button confirm-button" value="Cập nhật đơn hàng">
-                                                </p>
-                                            </form>
-                                           
-                                            
-                                                <?php else:?>
-                                                    <p><strong>Tình trạng :</strong><span><?php echo $status_order;?></span></p>
-
-                                                <?php endif;?>   
-                                            
-                                            
-                                        </div>
+                    <div class="content-area">
+                        <p>
+                            <a href="<?php echo home_url('member-create-order');?>" class="button"> Tạo đơn hàng</a>
+                        </p>
+                    </div>
+                    <?php //if ( is_active_sidebar( 'sidebar-order-page' )) : ?>
+                   <!--  <div class="widget-area <?php //echo $sidebarClass; ?>">
+                        <?php //dynamic_sidebar('sidebar-order-page'); ?>
+                    </div>   -->
+                    <?php //endif; ?>
+                    <div class="grid-box-wrap">
+                        <?php if(isset($alermessenger) && $alermessenger!=''):?>
+                            <div class="messenger_alert">
+                                <p class="alert"><?php echo $alermessenger;?></p>
+                            </div>
+                        <?php endif;?>
+                        <h1>Danh sách đơn hàng</h1>
+                        <hr class="line-up">
+                        <?php if ( $author_posts->have_posts() ) : 
+                            while( $author_posts->have_posts() ) : $author_posts->the_post(); 
+                                $Id = get_the_ID();
+                                $ODtittle = get_the_title();
+                                $kh_ten = get_post_meta( $Id, 'kh_ten', true );
+                                $kh_sdt = get_post_meta( $Id, 'kh_sdt', true );
+                                $kh_dc = get_post_meta( $Id, 'kh_dc', true );
+                                $kh_quan = get_post_meta( $Id, 'kh_quan', true );
+                                $kh_hanghoa = get_post_meta( $Id, 'kh_hanghoa', true );
+                                $kh_kl = get_post_meta( $Id, 'kh_kl', true );
+                                $kh_tth = get_post_meta( $Id, 'kh_tth', true );
+                                $kh_goi = get_post_meta( $Id, 'kh_goi', true );
+                                $status_order = get_post_meta( $Id, 'status_order', true );
+                                ?>
+                                <div class="box-item <?php if($status_order =='cancel'){ echo "canceled";}?>">
+                                    <div class="box-shop-name"><span>Người nhận:</span><?php echo $kh_ten;?>
                                     </div>
-                                <?php endwhile;
-                                endif; ?>
-                                <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 12) : ?>
-                                <nav class="pagination">
-                                    <?php pagination_bar( $author_posts ); ?>
-                                </nav>
-                            <?php endif; ?>
-                            <div class="entry-links"><?php wp_link_pages(); ?></div>
-                        </div>
+                                    <div class="to-info">
+                                        <dl>
+                                            <dt>Điện thoại:</dt>
+                                            <dd><?php echo $kh_sdt;?></dd>
+                                            <dt>Địa chỉ:</dt>
+                                            <dd><?php echo $kh_dc;?></dd>
+                                            <dt>Quận/huyện:</dt>
+                                            <dd><?php echo $kh_quan;?></dd>
+                                            <dt>Hàng hóa:</dt>
+                                            <dd><?php echo $kh_hanghoa;?></dd>
+                                            <dt>Khối lượng:</dt>
+                                            <dd><?php echo $kh_kl;?></dd>
+                                            <dt>Tiền thu hộ:</dt>
+                                            <dd><?php echo $kh_tth;?></dd>
+                                        </dl>
+                                    </div>
+                                    <?php if($status_order == 'pending'):?>
+                                    <form action="<?php echo home_url("member-list-order");?>" class="mem_update_storder" method="POST">
+                                        <div class="status"><span><?php echo $ODtittle;?></span>
+                                            <select id="status_order_update" name="status_order_update">
+                                                <?php $status = array(
+                                                    'pending'=> 'đang xử lý',
+                                                    'cancel'=> 'Hủy đơn hàng'
+                                                );
+                                                foreach ($status as $sts => $value) { ?>
+                                                    <option value="<?php echo $sts; ?>" <?php echo selected( $sts, $status_order ); ?>>
+                                                    <?php echo $value; ?> <?php } ?></option>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="id_order_update" value="<?php echo $Id; ?>">
+                                        <p class="foot-action">
+                                            <input type="submit" name="update_status_od" class="button confirm-button" value="Lưu">
+                                        </p>
+                                    </form>
+                                    <?php else:?>
+                                        <div class="status"> <span><?php echo $ODtittle;?></span><?php echo $status_order;?></div>
+                                    <?php endif;?>
+                                </div>
+                                
+                            <?php endwhile;
+                            endif; ?>
+                            <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 12) : ?>
+                            <nav class="pagination">
+                                <?php pagination_bar( $author_posts ); ?>
+                            </nav>
+                        <?php endif; ?>
                         
-                        <?php wp_reset_postdata();?>
-                  </div>
-            </div>
-        </section>
+                    </div>
+                    
+                    <?php wp_reset_postdata();?>
+              </div>
+        </div>
     
-    </div>
+    
+    
     <?php if ( ! post_password_required() ) comments_template( '', true ); ?>
     
     <?php
     else :
         echo "not logged in";
     endif; ?>
-</div>
+
 
 <?php get_footer('order'); ?>

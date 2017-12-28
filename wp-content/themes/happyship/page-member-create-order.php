@@ -10,8 +10,9 @@ if ( !is_user_logged_in() ) {
 
 <div class="main-contain">
 	
-	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	
 	<div class="main-content">
+		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			
 			<section class="main-content">
@@ -64,9 +65,10 @@ if ( !is_user_logged_in() ) {
 				</div>
 			</section>
 		</article>
+		<?php endwhile; endif; ?>
 	</div>
 	<?php if ( ! post_password_required() ) comments_template( '', true ); ?>
-	<?php endwhile; endif; ?>
+	
 
 </div>
 
