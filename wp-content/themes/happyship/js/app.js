@@ -70,6 +70,7 @@
     // Bind to scroll
     $(window).scroll(function () {
         var offser = $('.head-infobar').height();
+        var offser2 = $('.page .nav-menu-block').height()
         //Display or hide scroll to top button 
         if ($(this).scrollTop() > 100) {
             $('.scrollup').fadeIn();
@@ -81,6 +82,12 @@
             $('.head-infobar').addClass('navbar-fixed-top animated fadeInDown');
         } else {
             $('.head-infobar').removeClass('navbar-fixed-top animated fadeInDown');
+        }
+
+        if ($(this).scrollTop() > offser2) {
+            $('.page .nav-menu-block').addClass('navbar-fixed-top animated fadeInDown');
+        } else {
+            $('.page .nav-menu-block').removeClass('navbar-fixed-top animated fadeInDown');
         }
 
         // Get container scroll position

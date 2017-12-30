@@ -95,7 +95,7 @@
 				<p class="signup-submit" style="display: none;">
 		            <input type="submit" id="create_form_submit" name="submit" class="button register-button" value="<?php _e( 'Tạo đơn hàng', 'happyship-member' ); ?>"/>
 		        </p>
-				<p>
+				<p style="text-align: center;">
 					<button id="btn-confirm-createnew" class="button confirm-button">Tạo đơn hàng</button>
 				</p>
 				

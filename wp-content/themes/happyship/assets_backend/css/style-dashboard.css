@@ -325,7 +325,7 @@ form.mem_update_storder .foot-action{
         margin-left: 0;
         margin-right: 0;
     }
-    #btn-create-order{
+    #btn-create-order,#btn-lis-order{
         position: fixed;
         text-indent: -9999px;
         padding: 0;
@@ -336,10 +336,25 @@ form.mem_update_storder .foot-action{
     }
     #btn-create-order:after{
         content: '+';
+        width: 100%;
         display: block;
+        font-size: 32px;
         float: left;
         color: #000;
+        text-indent: 0px;
+        text-align: center;
     }
+    #btn-lis-order:after{
+        content: '≡';
+        width: 100%;
+        display: block;
+        font-size: 32px;
+        float: left;
+        color: #000;
+        text-indent: 0px;
+        text-align: center;
+    }
+    
 }
 @media screen and (min-width: 768px) and (max-width: 1024px){
     .box-item{

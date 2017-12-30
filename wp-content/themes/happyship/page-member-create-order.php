@@ -20,7 +20,7 @@ if ( !is_user_logged_in() ) {
                     <div class="row-fluid">
                     	<div class="content-area">
 					        <p>
-					            <a href="<?php echo home_url('member-list-order');?>" class="button"> Danh sách đơn hàng</a>
+					            <a href="<?php echo home_url('member-list-order');?>" id="btn-lis-order" class="button"> Danh sách đơn hàng</a>
 					        </p>
 					    </div>
                     	<!-- <div class="widget-area span4">
