@@ -32,19 +32,5 @@ jQuery(document).ready(function ($) {
     // $(window).resize(function(){
     //     gridheight();
     // });
-    var pre = jQuery('.grid-box-wrap .box-item');
-    var el = pre.find('.shop-info');
-    jQuery('.box-shop-name').click(function() {
-        parent = jQuery(this).parent('.box-item');
-        parent.toggleClass('onopen');
-        if(parent.hasClass('onopen') == true){
-          parent.children('.shop-info').show(400);
-        }else{
-          parent.children('.shop-info').hide(400);
-        }
-      });
-      
-    el.each(function() {
-        el.hide();
-    });
+    
 });

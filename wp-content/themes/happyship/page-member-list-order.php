@@ -47,7 +47,7 @@ if ( !is_user_logged_in() ) {
                 <div class="row-fluid">
                     <div class="content-area">
                         <p>
-                            <a href="<?php echo home_url('member-create-order');?>" class="button"> Tạo đơn hàng</a>
+                            <a href="<?php echo home_url('member-create-order');?>" class="button" id="btn-create-order"> Tạo đơn hàng</a>
                         </p>
                     </div>
                     <?php //if ( is_active_sidebar( 'sidebar-order-page' )) : ?>

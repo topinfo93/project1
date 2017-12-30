@@ -40,7 +40,9 @@ class HappyShip_Login_Plugin {
 		add_action( 'wp_ajax_get_price', array( 'HappyShip_Login_Plugin','get_price' )  );
 		// add menu and submenu
 		add_action("admin_menu", array( "HappyShip_Login_Plugin","add_Happyship_Menu"));
-
+		add_action( 'admin_enqueue_scripts', array( 'HappyShip_Login_Plugin','load_custom_wp_admin_style' ) );
+		add_action('edit_price_management',array( "HappyShip_Login_Plugin","edit_price"));
+		add_action('update_price_management',array( "HappyShip_Login_Plugin","update_price"));
 		
     }
     
@@ -89,6 +91,24 @@ class HappyShip_Login_Plugin {
 	            );
 	        }
 	    }
+	    //create table
+	    global $wpdb;
+	    $charset_collate = $wpdb->get_charset_collate();
+	    $table_name = $wpdb->prefix . 'price_manager';
+	    if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+		    $sql = "CREATE TABLE $table_name (
+		        id int(9) NOT NULL AUTO_INCREMENT,
+		        nhan_hang varchar(255)  NULL,
+		        giao_hang varchar(255)  NULL,
+		        gia_tiet_kiem int(12)  NULL,
+		        gia_nhanh int(12)  NULL,
+		        super_happy int(12)  NULL,
+		        UNIQUE KEY id (id)
+		    ) $charset_collate;";
+
+		    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		    dbDelta( $sql );
+		}
 	}
      
     public function render_login_form( $attributes, $content = null ) {
@@ -803,8 +823,7 @@ class HappyShip_Login_Plugin {
 	    }
 	}
 	function my_enqueue() {
-		wp_enqueue_style('admin-styles', get_template_directory_uri().'/assets_backend/css/style-dashboard.css');
-	  	wp_enqueue_script( 'ajax-script', get_template_directory_uri() . '/js/my-ajax-script.js', array('jquery') );
+		wp_enqueue_script( 'ajax-script', get_template_directory_uri() . '/js/my-ajax-script.js', array('jquery') );
 	  	wp_localize_script( 'ajax-script', 'my_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 	}
 	function get_price() {
@@ -827,7 +846,11 @@ class HappyShip_Login_Plugin {
 	}
 	function add_Happyship_Menu(){
 		add_menu_page(__('Happy Oders Ships'), __('Order Ship'), 'edit_themes', 'happy_order', array("HappyShip_Login_Plugin",'my_menu_render'), 'dashicons-external', 7);
-		add_submenu_page('happy_order', __('Quản lí cước'), __('Quản lí cước'), 'edit_themes', 'my_new_submenu', array("HappyShip_Login_Plugin",'my_submenu_render'));
+		add_submenu_page('happy_order', __('Quản lí cước'), __('Quản lí cước'), 'edit_themes', 'price_manager', array("HappyShip_Login_Plugin",'my_submenu_render'));
+	}
+	function load_custom_wp_admin_style(){
+		wp_enqueue_style('admin-styles', get_template_directory_uri().'/assets_backend/css/style-dashboard.css');
+		wp_enqueue_script('admin-custom-script', get_template_directory_uri().'/assets_backend/js/style-dashboard.js');
 	}
 	function my_menu_render() { 
 		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -901,9 +924,102 @@ class HappyShip_Login_Plugin {
 	    <?php
 	}
 	function my_submenu_render() {
-        // Render our theme options page here ...
-        echo "123";
-	}
+		global $wpdb;
+		if (isset($_GET['edit']) && $_GET['edit'] != null ) { 
+	     	do_action('edit_price_management');
+	    }
+	    if (isset($_GET['update']) && $_GET['update'] != null) {
+	        //update_price();
+	        do_action('update_price_management');
+	    }
+        ?>
+		<div class="wrap">
+			<h1><?php _e( 'Bảng cước phí vận chuyển', 'happyship-member' ); ?></h1>
+			<p><?php _e( 'Giá dưới đây chỉ áp dụng cho kích thước hàng dưới 50cm3 và trọng lượng dưới 3kg', 'happyship-member' ); ?></p>
+			<table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Điểm nhận hàng</th>
+                        <th>Điểm giao hàng</th>
+                        <th>Giá tiết kiệm</th>
+                        <th>Giá nhanh</th>
+                        <th>Super Happy</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        $results = $wpdb->get_results( 'SELECT * FROM wp_price_manager', OBJECT ); 
+                        foreach ($results as $key) { ?>
+                    <tr>
+                        <td>#<?php echo $key->id; ?></td>
+                        <td><?php echo $key->nhan_hang; ?></td>
+                        <td><?php echo $key->giao_hang; ?></td>
+                        <td><?php echo number_format($key->gia_tiet_kiem); ?></td>
+                        <td><?php echo number_format($key->gia_nhanh); ?></td>
+                        <td><?php echo number_format($key->super_happy); ?></td>
+                        <td><a href="<?php  menu_page_url('price_manager'); ?>&edit=<?php echo $key->id; ?>">Chỉnh sửa</a></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+		</div>
+	<?php }
+	function edit_price() {
+    global $wpdb;
+    $results = $wpdb->get_results( 'SELECT * FROM wp_price_manager WHERE id = '.$_GET["edit"].'' , OBJECT );
+        ?>
+	<div class="happy-edit">
+	    <div class="container">
+	        <h2>Chỉnh sửa cước phí</h2>
+	        <form method="post" action="<?php  menu_page_url('price_manager'); ?>&update=<?php echo $results[0]->id; ?>">
+	            <div class="form-group">
+	                <label for="email">Điểm nhận hàng:</label><br>
+	                <input type="text" class="form-control" disabled="" value="<?php echo $results[0]->nhan_hang; ?>">
+	            </div>
+	            <div class="form-group">
+	                <label for="pwd">Điểm giao hàng:</label> <br>
+	                <input type="text" class="form-control" disabled="" value="<?php echo $results[0]->giao_hang; ?>">
+	            </div>
+	            <div class="clearfix"></div>
+	            <div class="form-group">
+	                <label for="pwd">Giá tiết kiệm:</label> <br>
+	                <input type="number" class="form-control" value="<?php echo $results[0]->gia_tiet_kiem; ?>" name="gia_tiet_kiem">
+	            </div>
+	            <div class="clearfix"></div>
+	            <div class="form-group">
+	                <label for="pwd">Giá nhanh:</label> <br>
+	                <input type="number" class="form-control" value="<?php echo $results[0]->gia_nhanh; ?>" name="gia_nhanh">
+	            </div>
+	            <div class="clearfix"></div>
+	            <div class="form-group">
+	                <label for="pwd">Supper happy:</label> <br>
+	                <input type="number" class="form-control" value="<?php echo $results[0]->super_happy; ?>" name="super_happy">
+	            </div>
+	            <div class="clearfix"></div>
+	            <div class="form-group">
+	                <button type="submit" class="button btn-edit-submit">Lưu lại</button>
+	            </div>
+	            
+	        </form>
+	    </div>
+	</div>
+	<?php }
+	function update_price() { 
+	    global $wpdb;
+
+	    $gia_nhanh = $_POST['gia_nhanh'];
+	    $gia_tiet_kiem = $_POST['gia_tiet_kiem'];
+	    $super_happy = $_POST['super_happy'];
+	    $id = $_GET['update'];
+
+	    $updated = $wpdb->query("UPDATE `wp_price_manager` SET  `gia_tiet_kiem` = $gia_tiet_kiem,`gia_nhanh` = $gia_nhanh, `super_happy` = $super_happy WHERE `wp_price_manager`.`id` = $id;");
+	    ?>
+	    <div class="show-alert">
+	    	<p class="alert success">Cập nhật thành công!</p>
+	    </div>
+	<?php }
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();
 

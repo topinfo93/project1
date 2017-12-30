@@ -1,3 +1,10 @@
+<!-- ScrollUp button start -->
+        <div class="scrollup">
+            <a href="#">
+                <i class="icon-up-open"></i>
+            </a>
+        </div>
+        <!-- ScrollUp button end -->
 <?php wp_footer(); ?>
         <!-- Include javascript -->
         <!-- <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.validate.js"></script> -->

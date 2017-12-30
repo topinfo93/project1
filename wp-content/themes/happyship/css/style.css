@@ -367,8 +367,19 @@ p {
     border-bottom: 1px solid #FFF;
     background: #336246;
 }
+#service .title{
+    border-bottom: 1px solid #000;
+    background: transparent;
+}
+#service .title h1{
+    color: #000;
+}
 .primary-section, .primary-section .title p, .primary-section h3 {
     color: #181A1C;
+}
+#get-service.section{padding-bottom: 0;}
+#get-service .box-control .title{
+    margin-bottom: 0;
 }
 .primary-section h1 {
     color:#fff;
@@ -382,7 +393,7 @@ p {
 /* Third section use bacground image */
 .third-section {
     padding-bottom: 70px;
-    background: #181A1C url(../images/banner/saigon1.jpg) no-repeat center;
+    background: #181A1C url(../images/banner/saigon1.jpg) no-repeat;
     background-attachment: fixed;
 }
 .third-section .container {
@@ -614,6 +625,7 @@ p {
 }
 .price-table .price-column{
     border: 1px solid #eec32a;
+    padding: 10px;
 }
 .price-column {
     background-color:white;
@@ -979,7 +991,9 @@ p {
     float: left;
 }
 /* style input */
-input.style-happy,.login-form-container input[type="text"],.login-form-container input[type="password"],select.style-happy{
+input.style-happy,.login-form-container input[type="text"],
+.login-form-container input[type="password"],select.style-happy
+.contain-form select.style-happy,.panel.panel-login input.style-happy,select.style-happy{
     background-color: #f7f7f7;
     border-radius: 0;
     font-size: 16px;
@@ -1036,6 +1050,7 @@ span.form_note{
 /* Header info-bar */
 .head-infobar{
     background: #336246;
+    padding: 5px 0;
 }
 .head-infobar:after{
     content: '';
@@ -1050,6 +1065,9 @@ ul.contact {
     margin: 0;
     list-style: none;
     background: transparent;
+}
+ul.contact li a{
+    color: #FECE1A;
 }
 ul.contact li {
     display: inline-block;

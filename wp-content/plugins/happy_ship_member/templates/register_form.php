@@ -12,29 +12,25 @@
     <form id="customer_signup_form" action="<?php echo wp_registration_url(); ?>" method="post">
         <p class="form-row">
             <label for="user_email2"><?php _e( 'Nhập Email Đăng ký', 'happyship-member' ); ?> <strong>*</strong></label>
-            <input type="email" placeholder="Nhập địa chỉ Email" name="user_email" id="user_email2" class="style-happy required">
+            <input type="email" placeholder="Nhập Email" name="user_email" id="user_email2" class="style-happy required">
         </p>
- 
         <p class="form-row">
             <label for="user_login"><?php _e( 'Tên đăng nhập', 'happyship-member' ); ?></label>
             <input type="text" placeholder="Nhập tên đăng nhập" name="user_login" id="user_login" class="style-happy required">
         </p>
- 
-        <p class="form-row">
-            <label for="last_name"><?php _e( 'Nhập họ tên', 'happyship-member' ); ?></label>
-            <input type="text" placeholder="Nhập Họ tên" name="user_nicename" id="user_nicename" class="style-happy">
-        </p>
-
-        <p class="form-row">
+        <p class="form-row row_password">
             <label for="user_pass"><?php _e( 'Mật khẩu', 'happyship-member' ); ?></label>
             <input type="password" placeholder="Nhập mật khẩu" name="user_pass" id="user_pass" class="style-happy required">
         </p>
-
         <p class="form-row">
             <label for="user_repass"><?php _e( 'Xác nhận lại mật khẩu', 'happyship-member' ); ?></label>
             <input type="password" placeholder="Nhập lại mật khẩu" name="user_repass" id="user_repass" equalTo="#user_pass" class="style-happy required">
         </p>
 
+        <p class="form-row">
+            <label for="last_name"><?php _e( 'Nhập họ tên', 'happyship-member' ); ?></label>
+            <input type="text" placeholder="Nhập Họ tên" name="user_nicename" id="user_nicename" class="style-happy">
+        </p>
         <p class="form-row">
             <label for="user_phone"><?php _e( 'Số điện thoại', 'happyship-member' ); ?></label>
             <input type="tel" placeholder="090xxxxxxx" name="user_phone" id="user_phone" class="style-happy required digits">

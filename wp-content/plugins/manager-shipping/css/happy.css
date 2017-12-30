@@ -21,8 +21,7 @@ table.table tr th, table.table tr td{
     background: none!important;
     }
     .box-item{
-    padding: 10px;
-    width: 25%;
+    width: 23%;
     float: left;
     position: relative;
     }

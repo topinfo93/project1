@@ -9,7 +9,7 @@
         </div>
     <?php endif; ?>
 
-    <p>
+    <p class="note">
         <?php
             _e(
                 "Vui lòng nhập địa chỉ Email đã đăng ký,chúng tôi sẽ gửi mật khẩu đến email này.",

@@ -20,7 +20,7 @@
       <div class="head-infobar">
         <div class="container">
           <div class="header-bar-left">
-            <ul class="contact">
+            <ul class="contact show-destop">
               <li><a href="tel: 0901231234"><span class="icon-phone"></span>0901231234</a></li>
               <li><a href="" class='zalo-chat'><span class="icon-zalo"></span>0901231234</a></li>
             </ul>
@@ -28,25 +28,26 @@
           <div class="header-bar-right">
             <ul class="social">
               <li class="facebook">
-                  <a href="http://facebook.com/themesflat" target="_blank" rel="alternate" title="facebook.com/"><span class="icon-fa icon-facebook-circled"></span></a>
+                  <a href="#" target="_blank" rel="alternate" title="facebook.com/"><span class="icon-fa icon-facebook-circled"></span></a>
               </li>
-              <li class="twitter">
-                  <a href="#" target="_blank" rel="alternate" title="#"><span class="icon-fa icon-twitter-circled"></span></a>
-              </li>
+              
               <li class="instagram">
                   <a href="#" target="_blank" rel="alternate" title="#"><span class="icon-fa icon-linkedin-circled"></span></a>
               </li>
-              <li class="rss">
+              <li class="google-plus">
                   <a href="#" target="_blank" rel="alternate" title="#"><span class="icon-fa icon-gplus-circled"></span></a>
               </li>
             </ul>
             <div class="member-action">
-              <span>Xin Chào!</span>
+              
               <?php if(is_user_logged_in()) { ?>
+              <span>Chào <?php echo wp_get_current_user()->display_name;?>!</span>
               <a href="<?php echo wp_logout_url(); ?>" class="signout">Đăng Xuất</a>
+              <a href="<?php echo  home_url( 'member-infomation' ); ?>" class="">Tài khoản</a>
               <?php } else { ?>
-              <a href="<?php echo home_url( 'member-login' ); ?>" class="signin">Đăng Nhập</a>
-              <a href="<?php echo wp_registration_url(); ?> " class="signin">Đăng Ký</a>
+              <span>Xin chào!</span>
+              <a href="<?php echo home_url( 'member-login' ); ?>" class="signin"><span>Đăng Nhập</span></a>
+              <a href="<?php echo wp_registration_url(); ?> " class="register"><span>Đăng Ký</span></a>
               <?php }?>
               
             </div>
@@ -59,6 +60,7 @@
                  <a href="#" class="brand top-logo">
                      <img src="<?php echo get_template_directory_uri(); ?>/images/happy_ship.png" width="120" height="120" alt="Logo" />
                  </a>
+                 <a href="tel: 0901231234" class="show-mobile"><span class="icon-phone"></span>0901231234</a>
                  <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                      <i class="icon-menu"></i>
                  </button>

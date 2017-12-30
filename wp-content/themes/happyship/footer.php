@@ -8,8 +8,7 @@
                                 <div id="text-2" class="widget widget_text">
                                     <div class="textwidget">
                                         <p>
-                                            <a title="Financial Occult" href="#">
-                                                <br>
+                                            <a title="Happy Ship" id="logo_footer" href="#">
                                                 <img src="<?php echo get_template_directory_uri(); ?>/images/bottom_logo.png" width="120" height="40" alt="Footer-Logo" />
                                                 <br>
                                             </a>
@@ -17,9 +16,10 @@
                                     </div>
                                 </div>
                                 <div id="text-5" class="widget widget_infomation">
+                                    <p class="cty">CTY TNHH GIAO HÀNG HẠNH PHÚC</p>
+                                    <p class="tearm"><span>GPKD : 123654</span></p>
                                     <p class="address"><span>Địa chỉ:</span> 442/119/2 QL1A, KP.3B, P.AN PHÚ ĐÔNG, Q12 TP HCM</p>
                                     <p class="phone"><span>Điện thoại:</span> 0909.070.935</p>
-                                    <p class="tearm"><span>GPKD : 123654</span></p>
                                 </div>
                             </div>
                             <div class="span2">
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="span4">
+                            <div class="span4 maps">
                                 <div id="mc4wp_form_widget-5" class="widget widget_mc4wp_form_widget">
                                     <h4 class="widget-title">XEM BẢN ĐỒ</h4>
                                     <div class="map-wrapper">

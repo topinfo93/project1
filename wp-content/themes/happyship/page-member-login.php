@@ -9,6 +9,11 @@
 ?>
 <div class="container">
 	<div class="row login-logout">
+		<div class="logo-happy col-md-6 col-md-offset-3">
+			<a href="<?php echo home_url(); ?>">
+				<img src="<?php echo get_template_directory_uri(); ?>/images/happy_ship.png" alt="Happy ship" class="img-reponsive"/>
+			</a>
+		</div>
 		<div class="col-md-6 col-md-offset-3">
 			<div class="panel panel-login">
 				<div class="panel-heading">
