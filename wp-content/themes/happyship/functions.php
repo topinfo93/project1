@@ -146,7 +146,7 @@ function pagination_bar( $custom_query ) {
 
     $total_pages = $custom_query->max_num_pages;
     $big = 999999999; // need an unlikely integer
-
+    var_dump(get_query_var('paged'));
     if ($total_pages > 1){
         $current_page = max(1, get_query_var('paged'));
 
@@ -155,6 +155,23 @@ function pagination_bar( $custom_query ) {
             'format' => '?paged=%#%',
             'current' => $current_page,
             'total' => $total_pages,
+        ));
+    }
+}
+function pagination_admin_bar( $custom_query ) {
+
+    $total_pages = $custom_query->max_num_pages;
+    $big = 999999999; // need an unlikely integer
+    if ($total_pages > 1){
+        $current_page = max(1, $_GET['paged']);
+        echo paginate_links(array(
+            'base' =>  @add_query_arg('paged','%#%'),
+            'format' => '?paged=%#%',
+            'prev_text'          => __('«'),
+            'next_text'          => __('»'),
+            'current' => $current_page,
+            'total' => $total_pages,
+            //'add_args'=> $arr_params
         ));
     }
 }

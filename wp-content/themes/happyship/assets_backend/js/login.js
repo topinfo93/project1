@@ -27,5 +27,7 @@ jQuery(document).ready(function ($) {
 	setTimeout(function(){
 	   jQuery("#show-messenger p,#show-register-messenger p,#lostpass_errors p").fadeOut(800);
 	}, 5000);
-	
+	// $( 'select#shop_state' ).change(function() {
+ //        $( 'select#shop_state_full' ).val($(this).val());
+ //    });
 });

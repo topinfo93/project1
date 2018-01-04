@@ -274,6 +274,9 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
     padding: 10px;
     background: #8bc028; 
 }
+.box-item dl{
+    margin-bottom: 0;
+}
 .box-item dl dd select{
     width: 100%;
     height: 20px;
@@ -360,4 +363,85 @@ form.mem_update_storder .foot-action{
     .box-item{
         width: 31.333%;
     }
+}
+
+/** style form filter **/
+#page_happy_ship{
+
+}
+#page_happy_ship .filter_order{
+    margin-bottom: 15px;
+}
+#page_happy_ship .filter_order .btn-filter{
+    border-radius: 0;
+    background: #336246;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 14px;
+}
+#page_happy_ship .filter_order .btn-filter.actived{
+    background: #000;
+}
+#page_happy_ship .filter_order .btn-filter:focus,#page_happy_ship .filter_order .btn-filter:active{
+    outline: 0;
+    box-shadow: none;
+}
+#page_happy_ship form#form_filter{
+    padding-left: 15px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    background: #f1f1f1;
+    display: none;
+}
+#page_happy_ship form#form_filter .filter_row{
+    width: 25%;
+    float: left;
+}
+#page_happy_ship form#form_filter .filter_row.filter-submit{
+    width: 100%;
+    margin-top: 15px;
+}
+#page_happy_ship form#form_filter .filter_row.filter-submit .btn-submit{
+    border-radius: 0;
+    background: #8bc028;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 14px;
+}
+#page_happy_ship form#form_filter .filter_content{
+    display: none;
+}
+#page_happy_ship form#form_filter .filter_row:before,#page_happy_ship form#form_filter:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+#page_happy_ship form#form_filter .filter_row label{
+}
+.wrap .pagination a,.wrap .pagination span{
+    padding: 5px;
+    display: inline-block;
+    width: 35px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #224c33;
+    margin-right: 5px;
+}
+.wrap .pagination span.current{
+    background: #224c33;
+    color: #fff;
+}
+/* admin action*/
+#wpcontent .custombtn{
+    padding: 0px 15px;
+    border: 0;
+}
+#wpcontent .custombtn.delete-btn{
+    color: red;
+}
+#wpcontent .custombtn:hover{
+    background: transparent;
 }

@@ -57,6 +57,9 @@
 
 					</select>
 				</p>
+				<!-- <p class="form-row">
+					<input type="hidden" name="kh_quan_full" id="kh_quan_full" class="style-happy">
+				</p> -->
 				<p class="form-row">
 					<label for="kh_hanghoa">Tên hàng hóa</label>
 					<input type="text" name="kh_hanghoa" id="kh_hanghoa" class="style-happy" placeholder="Nhập tên hàng hóa">

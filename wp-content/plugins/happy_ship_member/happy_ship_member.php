@@ -43,7 +43,6 @@ class HappyShip_Login_Plugin {
 		add_action( 'admin_enqueue_scripts', array( 'HappyShip_Login_Plugin','load_custom_wp_admin_style' ) );
 		add_action('edit_price_management',array( "HappyShip_Login_Plugin","edit_price"));
 		add_action('update_price_management',array( "HappyShip_Login_Plugin","update_price"));
-		
     }
     
     public static function plugin_activated() {
@@ -329,8 +328,7 @@ class HappyShip_Login_Plugin {
 	        return $redirect_url;
 	        exit;
 	    }
-	 	var_dump(user_can( $user, 'manage_options' ));
-	    if ( user_can( $user, 'manage_options' ) ) {
+	 	if ( user_can( $user, 'manage_options' ) ) {
 	        if ( $requested_redirect_to == '' ) {
 	            $redirect_url = admin_url();
 	        } else {
@@ -413,6 +411,7 @@ class HappyShip_Login_Plugin {
 	 			$user_phone = $_POST['user_phone'];
 	 			$shop_address = $_POST['shop_address'];
 	 			$shop_state = $_POST['shop_state'];
+	 			//$shop_state_full = $_POST['shop_state_full'];
 
 	 			$getpostdata = array(
 	 				'user_login'    => $user_login,
@@ -421,15 +420,14 @@ class HappyShip_Login_Plugin {
 			        'user_nicename' => $user_nicename,
 			        'display_name'  => $display_name
 	 			);
-	 			
-	 			$result = $this->register_user( $email, $getpostdata );
-	 			if ( is_wp_error( $result ) ) {
+	 			$user_id = wp_insert_user( $getpostdata );
+	 			if ( is_wp_error( $user_id ) ) {
 
 	                $errors = join( ',', $result->get_error_codes() );
 	                $redirect_url = add_query_arg( 'register-errors', $errors, $redirect_url );
 
 	            } else {
-
+	            	
 	            	$redirect_url = home_url( 'member-login?action="register"' );
 	                $redirect_url = add_query_arg( 'registered', $email, $redirect_url );
             	
@@ -441,12 +439,12 @@ class HappyShip_Login_Plugin {
 	    }
 	}
 	public function _addMetaData($user_id){
-        $postdata=array(
+        $postdata = array(
         	'user_phone' 	=> $_POST['user_phone'],
         	'shop_address'  => $_POST['shop_address'],
-        	'shop_state'	=> $_POST['shop_state']
+        	'shop_state'	=> $_POST['shop_state'],
+        	'shop_code' 	=> $_POST['shop_code']
         );
-        var_dump($postdata);
         if (! empty($postdata) && is_array($postdata)) {
         	foreach ($postdata as $key => $val) {
             	add_user_meta($user_id, $key, $val);
@@ -656,6 +654,9 @@ class HappyShip_Login_Plugin {
 			if(isset($_POST['kh_quan']) && $_POST['kh_quan']!=null){
 				add_post_meta($post_id, 'kh_quan', $_POST['kh_quan']);
 			}
+			// if(isset($_POST['kh_quan_full']) && $_POST['kh_quan_full']!=null){
+			// 	add_post_meta($post_id, 'kh_quan_full', $_POST['kh_quan']);
+			// }
 			if(isset($_POST['kh_hanghoa']) && $_POST['kh_hanghoa']!=null){
 				add_post_meta($post_id, 'kh_hanghoa', $_POST['kh_hanghoa']);
 			}
@@ -847,37 +848,124 @@ class HappyShip_Login_Plugin {
 	function add_Happyship_Menu(){
 		add_menu_page(__('Happy Oders Ships'), __('Order Ship'), 'edit_themes', 'happy_order', array("HappyShip_Login_Plugin",'my_menu_render'), 'dashicons-external', 7);
 		add_submenu_page('happy_order', __('Quản lí cước'), __('Quản lí cước'), 'edit_themes', 'price_manager', array("HappyShip_Login_Plugin",'my_submenu_render'));
+		add_submenu_page('', __('Danh sach tim kiem'), __('Danh sach tim kiem'), 'edit_themes', 'filter_result', array("HappyShip_Login_Plugin",'list_filter_render'));
+		//thêm menu trang danh sách shop
+		add_submenu_page('happy_order', __('Danh sách Shop'), __('Danh sách shop'), 'edit_themes', 'list_manager', array("HappyShip_Login_Plugin",'shop_list_render'));
+		add_submenu_page('', __('Quản lí Shop'), __('Quản lí shop'), 'edit_themes', 'shop_manager', array("HappyShip_Login_Plugin",'shop_manager_render'));
 	}
 	function load_custom_wp_admin_style(){
 		wp_enqueue_style('admin-styles', get_template_directory_uri().'/assets_backend/css/style-dashboard.css');
+		wp_enqueue_script( 'jqueryui_js', "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" );
+		wp_enqueue_script('admin-jsconfirm-script', get_template_directory_uri().'/js/jquery-confirm.min.js');
+		wp_enqueue_style('admin-jsconfirm-styles', get_template_directory_uri().'/css/jquery-confirm.min.css');
 		wp_enqueue_script('admin-custom-script', get_template_directory_uri().'/assets_backend/js/style-dashboard.js');
+		wp_enqueue_style('jqueryui-styles', "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css");
+		wp_enqueue_script( 'admin_ajax_script', get_template_directory_uri() . '/assets_backend/js/admin_ajax_script.js', array( 'jquery' ), '1.0.0', true );
+		wp_localize_script( 'admin_ajax_script', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+
 	}
-	function my_menu_render() { 
-		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-	    $allorder_query = array(
-	      'posts_per_page' => '20',
-	      'post_type'=> 'happyship',
-	      'paged' => $paged
+	function my_menu_render() {
+		global $wpdb;
+		$paged = ( $_GET['paged'] ) ? $_GET['paged'] : 1;
+		$allorder_query = array(
+	      	'posts_per_page' => '12',
+	      	'post_type'=> 'happyship',
+	      	'paged' => $paged
 	    );
+	    
+	    if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+	    	$arr_params=[];
+	    	$redirect_to_result = isset( $_REQUEST['result_url'] ) ? $_REQUEST['result_url'] : null;
+	    	$result_url = '';
+	        if(isset($_POST['order_id']) && $_POST['order_id'] !=null ){
+	    		$orid = $_POST['order_id'];
+	    		$result_url = add_query_arg( 'order_id', $orid , $result_url );
+	    	}
+	    	if(isset($_POST['shop_name']) && $_POST['shop_name'] !=null){
+	    		$shop_name = $_POST['shop_name'];
+	    		$result_url = add_query_arg( 'shop_name', $shop_name , $result_url );
+	    	}
+	    	if(isset($_POST['date']) && $_POST['date'] !=null){
+	    		$create_date = str_replace("/","-",$_POST['date']);
+	    		$result_url = add_query_arg( 'date', $create_date , $result_url );
+	    	}
+		    if(isset($_POST['shop_phone']) && $_POST['shop_phone'] !=null){
+		    	$shop_phone = $_POST['shop_phone'];
+		    	$result_url = add_query_arg( 'shop_phone', $shop_phone , $result_url );
+		    }
+		    $result_url= str_replace('?', '&', $result_url);
+		    $location = menu_page_url('filter_result',false).$result_url; 
+			echo "<meta http-equiv='refresh' content='0;url=$location' />"; exit;
+		    exit;
+	    }
 	    $happyships = new WP_Query($allorder_query);
+	    
 	    ?>
-	    <div class="wrap">
+	    <div class="wrap" id="page_happy_ship">
 	        <h1><?php _e( 'Danh sách đơn hàng', 'happyship-member' ); ?></h1>
-	        <p><?php _e( 'Helpful stuff here', 'happyship-member' ); ?></p>
+	        <hr>
+	        <div class="filter_order">
+	        	<button class="btn btn-filter"> Lọc tìm kiếm </button>
+	        	<form action="" name="formfilter" method="POST" id="form_filter">
+	        	<div class="filter_row">
+	        		<input type="checkbox" id="checkbox_name" name="checkbox_name"/>
+	        		<label for="checkbox_name">Tên shop</label>
+	        		<div id="shop_name" class="filter_content" data-show="checkbox_name">
+	        			<input type="text" name="shop_name" value="" placeholder="Nhập tên shop"/>
+	        		</div>	
+	        	</div>
+	        	<div class="filter_row">
+	        		<input type="checkbox" id="checkbox_odid"  name="checkbox_odid"/>
+	        		<label for="checkbox_odid">ID đơn hàng</label>
+	        		<div class="filter_content" data-show="checkbox_odid">
+	        			<input type="text" name="order_id" value="" placeholder="Ví dụ: OD123"/>
+	        		</div>
+	        	</div>
+	        	<div class="filter_row">
+	        		<input type="checkbox" id="checkbox_date" name="checkbox_date"/>
+	        		<label for="checkbox_date">Ngày tạo đơn</label>
+	        		<div id="datepicker_create" class="filter_content" data-show="checkbox_date">
+	        			<input class="datepicker" name="date" data-date-format="mm/dd/yyyy" placeholder="Kích chọn ngày">
+	        		</div>	
+	        		
+	        	</div>
+	        	<div class="filter_row">
+	        		<input type="checkbox" id="checkbox_phone" name="checkbox_phone">
+	        		<label for="checkbox_phone">Số điện thoại người nhận</label>
+	        		<div class="filter_content" data-show="checkbox_phone">
+	        			<input type="text" name="shop_phone" value="" placeholder="Nhập số điện thoại"/>
+	        		</div>	
+	        	</div>
+	        	<input type="hidden" name="result_url" value="<?php menu_page_url('filter_result') ?>"/>
+	        	<div class="filter_row filter-submit">
+	        		<button type="submit" id="" name="" class="btn btn-submit">Lọc</button>
+	        	</div>
+	        	</form>
+	        </div>
+	        <!-- <div class="sort_order">
+	        	<span> Sắp xếp theo </span>
+	        	<select name="" id="">
+	        		<option value="des">Mới nhất</option>
+	        		<option value="asc">Cũ hơn</option>
+	        		<option value="asc">Ngày/Tháng/Năm</option>
+	        	</select>
+	        </div> -->
 	        <div class="order-list">
 	        	<?php if ( $happyships->have_posts() ) : 
                         while( $happyships->have_posts() ) : $happyships->the_post();
                         	$authorID =  get_the_author_id(); 
                         	$shop = get_the_author_meta('display_name');
                         	$author_phone = get_user_meta($authorID ,'user_phone',true);
-                        	$author_addr = get_user_meta($authorID ,'user_address',true);
+                        	$author_addr = get_user_meta($authorID ,'shop_address',true);
                         	$author_state = get_user_meta($authorID ,'shop_state',true);
+                        	//$author_state_full = get_user_meta($authorID ,'author_state_full',true);
                         	$Id = get_the_ID();
                             $ODtittle = get_the_title();
                             $kh_ten = get_post_meta( $Id, 'kh_ten', true );
                             $kh_sdt = get_post_meta( $Id, 'kh_sdt', true );
                             $kh_dc = get_post_meta( $Id, 'kh_dc', true );
                             $kh_quan = get_post_meta( $Id, 'kh_quan', true );
+                            //$kh_quan_full = get_post_meta( $Id, 'kh_quan_full', true );
                             $kh_hanghoa = get_post_meta( $Id, 'kh_hanghoa', true );
                             $kh_kl = get_post_meta( $Id, 'kh_kl', true );
                             $kh_tth = get_post_meta( $Id, 'kh_tth', true );
@@ -907,7 +995,7 @@ class HappyShip_Login_Plugin {
 				              <dt>Địa chỉ:</dt>
 				              <dd><?php echo $kh_dc;?></dd>
 				              <dt>Quận/huyện:</dt>
-				              <dd>Q.Tân Bình</dd>
+				              <dd><?php echo $kh_quan;?></dd>
 				              <dt>Hàng hóa:</dt>
 				              <dd><?php echo $kh_hanghoa;?></dd>
 				              <dt>Khối lượng:</dt>
@@ -916,11 +1004,19 @@ class HappyShip_Login_Plugin {
 				              <dd><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></dd>
 				            </dl>
 				          </div>
-				          <div class="status"> <span><?php echo  $ODtittle;?></span><?php echo $status_order;?></div>
+				          <div class="status"><span><?php echo  $ODtittle;?></span><a href="" class="edit-btn custombtn">Sửa</a><a href="" class="delete-btn custombtn" data-id="<?php the_ID() ?>" data-nonce="<?php echo wp_create_nonce('my_delete_post_nonce') ?>">Xóa</a><?php echo $status_order;?></div>
+				          <div class="foot-action"></div>
 				        </div>
                	<?php endwhile;endif; ?>
 	        </div>
+	        <div class="clear"></div>
+	        <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 12) : ?>
+            <nav class="pagination">
+                <?php pagination_admin_bar( $happyships, $arr_params ); ?>
+            </nav>
+        <?php endif; ?>
 	    </div>
+	    
 	    <?php
 	}
 	function my_submenu_render() {
@@ -929,11 +1025,42 @@ class HappyShip_Login_Plugin {
 	     	do_action('edit_price_management');
 	    }
 	    if (isset($_GET['update']) && $_GET['update'] != null) {
-	        //update_price();
 	        do_action('update_price_management');
 	    }
+	    if( 'POST' == $_SERVER['REQUEST_METHOD']  ) {
+			if ( $_FILES ) { 
+			    $files = $_FILES["my_file_upload"];  
+			    foreach ($files['name'] as $key => $value) {            
+			            if ($files['name'][$key]) { 
+			                $file = array( 
+			                    'name' => $files['name'][$key],
+			                    'type' => $files['type'][$key], 
+			                    'tmp_name' => $files['tmp_name'][$key], 
+			                    'error' => $files['error'][$key],
+			                    'size' => $files['size'][$key]
+			                ); 
+			                $_FILES = array ("my_file_upload" => $file); 
+			                foreach ($_FILES as $file => $array) {              
+			                    $newupload = my_handle_attachment($file,$pid); 
+			                }
+			            } 
+			        } 
+			    }
+			}
         ?>
 		<div class="wrap">
+			<!-- form upload -->
+			<!-- <div class="action_head">
+				<p><a href="#"> Nhập file json giá :</a></p>
+				<div class="form-content">
+					<form action="" enctype="multipart/form-data" method="POST">
+						<label for=""></label>
+						<input name="uploaded" name="my_file_upload" id="my_file_upload" type="file" />
+						<input type="submit" value="Upload" />
+					</form>
+				</div>
+			</div> -->
+			<!-- end form upload -->
 			<h1><?php _e( 'Bảng cước phí vận chuyển', 'happyship-member' ); ?></h1>
 			<p><?php _e( 'Giá dưới đây chỉ áp dụng cho kích thước hàng dưới 50cm3 và trọng lượng dưới 3kg', 'happyship-member' ); ?></p>
 			<table class="table">
@@ -1020,6 +1147,296 @@ class HappyShip_Login_Plugin {
 	    	<p class="alert success">Cập nhật thành công!</p>
 	    </div>
 	<?php }
+	function list_filter_render(){
+		global $wpdb;
+		$paged = ( $_GET['paged'] ) ? $_GET['paged'] : 1;
+		$allorder_query = array(
+	      	'posts_per_page' => '20',
+	      	'post_type'=> 'happyship',
+	      	'paged' => $paged
+	    );
+		$arr_params=[];
+    	if(isset($_GET['order_id']) && $_GET['order_id'] !=null ){
+    		$orid = $_GET['order_id'];
+    		$allorder_query['s'] = $orid;
+    		$arr_params = array( 'orderid' => $orid );
+    	}
+    	if(isset($_GET['shop_name']) && $_GET['shop_name'] !=null){
+    		$user = $wpdb->get_row( $wpdb->prepare("SELECT `ID` FROM $wpdb->users WHERE `display_name` = %s", $_GET['shop_name'] ) );
+    		$allorder_query['author'] = $user->ID;
+    		$arr_params = array( 'shop_name' => $user->ID );
+    	}
+    	if(isset($_GET['date']) && $_GET['date'] !=null){
+    		$date = explode("-",$_GET['date']);
+    		$day = $date[1];
+    		$monthnum = $date[0];
+    		$year = $date[2];
+    		$allorder_query['day'] = $day;
+    		$allorder_query['monthnum'] = $monthnum;
+    		$allorder_query['year'] = $year;
+    	}
+	    if(isset($_GET['shop_phone']) && $_GET['shop_phone'] !=null){
+	    	 $allorder_query['meta_query'] = array(
+	    	 	array(
+			         'key' => 'kh_sdt',
+			         'value' => $_GET['shop_phone'],
+			         'type' => 'CHAR',
+			         'compare' => '=',
+			       ),
+	    	 );
+	    }
+	    $happyships = new WP_Query($allorder_query);
+	    
+	    ?>
+	    <div class="wrap" id="page_happy_ship">
+	        <h1><?php _e( 'Danh sách đơn hàng', 'happyship-member' ); ?></h1>
+	        <hr>
+	        <?php $count = $happyships->post_count;
+	        	if($count > 0){
+			?>
+	        <div class="order-list">
+	        	<?php if ( $happyships->have_posts() ) : 
+                        while( $happyships->have_posts() ) : $happyships->the_post();
+                        	$authorID =  get_the_author_id(); 
+                        	$shop = get_the_author_meta('display_name');
+                        	$author_phone = get_user_meta($authorID ,'user_phone',true);
+                        	$author_addr = get_user_meta($authorID ,'shop_address',true);
+                        	$author_state = get_user_meta($authorID ,'shop_state',true);
+                        	//$author_state_full = get_user_meta($authorID ,'author_state_full',true);
+                        	$Id = get_the_ID();
+                            $ODtittle = get_the_title();
+                            $kh_ten = get_post_meta( $Id, 'kh_ten', true );
+                            $kh_sdt = get_post_meta( $Id, 'kh_sdt', true );
+                            $kh_dc = get_post_meta( $Id, 'kh_dc', true );
+                            $kh_quan = get_post_meta( $Id, 'kh_quan', true );
+                            //$kh_quan_full = get_post_meta( $Id, 'kh_quan_full', true );
+                            $kh_hanghoa = get_post_meta( $Id, 'kh_hanghoa', true );
+                            $kh_kl = get_post_meta( $Id, 'kh_kl', true );
+                            $kh_tth = get_post_meta( $Id, 'kh_tth', true );
+                            $kh_goi = get_post_meta( $Id, 'kh_goi', true );
+                            $status_order = get_post_meta( $Id, 'status_order', true );
+                        	?>
+                        <div class="box-item <?php if($status_order =='cancel'){ echo "canceled";}?>">
+				          <div class="box-shop-name"><span>Tên shop: </span><?php echo $shop;?></div>
+				          <div class="shop-info">
+				            <dl>
+				              <dt>Điện thoại:</dt>
+				              <dd><?php echo $author_phone;?></dd>
+				              <dt>Địa chỉ:</dt>
+				              <dd><?php echo $author_phone;?></dd>
+				              <dt>Quận/huyện:</dt>
+				              <dd><?php echo $author_state;?></dd>
+				              <dt>Địa chỉ:</dt>
+				              <dd><?php echo $author_addr;?></dd>
+				            </dl>
+				          </div>
+				          <div class="to-info">
+				            <dl>
+				              <dt>Đến:</dt>
+				              <dd><?php echo $kh_ten;?></dd>
+				              <dt>Điện thoại:</dt>
+				              <dd><?php echo $kh_sdt;?></dd>
+				              <dt>Địa chỉ:</dt>
+				              <dd><?php echo $kh_dc;?></dd>
+				              <dt>Quận/huyện:</dt>
+				              <dd><?php echo $kh_quan;?></dd>
+				              <dt>Hàng hóa:</dt>
+				              <dd><?php echo $kh_hanghoa;?></dd>
+				              <dt>Khối lượng:</dt>
+				              <dd><?php echo $kh_kl;?></dd>
+				              <dt>tiền thu hộ:</dt>
+				              <dd><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></dd>
+				            </dl>
+				          </div>
+				          <div class="status"> <span><?php echo  $ODtittle;?></span><?php echo $status_order;?></div>
+				        </div>
+               	<?php endwhile;endif; ?>
+	        </div>
+	        <div class="clear"></div>
+	        <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 20) : ?>
+            <nav class="pagination">
+                <?php pagination_admin_bar( $happyships); ?>
+            </nav>
+        <?php endif; 
+        	}else{
+        		echo '<p>Không tìm thấy kết quả nào phù hợp</p>';		
+        	}
+        ?>
+
+	    </div>
+	    
+	    <?php
+	    // trang danh sách shop
+	}
+	// xóa đơn hàng
+	function xoa_don_hang() {
+		echo "0";
+		// $permission = check_ajax_referer( 'my_delete_post_nonce', 'nonce', false );
+	 //    if( $permission == false ) {
+	 //        echo 'error';
+	 //    }
+	 //    else {
+	 //        //wp_delete_post( $_REQUEST['id'] );
+	 //        echo 'success';
+	 //    }
+	 
+	    die();
+	}
+	// render xử lý trang danh sách shop
+	function shop_list_render(){
+		$count_args = array(
+		    'role__not_in'      => 'Administrator'
+		);
+		$user_count_query = new WP_User_Query($count_args);
+		$user_count = $user_count_query->get_results();
+		$total_shop = $user_count ? count($user_count) : 1;
+		$page = isset($_GET['p']) ? $_GET['p'] : 1;
+		$shop_per_page = 20;
+		$total_pages = 1;
+		$offset = $shop_per_page * ($page - 1);
+		$total_pages = ceil($total_shop / $shop_per_page);
+		$user_query = new WP_User_Query( array( 
+			'role__not_in' => 'Administrator' , 
+			'number'    => $shop_per_page,
+    		'offset'    => $offset ) 
+			);
+		$allshops = $user_query->get_results();
+		if ( ! empty( $allshops ) ) {
+			$i=0;
+		?>
+		<div class="wrap" id="page_shop_manager">
+			<h1> Danh sách shop </h1>
+			<hr>
+			<div class="list-shop">
+				<table class="table table-shop">
+	                <thead>
+	                    <tr>
+	                        <th>STT</th>
+	                        <th>Tên shop</th>
+	                        <th>Mã shop</th>
+	                        <th>Shop COD</th>
+	                        <th>Thao tác</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                   <?php foreach ( $allshops as $shop ) {
+	                   	$i++;
+	                   	$nonce = wp_create_nonce( 'xoa-nonce' );
+	                    ?>
+	                   
+	                    <tr>
+	                        <td>#<?php echo $i; ?></td>
+	                        <td><?php echo $shop->display_name; ?></td>
+	                        <td><?php echo $shop->ID; ?></td>
+	                        <td><?php echo $shop->shop_code; ?></td>
+	                        <td><a href="<?php  menu_page_url('shop_manager'); ?>&edit=<?php echo $shop->ID; ?>">Sửa</a>
+								<a href="#" id="delete_shop" data-href="<?php  menu_page_url('shop_manager'); ?>&delete=<?php echo $shop->ID; ?>&nonce=<?php echo $nonce;?>">Xóa</a>
+	                        </td>
+	                    </tr>
+	                    <?php } ?>
+	                </tbody>
+            </table>
+			
+		<?php }else{ echo '<p> Chưa có shop thành viên </p>';}?>
+			</div>
+			<?php $query_string = $_SERVER['QUERY_STRING'];
+			$base = menu_page_url('shop_list',false) . '&' . remove_query_arg('p', $query_string) . '%_%';
+			?>
+			<?php if($user_count > $shop_per_page):?>
+			<div class="pagination">
+			<?php
+			echo paginate_links( array(
+			    'base' => $base,
+			    'format' => '&p=%#%',
+			    'prev_text' => __('&laquo;'),
+			    'next_text' => __('&raquo;'),
+			    'total' => $total_pages,
+			    'current' => $page,
+			    'end_size' => 1,
+			    'mid_size' => 5,
+			));
+			?>
+			</div>
+		<?php endif; ?>
+		</div>
+
+	<?php }
+	function shop_manager_render(){?>
+		<div class="wrap" id="edit_shop_page">
+ 			<h1> Chỉnh sửa thông tin shop</h1>
+ 			<hr>
+	<?php
+		if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
+		 	if(isset($_GET['edit']) && !empty($_GET['edit'])){
+		 		$shop_id = $_GET['edit'];
+		 		$shop = get_user_by( 'ID', $shop_id );
+		 		$shop_code = (get_user_meta($shop_id , 'shop_code', true))?get_user_meta($shop_id , 'shop_code', true) : 'SCOD-D';
+		 		$shop_name = $shop->display_name;
+		 		?>
+		 		
+					<form action="" name="edit-shop" method="POST">
+						<p>
+							<label for="shop_name_new">Tên shop :</label>
+							<input type="text" name="shop_name_new" id="shop_name_new" value="<?php echo $shop_name ?>">
+						</p>
+						<p>
+							<label for="shop_code">Mã COD Shop:</label>
+							<select name="shop_code" id="shop_code">
+								<?php
+				                $shop_code_type = array(
+				                	'SCOD-D'=> 'Shop COD mới',
+				                	'SCOD-N'=> 'Shop COD',
+				                	'SUTT-M' => 'Shop Ứng tiền trước'
+				                );
+				                foreach ($shop_code_type as $sc => $scn) { ?>
+				                 	<option value="<?php echo $sc; ?>" <?php echo selected( $sc, $shop_code ); ?>>
+				                    <?php echo $scn; ?> <?php } ?>
+								<option value=""></option>
+							</select>
+						</p>
+						<?php wp_nonce_field( 'save_edit_shop', 'edit_shop_nonce' );?>
+						<input type="hidden" id="shop_id" name="shop_id" value="<?php echo $shop_id;?>">
+						<p>
+							<input type="submit" class="btn btn-submit" value="Lưu sửa đổi">
+						</p>
+					</form>
+		 		<?php
+		 	}
+		}
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			if ( ! isset( $_POST['edit_shop_nonce'] ) || ! wp_verify_nonce( $_POST['edit_shop_nonce'], 'save_edit_shop' ) ) {
+
+		   		echo '<p> Lỗi kiểm tra mã lưu.Bạn không thể lưu thay đổi!</p>';
+		   		exit;
+
+			} else {
+				if(isset($_POST['shop_name_new']) && !empty($_POST['shop_name_new'])){
+					$new_name = $_POST['shop_name_new'];
+				}
+				if(isset($_POST['shop_code']) && !empty($_POST['shop_code'])){
+					$new_shopcode = $_POST['shop_code'];
+				}
+				if(isset($_POST['shop_id']) && !empty($_POST['shop_id'])){
+					$user_id = $_POST['shop_id'];
+
+					if( get_user_meta($_POST['shop_id'],'shop_code')){
+						$update = update_user_meta( $user_id, 'shop_code', $new_shopcode );
+					}else{
+						$add_id = add_user_meta( $user_id, 'shop_code', $new_shopcode);
+					}
+					if($update || $add_id){
+						echo '<p> Bạn Đã lưu thay đổi thành công!</p>';
+					}
+				}else{
+					echo '<p> Đã có lỗi xảy ra.Bạn không thể lưu thay đổi này!</p>';
+		   			exit;
+				}		   
+			}
+		}?>
+		<a href="<?php menu_page_url('list_manager');?>" class="btn">Quay lại</a>
+		</div>
+	<?php
+	}
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();
 

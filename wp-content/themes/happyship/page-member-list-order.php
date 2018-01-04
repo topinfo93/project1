@@ -18,7 +18,7 @@ if ( !is_user_logged_in() ) {
     wp_get_current_user();
     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
     $author_query = array(
-      'posts_per_page' => '12',
+      'posts_per_page' => '4',
       'author' => $current_user->ID,
       'post_type'=> 'happyship',
       'paged' => $paged
@@ -93,7 +93,7 @@ if ( !is_user_logged_in() ) {
                                             <dt>Khối lượng:</dt>
                                             <dd><?php echo $kh_kl;?></dd>
                                             <dt>Tiền thu hộ:</dt>
-                                            <dd><?php echo $kh_tth;?></dd>
+                                            <dd><?php echo number_format($kh_tth);?></dd>
                                         </dl>
                                     </div>
                                     <?php if($status_order == 'pending'):?>
@@ -121,7 +121,7 @@ if ( !is_user_logged_in() ) {
                                 
                             <?php endwhile;
                             endif; ?>
-                            <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 12) : ?>
+                            <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 4) : ?>
                             <nav class="pagination">
                                 <?php pagination_bar( $author_posts ); ?>
                             </nav>

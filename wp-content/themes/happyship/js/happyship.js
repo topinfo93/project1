@@ -27,10 +27,8 @@ jQuery(document).ready(function ($) {
     setTimeout(function(){
        jQuery(".messenger_alert").fadeOut(800);
     }, 5000);
-    
-    // gridheight();
-    // $(window).resize(function(){
-    //     gridheight();
+    // $( 'select#kh_quan' ).change(function() {
+    //     $( 'select#kh_quan_full' ).val($(this).val());
     // });
-    
+
 });
