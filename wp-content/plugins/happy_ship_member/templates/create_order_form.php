@@ -1,4 +1,7 @@
-<?php $showForm = true;?>
+<?php $showForm = true;
+	$shopID = get_current_user_id();
+	$shop_code = (get_user_meta($shopID, 'shop_code', true)) ? get_user_meta($shopID, 'shop_code', true) : 'COD-N';
+?>
 <div class="create_new_order_form">
 	<div class="form-info">
 		<h2 class="form_tittle">Tạo đơn hàng</h2>
@@ -57,9 +60,10 @@
 
 					</select>
 				</p>
-				<!-- <p class="form-row">
-					<input type="hidden" name="kh_quan_full" id="kh_quan_full" class="style-happy">
-				</p> -->
+				<p class="form-row">
+					<input type="hidden" name="shop_code" id="shop_code" value="<?php echo $shop_code;?>">
+					<input type="hidden" name="order_price" id="order_price" value="">
+				</p>
 				<p class="form-row">
 					<label for="kh_hanghoa">Tên hàng hóa</label>
 					<input type="text" name="kh_hanghoa" id="kh_hanghoa" class="style-happy" placeholder="Nhập tên hàng hóa">

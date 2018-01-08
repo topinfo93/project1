@@ -5,13 +5,15 @@ jQuery(document).ready(function($) {
         var valueOption = $('select[name="kh_goi"]').find(":selected").val();
         var textOption = $('select[name="kh_goi"]').find(":selected").text();
         var giao_hang = $('select[name="kh_quan"]').find(":selected").val();
+        var shop_code = $('input[name="shop_code"]').val();
         $.ajax({
             type: "post",
             url: my_ajax_object.ajax_url, // or example_ajax_obj.ajaxurl if using on frontend
             data: {
                 'action': 'get_price',
                 kh_goi : valueOption,
-                giao_hang : giao_hang
+                giao_hang : giao_hang,
+                shop_code : shop_code
             },
             success:function(data) {
                 // This outputs the result of the ajax request
@@ -49,6 +51,7 @@ jQuery(document).ready(function($) {
                                 text: 'Xác nhận',
                                 btnClass: 'btn-agree button',
                                 action: function(){
+                                    $('input#order_price').val(ttt);
                                     $('#create_form_submit').trigger('click');
                                 }
                             },

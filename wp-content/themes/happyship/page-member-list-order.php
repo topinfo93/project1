@@ -73,9 +73,10 @@ if ( !is_user_logged_in() ) {
                                 $kh_quan = get_post_meta( $Id, 'kh_quan', true );
                                 $kh_hanghoa = get_post_meta( $Id, 'kh_hanghoa', true );
                                 $kh_kl = get_post_meta( $Id, 'kh_kl', true );
-                                $kh_tth = get_post_meta( $Id, 'kh_tth', true );
+                                $kh_tth = (get_post_meta( $Id, 'kh_tth', true ))? get_post_meta( $Id, 'kh_tth', true ) : 0;
                                 $kh_goi = get_post_meta( $Id, 'kh_goi', true );
                                 $status_order = get_post_meta( $Id, 'status_order', true );
+                                $order_price = get_post_meta( $Id, 'order_price', true );
                                 ?>
                                 <div class="box-item <?php if($status_order =='cancel'){ echo "canceled";}?>">
                                     <div class="box-shop-name"><span>Người nhận:</span><?php echo $kh_ten;?>
@@ -94,6 +95,10 @@ if ( !is_user_logged_in() ) {
                                             <dd><?php echo $kh_kl;?></dd>
                                             <dt>Tiền thu hộ:</dt>
                                             <dd><?php echo number_format($kh_tth);?></dd>
+                                            <?php if($order_price){?>
+                                            <dt>Cước phí:</dt>
+                                            <dd><?php echo $order_price;?></dd>
+                                            <?php } ?>
                                         </dl>
                                     </div>
                                     <?php if($status_order == 'pending'):?>

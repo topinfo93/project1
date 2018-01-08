@@ -42,7 +42,7 @@
         wp_login_form(
             array(
                 'form_id'=> 'customer_login_form',
-                'label_username' => __( 'Email', 'happyship-member' ),
+                'label_username' => __( 'Nhập Email (hoặc Tên đăng nhập)', 'happyship-member' ),
                 'id_username' =>'user_email',
                 'id_password' => 'user_password',
                 'label_password' => __( 'Mật khẩu', 'happyship-member' ),

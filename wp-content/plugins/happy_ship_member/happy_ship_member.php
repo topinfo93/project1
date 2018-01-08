@@ -684,9 +684,6 @@ class HappyShip_Login_Plugin {
 			if(isset($_POST['kh_quan']) && $_POST['kh_quan']!=null){
 				add_post_meta($post_id, 'kh_quan', $_POST['kh_quan']);
 			}
-			// if(isset($_POST['kh_quan_full']) && $_POST['kh_quan_full']!=null){
-			// 	add_post_meta($post_id, 'kh_quan_full', $_POST['kh_quan']);
-			// }
 			if(isset($_POST['kh_hanghoa']) && $_POST['kh_hanghoa']!=null){
 				add_post_meta($post_id, 'kh_hanghoa', $_POST['kh_hanghoa']);
 			}
@@ -705,7 +702,9 @@ class HappyShip_Login_Plugin {
 			if(isset($_POST['status_order']) && $_POST['status_order']!=null){
 				add_post_meta($post_id, 'status_order', $_POST['status_order']);
 			}
-
+			if(isset($_POST['order_price']) && $_POST['order_price']!=null){
+				add_post_meta($post_id, 'order_price', $_POST['order_price']);
+			}
 			$my_post = array(
 			    'ID'           => $id,
 			    'post_title'   => 'OD'.$id,
@@ -865,8 +864,10 @@ class HappyShip_Login_Plugin {
 		if ( isset($_POST) ) {
 	     	$kh_goi = $_POST['kh_goi'];
 			$giao_hang = $_POST['giao_hang'];
+			$shop_code = str_replace("-","_",$_POST['shop_code']);
+			$fromtb = 'wp_price_'.strtolower($shop_code);
 	    }
-	    $results = $wpdb->get_results( 'SELECT * FROM `wp_price_manager` WHERE `nhan_hang` = "'.$nhan_hang.'" AND `giao_hang` ="'.$giao_hang. '"');
+	    $results = $wpdb->get_results( 'SELECT * FROM `'.$fromtb.'` WHERE `nhan_hang` = "'.$nhan_hang.'" AND `giao_hang` ="'.$giao_hang. '"');
 	    if(($results[0]->id)+0 > 0){
 			$price = $results[0]->$kh_goi;
 		} 
@@ -884,6 +885,7 @@ class HappyShip_Login_Plugin {
 		//thêm menu trang danh sách shop
 		add_submenu_page('happy_order', __('Danh sách Shop'), __('Danh sách shop'), 'edit_themes', 'list_manager', array("HappyShip_Login_Plugin",'shop_list_render'));
 		add_submenu_page('', __('Quản lí Shop'), __('Quản lí shop'), 'edit_themes', 'shop_manager', array("HappyShip_Login_Plugin",'shop_manager_render'));
+		add_submenu_page('', __('Tìm Shop'), __('Tìm Shop'), 'edit_themes', 'find_shop', array("HappyShip_Login_Plugin",'find_shop_render'));
 	}
 	function load_custom_wp_admin_style(){
 		wp_enqueue_style('admin-styles', get_template_directory_uri().'/assets_backend/css/style-dashboard.css');
@@ -1489,8 +1491,7 @@ class HappyShip_Login_Plugin {
 	                   	$idShop = $shop->ID;
 	                   	$AddrShop = get_user_meta($idShop , 'shop_address',true);
 	                   	$foneShop = get_user_meta($idShop , 'user_phone',true);
-	                   	$nonce = wp_create_nonce( 'xoa-nonce' );
-	                    ?>
+	                   	?>
 	                   
 	                    <tr>
 	                        <td><?php echo $shop->ID; ?></td>
@@ -1499,7 +1500,7 @@ class HappyShip_Login_Plugin {
 	                        <td><?php echo $foneShop; ?></td>
 	                        <td><?php echo $shop->shop_code; ?></td>
 	                        <td><a href="<?php  menu_page_url('shop_manager'); ?>&edit=<?php echo $shop->ID; ?>">Sửa</a>
-								<a href="#" id="delete_shop" data-href="<?php  menu_page_url('shop_manager'); ?>&delete=<?php echo $shop->ID; ?>&nonce=<?php echo $nonce;?>">Xóa</a>
+								<a href="<?php  menu_page_url('shop_manager'); ?>&delete=<?php echo $shop->ID; ?>" id="delete_shop" data-href="">Xóa</a>
 	                        </td>
 	                    </tr>
 	                    <?php } ?>
@@ -1539,7 +1540,7 @@ class HappyShip_Login_Plugin {
 		 	if(isset($_GET['edit']) && !empty($_GET['edit'])){
 		 		$shop_id = $_GET['edit'];
 		 		$shop = get_user_by( 'ID', $shop_id );
-		 		$shop_code = (get_user_meta($shop_id , 'shop_code', true))?get_user_meta($shop_id , 'shop_code', true) : 'SCOD-D';
+		 		$shop_code = (get_user_meta($shop_id , 'shop_code', true))?get_user_meta($shop_id , 'shop_code', true) : 'COD-D';
 		 		$shop_name = $shop->display_name;
 		 		?>
 		 		
@@ -1553,9 +1554,9 @@ class HappyShip_Login_Plugin {
 							<select name="shop_code" id="shop_code">
 								<?php
 				                $shop_code_type = array(
-				                	'SCOD-D'=> 'Shop COD mới',
-				                	'SCOD-N'=> 'Shop COD',
-				                	'SUTT-M' => 'Shop Ứng tiền trước'
+				                	'COD-D'=> 'Shop COD mới',
+				                	'COD-N'=> 'Shop COD',
+				                	'UTT-M' => 'Shop Ứng tiền trước'
 				                );
 				                foreach ($shop_code_type as $sc => $scn) { ?>
 				                 	<option value="<?php echo $sc; ?>" <?php echo selected( $sc, $shop_code ); ?>>
@@ -1569,6 +1570,17 @@ class HappyShip_Login_Plugin {
 							<input type="submit" class="btn btn-submit" value="Lưu sửa đổi">
 						</p>
 					</form>
+		 		<?php
+		 	}
+		 	if(isset($_GET['delete']) && !empty($_GET['delete'])){
+		 		$shop_id = $_GET['delete'];?>
+		 		<form action="" id="delete-shop" name="delete-shop" method="POST">
+		 			<input type="hidden" name="shop_id_delete" value="<?php echo $shop_id;?>">
+		 			<?php wp_nonce_field( 'do_del_shop', 'do_del_nonce' );?>
+		 			<p class="note_alert"> Bạn thật sự muốn xóa shop này vĩnh viễn? </p>
+					<input type="submit" class="btn btn-confirm-del" value="Xác nhận xóa"/>
+		 		</form>
+		 		<a href="<?php menu_page_url('list_manager') ?>" class="btn"  id="btn-cancel-del">Không xóa</a>
 		 		<?php
 		 	}
 		}
@@ -1601,10 +1613,27 @@ class HappyShip_Login_Plugin {
 		   			exit;
 				}		   
 			}
+			if ( ! isset( $_POST['do_del_nonce'] ) || ! wp_verify_nonce( $_POST['do_del_nonce'], 'do_del_shop' ) ) {
+				echo '<p> Lỗi quyền xóa.Bạn không thể xóa thông tin này!</p>';
+	   			exit;
+			}else{
+				if(isset($_POST['shop_id_delete']) && !empty($_POST['shop_id_delete'])){
+					$delected = wp_delete_user( $_POST['shop_id_delete'], null );
+				}
+				if($delected){
+					echo '<p> Bạn Đã Xóa thành công!</p>';
+				}else{
+					echo "<p> Xóa không thành công!</p>";
+				}
+			}
 		}?>
 		<a href="<?php menu_page_url('list_manager');?>" class="btn">Quay lại</a>
 		</div>
 	<?php
+	}
+	// lọc shop
+	function find_shop_render(){
+
 	}
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();

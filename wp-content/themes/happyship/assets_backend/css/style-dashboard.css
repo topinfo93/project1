@@ -445,3 +445,28 @@ form.mem_update_storder .foot-action{
 #wpcontent .custombtn:hover{
     background: transparent;
 }
+p.note_alert, .btn.btn-confirm-del {
+    padding: 15px;
+    background: #ec2020b8;
+    font-weight: bold;
+    color: #fff;
+}
+.btn.btn-confirm-del{
+    padding: 5px 15px;
+    cursor: pointer;
+    line-height: 30px;
+}
+.btn.btn-confirm-del:hover{
+    background: #b32a2ab8;
+}
+div#edit_shop_page {
+    position: relative;
+}
+#btn-cancel-del{
+    position: absolute;
+    bottom: 37px;
+    left: 145px;
+    line-height: 25px;
+    background: #6fca6f;
+    color: #000;
+}

@@ -71,7 +71,7 @@
                 <option value="Quan-Thu-Duc">Quận Thủ Đức</option>
                 <option value="Huyen-Cu-Chi">Huyện Củ Chi</option>
             </select>
-            <input type="hidden" name="shop_code" id="shop_code" value="SCOD-D"/>
+            <input type="hidden" name="shop_code" id="shop_code" value="COD-D"/>
         </p>
        <!--  <p class="form-row">
             <input type="hidden" id="shop_state_full" class="style-happy" value=""/>
