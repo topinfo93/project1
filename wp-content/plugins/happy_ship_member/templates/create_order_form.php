@@ -79,9 +79,8 @@
 					<label for="">Gói dịch vụ chuyển hàng</label>
 					<select name="kh_goi" class="style-happy selectpicker required">
 						<option value="" name="kh_goi">Gói dịch vụ</option>
-						<option value="gia_tiet_kiem">Tiết kiệm</option>
-						<option value="gia_nhanh">Tốc hành</option>
-						<option value="super_happy">Siêu tốc</option>
+						<option value="gia_thuong">Tiết kiệm</option>
+						<option value="gia_super">Tốc hành</option>
 					</select>
 				</p>
 				<p class="form-row">
