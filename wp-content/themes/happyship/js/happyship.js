@@ -30,5 +30,4 @@ jQuery(document).ready(function ($) {
     // $( 'select#kh_quan' ).change(function() {
     //     $( 'select#kh_quan_full' ).val($(this).val());
     // });
-
 });

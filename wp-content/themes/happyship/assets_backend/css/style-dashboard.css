@@ -81,7 +81,7 @@ p {
     margin-bottom: 20px;
 }
 
-.custombtn{
+.custombtn,.ft_delete_od{
     padding: 7px 15px;
     float: left;
     margin-bottom: 0;
@@ -387,7 +387,7 @@ form.mem_update_storder .foot-action{
     outline: 0;
     box-shadow: none;
 }
-#page_happy_ship form#form_filter{
+form#form_filter{
     padding-left: 15px;
     padding-top: 15px;
     margin-bottom: 15px;
@@ -398,6 +398,9 @@ form.mem_update_storder .foot-action{
 #page_happy_ship form#form_filter .filter_row{
     width: 25%;
     float: left;
+}
+#page_happy_ship form#form_filter .filter_row.order_status{
+    width: 100%;
 }
 #page_happy_ship form#form_filter .filter_row.filter-submit{
     width: 100%;
@@ -435,11 +438,11 @@ form.mem_update_storder .foot-action{
     color: #fff;
 }
 /* admin action*/
-#wpcontent .custombtn{
+#wpcontent .custombtn,#wpcontent .ft_delete_od{
     padding: 0px 15px;
     border: 0;
 }
-#wpcontent .custombtn.delete-btn{
+#wpcontent .delete-btn{
     color: red;
 }
 #wpcontent .custombtn:hover{
@@ -469,4 +472,64 @@ div#edit_shop_page {
     line-height: 25px;
     background: #6fca6f;
     color: #000;
+}
+/* filter shop page  */
+#page_shop_manager{
+    font-size: 14px;
+}
+#page_shop_manager form:after,#page_shop_manager form:before{
+    content: '';
+    clear: both;
+    display: block;
+}
+#page_shop_manager .list-shop{
+    margin-top: 20px;
+}
+#page_shop_manager .list-shop .table-shop{
+    border: none;
+}
+#page_shop_manager .filter_shop .btn-filter {
+    border-radius: 0;
+    background: #336246;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 14px;
+}
+#page_shop_manager .filter_row .filter_content{
+    display: none;
+}
+#page_shop_manager .filter_row select{
+    line-height: 35px;
+    height: 35px;
+    margin: 10px 0;
+    width: 180px;
+    border: 1px solid #000;
+}
+#page_shop_manager .filter_row input[type="text"],#page_shop_manager .filter_row input.datepicker{
+    line-height: 35px;
+    height: 35px;
+    margin: 10px 0;
+    width: 180px;
+    border: 1px solid #000;
+    background: #e0f5e0;
+}
+#page_shop_manager .filter_row{
+    width: 33%;
+    float: left;
+}
+#page_shop_manager .filter_row.filter-submit{
+    width: 100%;
+    clear: both;
+}
+/**/
+.box-item button.save_update_od{
+    float: right;
+    line-height: 21px;
+}
+.box-item button:disabled,
+.box-item button[disabled]{
+    cursor: no-drop;
+    background: #93ab67;
+    border: 1px solid #93ab67;
 }

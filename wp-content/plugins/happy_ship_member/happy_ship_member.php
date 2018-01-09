@@ -6,8 +6,8 @@
  * Author:            CatKing 18
  * Text Domain:       happyship-member
  */
+
 class HappyShip_Login_Plugin {
- 
     public function __construct() {
 
      	register_activation_hook( __FILE__, array( 'HappyShip_Login_Plugin', 'plugin_activated' ) );
@@ -38,6 +38,17 @@ class HappyShip_Login_Plugin {
  		add_action( 'wp_enqueue_scripts', array( 'HappyShip_Login_Plugin','my_enqueue' ) );
  		add_action( 'wp_ajax_nopriv_get_price', array( 'HappyShip_Login_Plugin','get_price' ) );
 		add_action( 'wp_ajax_get_price', array( 'HappyShip_Login_Plugin','get_price' )  );
+		// ajax xóa đơn hàng
+		add_action( 'wp_ajax_nopriv_xoa_don_hang', array( 'HappyShip_Login_Plugin','xoa_don_hang' ) );
+		add_action( 'wp_ajax_xoa_don_hang', array( 'HappyShip_Login_Plugin','xoa_don_hang' )  );
+		// ajax cập nhật đơn hàng
+		add_action( 'wp_ajax_nopriv_cap_nhat_donhang', array( 'HappyShip_Login_Plugin','cap_nhat_donhang' ) );
+		add_action( 'wp_ajax_cap_nhat_donhang', array( 'HappyShip_Login_Plugin','cap_nhat_donhang' )  );
+		//nhan doi ajax
+		add_action( 'wp_ajax_nopriv_ft_xoa_don_hang', array( 'HappyShip_Login_Plugin','ft_xoa_don_hang' ) );
+		add_action( 'wp_ajax_ft_xoa_don_hang', array( 'HappyShip_Login_Plugin','ft_xoa_don_hang' )  );
+		add_action( 'wp_ajax_nopriv_ft_cap_nhat_donhang', array( 'HappyShip_Login_Plugin','ft_cap_nhat_donhang' ) );
+		add_action( 'wp_ajax_ft_cap_nhat_donhang', array( 'HappyShip_Login_Plugin','ft_cap_nhat_donhang' )  );
 		// add menu and submenu
 		add_action("admin_menu", array( "HappyShip_Login_Plugin","add_Happyship_Menu"));
 		add_action( 'admin_enqueue_scripts', array( 'HappyShip_Login_Plugin','load_custom_wp_admin_style' ) );
@@ -808,9 +819,10 @@ class HappyShip_Login_Plugin {
 	                <?php
 	                $status = array(
 	                	'pending'=> 'đang xử lý',
-	                	'processing'=> 'đang chuyển hàng',
-	                	'transformed' => 'đã chuyển hàng',
-	                	'processed' => 'xử lý xong',
+	                	'step1'=> 'chuyển hàng lần 1',
+	                	'step2' => 'chuyển hàng lần 2',
+	                	'shipped' => 'Đã giao hàng',
+	                	'procescod' => 'Đã thanh toán COD',
 	                	'cancel' => 'Hủy đơn hàng'
 	                );
 	                foreach ($status as $sts => $value) { ?>
@@ -886,6 +898,7 @@ class HappyShip_Login_Plugin {
 		add_submenu_page('happy_order', __('Danh sách Shop'), __('Danh sách shop'), 'edit_themes', 'list_manager', array("HappyShip_Login_Plugin",'shop_list_render'));
 		add_submenu_page('', __('Quản lí Shop'), __('Quản lí shop'), 'edit_themes', 'shop_manager', array("HappyShip_Login_Plugin",'shop_manager_render'));
 		add_submenu_page('', __('Tìm Shop'), __('Tìm Shop'), 'edit_themes', 'find_shop', array("HappyShip_Login_Plugin",'find_shop_render'));
+		add_submenu_page('', __('Chỉnh sửa đơn hàng'), __('Chỉnh sửa đơn hàng'), 'edit_themes', 'edit_order', array("HappyShip_Login_Plugin",'edit_order_render'));
 	}
 	function load_custom_wp_admin_style(){
 		wp_enqueue_style('admin-styles', get_template_directory_uri().'/assets_backend/css/style-dashboard.css');
@@ -898,6 +911,7 @@ class HappyShip_Login_Plugin {
 		wp_localize_script( 'admin_ajax_script', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 	}
+	// list order
 	function my_menu_render() {
 		global $wpdb;
 		$paged = ( $_GET['paged'] ) ? $_GET['paged'] : 1;
@@ -926,6 +940,10 @@ class HappyShip_Login_Plugin {
 		    if(isset($_POST['shop_phone']) && $_POST['shop_phone'] !=null){
 		    	$shop_phone = $_POST['shop_phone'];
 		    	$result_url = add_query_arg( 'shop_phone', $shop_phone , $result_url );
+		    }
+		    if(isset($_POST['order_statusing']) && $_POST['order_statusing'] !=null){
+		    	$order_statusing = $_POST['order_statusing'];
+		    	$result_url = add_query_arg( 'order_statusing', $order_statusing , $result_url );
 		    }
 		    $result_url= str_replace('?', '&', $result_url);
 		    $location = menu_page_url('filter_result',false).$result_url; 
@@ -969,6 +987,24 @@ class HappyShip_Login_Plugin {
 	        		<div class="filter_content" data-show="checkbox_phone">
 	        			<input type="text" name="shop_phone" value="" placeholder="Nhập số điện thoại"/>
 	        		</div>	
+	        	</div>
+	        	<div class="filter_row order_status">
+	        		<label for="order_statusing">Tình trạng đơn hàng</label>
+	        		<select name="order_statusing" id="order_statusing">
+	        			<option value="">Tất cả</option>
+	        			<?php $stating = array(
+                            'pending'=> 'đang xử lý',
+		                	'step1'=> 'chuyển hàng lần 1',
+		                	'step2' => 'chuyển hàng lần 2',
+		                	'shipped' => 'Đã giao hàng',
+		                	'procescod' => 'Đã thanh toán COD',
+		                	'cancel' => 'Hủy đơn hàng'
+                        );
+                        foreach ($stating as $sts => $value) { ?>
+                            <option value="<?php echo $sts; ?>" <?php echo selected( $sts, $status_order ); ?>>
+                            <?php echo $value; ?> <?php } ?></option>
+                    </select>
+	        		
 	        	</div>
 	        	<input type="hidden" name="result_url" value="<?php menu_page_url('filter_result') ?>"/>
 	        	<div class="filter_row filter-submit">
@@ -1030,8 +1066,23 @@ class HappyShip_Login_Plugin {
 				              <dd><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></dd>
 				            </dl>
 				          </div>
-				          <div class="status"><span><?php echo  $ODtittle;?></span><a href="" class="edit-btn custombtn">Sửa</a><a href="" class="delete-btn custombtn" data-id="<?php the_ID() ?>" data-nonce="<?php echo wp_create_nonce('my_delete_post_nonce') ?>">Xóa</a><?php echo $status_order;?></div>
-				          <div class="foot-action"></div>
+				          <div class="status"><span><?php echo  $ODtittle;?></span><a href="" class="delete-btn custombtn" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('my_delete_post_nonce') ?>">Xóa</a><?php echo $status_order;?></div>
+				          <div class="foot-action" data-show="od<?php the_ID(); ?>">
+				          	<select name="update_odstatus" class="update_odstatus">
+				          		<?php $stating = array(
+		                            'pending'=> 'đang xử lý',
+				                	'step1'=> 'chuyển hàng lần 1',
+				                	'step2' => 'chuyển hàng lần 2',
+				                	'shipped' => 'Đã giao hàng',
+				                	'procescod' => 'Đã thanh toán COD',
+				                	'cancel' => 'Hủy đơn hàng'
+		                        );
+		                        foreach ($stating as $sts => $value) { ?>
+		                            <option value="<?php echo $sts; ?>" <?php echo selected( $sts, $status_order ); ?>>
+		                            <?php echo $value; ?> <?php } ?></option>
+				          	</select>
+				          	<button class="save_update_od" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('edit_od_nonce');?>" disabled>cập nhật</button>
+				          </div>
 				        </div>
                	<?php endwhile;endif; ?>
 	        </div>
@@ -1352,8 +1403,17 @@ class HappyShip_Login_Plugin {
 			       ),
 	    	 );
 	    }
+	    if(isset($_GET['order_statusing']) && $_GET['order_statusing'] !=null){
+	    	 $allorder_query['meta_query'] = array(
+	    	 	array(
+			         'key' => 'status_order',
+			         'value' => $_GET['order_statusing'],
+			         'type' => 'CHAR',
+			         'compare' => '=',
+			       ),
+	    	 );
+	    }
 	    $happyships = new WP_Query($allorder_query);
-	    
 	    ?>
 	    <div class="wrap" id="page_happy_ship">
 	        <h1><?php _e( 'Danh sách đơn hàng', 'happyship-member' ); ?></h1>
@@ -1415,7 +1475,23 @@ class HappyShip_Login_Plugin {
 				              <dd><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></dd>
 				            </dl>
 				          </div>
-				          <div class="status"> <span><?php echo  $ODtittle;?></span><?php echo $status_order;?></div>
+				          <div class="status"> <span><?php echo  $ODtittle;?></span><a href="" class="delete-btn ft_delete_od" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('ft_delete_post_nonce') ?>">Xóa</a><?php echo $status_order;?></div>
+				          <div class="foot-action" data-show="od<?php the_ID(); ?>">
+				          	<select name="update_odstatus" class="update_odstatus">
+				          		<?php $stating = array(
+		                            'pending'=> 'đang xử lý',
+				                	'step1'=> 'chuyển hàng lần 1',
+				                	'step2' => 'chuyển hàng lần 2',
+				                	'shipped' => 'Đã giao hàng',
+				                	'procescod' => 'Đã thanh toán COD',
+				                	'cancel' => 'Hủy đơn hàng'
+		                        );
+		                        foreach ($stating as $sts => $value) { ?>
+		                            <option value="<?php echo $sts; ?>" <?php echo selected( $sts, $status_order ); ?>>
+		                            <?php echo $value; ?> <?php } ?></option>
+				          	</select>
+				          	<button class="ft_save_update_od" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('ft_edit_od_nonce');?>" disabled>cập nhật</button>
+				          </div>
 				        </div>
                	<?php endwhile;endif; ?>
 	        </div>
@@ -1437,16 +1513,78 @@ class HappyShip_Login_Plugin {
 	}
 	// xóa đơn hàng
 	function xoa_don_hang() {
-		echo "0";
-		// $permission = check_ajax_referer( 'my_delete_post_nonce', 'nonce', false );
-	 //    if( $permission == false ) {
-	 //        echo 'error';
-	 //    }
-	 //    else {
-	 //        //wp_delete_post( $_REQUEST['id'] );
-	 //        echo 'success';
-	 //    }
-	 
+		$return = array();
+		$permission = check_ajax_referer( 'my_delete_post_nonce', 'nonce', false );
+	    if( $permission == false ) {
+	        $return['error'] = "lỗi mã lệnh.Bạn không có quyền xóa đơn hàng này!";
+	    }
+	    else {
+	        $deleteod = wp_delete_post( $_REQUEST['id'] );
+	        if($deleteod){
+	        	$return['id'] = $deleteod->post_title;
+	        }else{
+	        	$return['error'] = "đơn hàng không tồn tại.Vui lòng kiểm tra lại!";
+	        }
+	    }
+	 	wp_send_json($return);
+	    die();
+	}
+	// xóa đơn hàng page filter
+	function ft_xoa_don_hang() {
+		$return = array();
+		$permission = check_ajax_referer( 'ft_delete_post_nonce', 'nonce', false );
+	    if( $permission == false ) {
+	        $return['error'] = "lỗi mã lệnh.Bạn không có quyền xóa đơn hàng này!";
+	    }
+	    else {
+	        $deleteod = wp_delete_post( $_REQUEST['id'] );
+	        if($deleteod){
+	        	$return['id'] = $deleteod->post_title;
+	        }else{
+	        	$return['error'] = "đơn hàng không tồn tại.Vui lòng kiểm tra lại!";
+	        }
+	    }
+	 	wp_send_json($return);
+	    die();
+	}
+	//cập nhật đơn hàng
+	function cap_nhat_donhang(){
+		$post_id = $_REQUEST['id'];
+		$status = $_REQUEST['status'];
+		$return = [];
+		$permission = check_ajax_referer( 'edit_od_nonce', 'nonce', false );
+	    if( $permission == false ) {
+	        $return['error'] = "lỗi mã lệnh.Bạn không có quyền xóa đơn hàng này!";
+	    }
+	    else {
+	        $updateod = update_post_meta( $post_id, 'status_order', $status );
+	        if($updateod){
+	        	$return['success'] = 'Cập nhật đơn hàng thành công!';
+	        }else{
+	        	$return['error'] = 'Cập nhật đơn hàng thất bại!';
+	        }
+	    }
+	 	wp_send_json($return);
+	    die();
+	}
+	//cập nhật đơn hàng page filter
+	function ft_cap_nhat_donhang(){
+		$post_id = $_REQUEST['id'];
+		$status = $_REQUEST['status'];
+		$return = [];
+		$permission = check_ajax_referer( 'ft_edit_od_nonce', 'nonce', false );
+	    if( $permission == false ) {
+	        $return['error'] = "lỗi mã lệnh.Bạn không có quyền xóa đơn hàng này!";
+	    }
+	    else {
+	        $updateod = update_post_meta( $post_id, 'status_order', $status );
+	        if($updateod){
+	        	$return['success'] = 'Cập nhật đơn hàng thành công!';
+	        }else{
+	        	$return['error'] = 'Cập nhật đơn hàng thất bại!';
+	        }
+	    }
+	 	wp_send_json($return);
 	    die();
 	}
 	// render xử lý trang danh sách shop
@@ -1474,11 +1612,54 @@ class HappyShip_Login_Plugin {
 		<div class="wrap" id="page_shop_manager">
 			<h1> Danh sách shop </h1>
 			<hr>
+			<div class="filter_shop">
+	        	<button class="btn btn-filter"> Thống kê shop </button>
+	        	<form action="" name="formfilter" method="POST" id="form_filter">
+	        	<div class="filter_row">
+	        		<select class="sl_filter" name="type_report" id="type_report">
+	        			<option value="" selected>Chọn loại thống kê</option>
+	        			<option value="byshopname">Theo Tên shop</option>
+	        			<option value="byshopphone">Theo số điện thoại shop</option>
+	        		</select>
+	        		<div class="filter_content" data-show="byshopname">
+	        			<input type="text" name="shopname" value="" placeholder="Nhập tên shop"/>
+	        		</div>
+	        		<div class="filter_content" data-show="byshopphone">
+	        			<input type="text" name="shopphone" value="" placeholder="Nhập số đt shop"/>
+	        		</div>	
+	        	</div>
+	        	<div class="filter_row">
+	        		<select class="sl_filter" name="type_report" id="type_report">
+	        			<option value="" selected>Chọn loại thống kê</option>
+	        			<option value="bydate">Theo Ngày</option>
+	        			<option value="bymonth">Theo Tháng, Năm</option>
+	        		</select>
+	        		<div class="filter_content" data-show="bydate">
+	        			<input class="datepicker" name="reportdate" data-date-format="mm/dd/yyyy" placeholder="Kích chọn ngày">
+	        		</div>
+	        		<div class="filter_content" data-show="bymonth">
+	        			<input class="reportmonth" name="reportmonth" data-date-format="dd/yyyy" placeholder="Kích chọn tháng/năm">
+	        		</div>
+	        	</div>
+	        	<div class="filter_row reportmoney">
+	        		<select class="sl_filter" name="paid_status" id="paid_status">
+	        			<option value="all" selected> Tất cả</option>
+	        			<option value="unpaid">Chưa thanh toán</option>
+	        			<option value="paid">Đã thanh toán</option>
+                    </select>
+	        		
+	        	</div>
+	        	<input type="hidden" name="result_url" value="<?php menu_page_url('filter_result') ?>"/>
+	        	<div class="filter_row filter-submit">
+	        		<button type="submit" id="" name="" class="btn btn-submit">Lọc</button>
+	        	</div>
+	        	</form>
+	        </div>
 			<div class="list-shop">
 				<table class="table table-shop">
 	                <thead>
 	                    <tr>
-	                        <th>ID Shop</th>
+	                        <th>ID</th>
 	                        <th>Tên shop</th>
 	                        <th>Địa chỉ</th>
 	                        <th>Số Điện thoại</th>
@@ -1585,7 +1766,7 @@ class HappyShip_Login_Plugin {
 		 	}
 		}
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			if ( ! isset( $_POST['edit_shop_nonce'] ) || ! wp_verify_nonce( $_POST['edit_shop_nonce'], 'save_edit_shop' ) ) {
+			if ( isset( $_POST['edit_shop_nonce'] ) && ! wp_verify_nonce( $_POST['edit_shop_nonce'], 'save_edit_shop' ) ) {
 
 		   		echo '<p> Lỗi kiểm tra mã lưu.Bạn không thể lưu thay đổi!</p>';
 		   		exit;
@@ -1613,7 +1794,7 @@ class HappyShip_Login_Plugin {
 		   			exit;
 				}		   
 			}
-			if ( ! isset( $_POST['do_del_nonce'] ) || ! wp_verify_nonce( $_POST['do_del_nonce'], 'do_del_shop' ) ) {
+			if ( isset( $_POST['do_del_nonce'] ) && ! wp_verify_nonce( $_POST['do_del_nonce'], 'do_del_shop' ) ) {
 				echo '<p> Lỗi quyền xóa.Bạn không thể xóa thông tin này!</p>';
 	   			exit;
 			}else{
@@ -1630,6 +1811,28 @@ class HappyShip_Login_Plugin {
 		<a href="<?php menu_page_url('list_manager');?>" class="btn">Quay lại</a>
 		</div>
 	<?php
+	}
+	// Chỉnh sửa order
+	function edit_order_render(){
+		if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
+			if(isset($_GET['odid']) && !empty($_GET['odid'])){
+				$post = get_post( $_GET['odid'] );
+				$authoid = $post->post_author;
+				$orderofshop = get_user_by('ID',$authoid);
+				$shop_name = $orderofshop->display_name;
+				$ordertitle = $post->post_title;
+				$orderstatus = get_post_meta( $_GET['odid'], 'status_order', true );?>
+				<div class="wrap">
+					<p>Bạn đang chỉnh sửa đơn hàng <?php echo $ordertitle;?></p>
+					<form action="" name="sua_donhang" method="POST">
+						<p class="form-row">
+							<label for="">Tình trạng đơn hàng</label>
+						</p>
+					</form>
+				</div>
+				<?php
+			}
+		}
 	}
 	// lọc shop
 	function find_shop_render(){
