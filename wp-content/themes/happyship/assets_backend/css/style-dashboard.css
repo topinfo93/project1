@@ -486,6 +486,7 @@ form#form_filter{
 }
 #wpcontent .delete-btn{
     color: red;
+    display: none;
 }
 #wpcontent .custombtn:hover{
     background: transparent;
