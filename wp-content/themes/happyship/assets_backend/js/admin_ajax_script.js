@@ -42,6 +42,7 @@ jQuery(document).ready(function($) {
                                     });
                                     mess = 'Bạn đã xóa thành công đơn hàng '+result.id;
                                     $.alert(mess);
+                                    setTimeout(function(){ location.reload(); }, 3000);
                                 }
                             }
                             
@@ -99,6 +100,7 @@ jQuery(document).ready(function($) {
                                     });
                                     mess = 'Bạn đã xóa thành công đơn hàng '+result.id;
                                     $.alert(mess);
+                                    setTimeout(function(){ location.reload(); }, 3000);
                                 }
                             }
                             
@@ -149,6 +151,7 @@ jQuery(document).ready(function($) {
                                     $.alert(result.error);
                                 }else{
                                     $.alert(result.success);
+                                    setTimeout(function(){ location.reload(); }, 3000);
                                 }
                             }
                         });
@@ -199,7 +202,7 @@ jQuery(document).ready(function($) {
                                     $.alert(result.error);
                                 }else{
                                     $.alert(result.success);
-                                    location.reload();
+                                    setTimeout(function(){ location.reload(); }, 3000);
                                 }
                             }
                             
@@ -265,7 +268,7 @@ jQuery(document).ready(function($) {
                     console.log(danhsach);
                     var html = '<p class="rp-total"><strong>Tổng Đơn hàng:</strong>'+ data.count +'</p><p class="tien_thieu"><strong>Tổng Số Tiền chưa thanh toán:</strong>'+ data.tien_no_khach +'</p>';
                         html+='<p class="tien_tra"><strong> Tiền đã trả khách :</strong>'+ data.tien_da_tra_khach +'</p>';
-                        html+='<div class="danhsach"><button class="btn btn-filter">Danh sách</button><div class="danhsach_ct" style="display:none;">';
+                        html+='<div class="danhsach"><button class="btn btn-filter" id="showreport">Danh sách</button><div class="danhsach_ct" style="display:none;">';
                     $.each(danhsach, function(i, item) {
 
                         var tennn = item[0];;

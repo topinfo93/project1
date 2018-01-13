@@ -28,6 +28,7 @@ class HappyShip_Login_Plugin {
 		add_action( 'login_form_rp', array( $this, 'redirect_to_custom_password_reset' ) );
 		add_action( 'login_form_resetpass', array( $this, 'redirect_to_custom_password_reset' ) );
 		add_shortcode( 'custom-password-reset-form', array( $this, 'render_password_reset_form' ) );
+		add_shortcode( 'account-info', array( $this, 'render_account_info' ) );
 		add_action( 'login_form_rp', array( $this, 'do_password_reset' ) );
 		add_action( 'login_form_resetpass', array( $this, 'do_password_reset' ) );
 		add_shortcode( 'create_order', array( $this, 'render_creatorder_form' ) );
@@ -88,6 +89,10 @@ class HappyShip_Login_Plugin {
 		    'member-order-detail' => array(
 		    	'title' => __( 'Chi tiết đơn hàng', 'happyship-member' ),
 		        'content' => ''
+		    ),
+		    'member-infomation' => array(
+		    	'title' => __( 'Thông tin tài khoản', 'happyship-member' ),
+		        'content' => '[account-info]'
 		    )
 	    );
 	 
@@ -528,7 +533,46 @@ class HappyShip_Login_Plugin {
 	    }
 
 	}
-	
+	public function render_account_info(){
+		$curuser = wp_get_current_user();
+		$curentid =  $curuser->ID;
+		$shopname = $curuser->display_name;
+		$ten_dang_nhap = $curuser->user_login;
+		$ho_ten = $curuser->user_nicename;
+		$email_dangky = $curuser->user_email;
+		$dien_thoai = get_user_meta( $curentid, 'user_phone', true );
+		$dia_chi = get_user_meta( $curentid, 'shop_address', true );
+		$dia_chi_qh = get_user_meta( $curentid, 'shop_state', true );
+		$shop_code = (get_user_meta( $curentid, 'shop_code', true )) ? get_user_meta( $curentid, 'shop_code', true ) : 'COD-N';
+		switch ($shop_code) {
+			case 'COD-N':
+				$loai_shop = 'Khách hàng MỚI';
+				break;
+			case 'COD-D':
+				$loai_shop = 'Khách hàng Ưu tiên';
+				break;
+			case 'UTT-M':
+				$loai_shop = 'Khách hàng UTT-M';
+				break;
+			default:
+				$loai_shop = 'Khách hàng MỚI';
+				break;
+		}
+		?>
+		<h2>Thông tin của tôi</h2>
+		<div class="shop_info">
+			<p class="shopname"><strong>Tên Shop:</strong><?php echo $shopname;?></p>
+			<p><strong>Tên Đăng nhập:</strong><?php echo $ten_dang_nhap;?></p>
+			<p><strong>Họ Tên:</strong><?php echo $ho_ten;?></p>
+			<p><strong>Email Đăng Ký:</strong><?php echo $email_dangky;?></p>
+			<p><strong>Số Điện thoại:</strong><?php echo $dien_thoai;?></p>
+			<p><strong>Địa chỉ Shop:</strong><?php echo $dia_chi;?></p>
+			<p><strong>Quận Huyện:</strong><?php echo $dia_chi_qh;?></p>
+			<p><strong>Loại Shop:</strong><?php echo $loai_shop;?></p>
+			
+		</div>
+		<?php
+	}
 	public function do_password_lost() {
 	    if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
 	        $errors = retrieve_password();
@@ -1035,22 +1079,22 @@ class HappyShip_Login_Plugin {
                             $status_order = get_post_meta( $Id, 'status_order', true );
                             switch ($status_order) {
                             	case 'pending':
-                            		$status_order = "đh mới";
+                            		$status_order_t = "đh mới";
                             		break;
                             	case 'step1':
-                            		$status_order = "g.lần1";
+                            		$status_order_t = "g.lần1";
                             		break;
                         		case 'step2':
-                            		$status_order = "g.lần2";
+                            		$status_order_t = "g.lần2";
                             		break;
                         		case 'procescod':
-                            		$status_order = "đtt cod";
+                            		$status_order_t = "đtt cod";
                             		break;
                         		case 'cancel':
-                            		$status_order = "hủy";
+                            		$status_order_t = "hủy";
                             		break;
                             	default:
-                            		$status_order = "đh mới";
+                            		$status_order_t = "đh mới";
                             		break;
                             }
                         	?>
@@ -1070,7 +1114,7 @@ class HappyShip_Login_Plugin {
 				          	<p class="tb-row"><span>Kl :</span><?php echo $kh_kl;?></p>
 				          	<p class="tb-row"><span>Tth :</span><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></p>
 				          </div>
-				          <div class="status"><span><?php echo  $ODtittle;?></span><a href="" class="delete-btn custombtn" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('my_delete_post_nonce') ?>">Xóa</a><?php echo $status_order;?></div>
+				          <div class="status"><span><?php echo  $ODtittle;?></span><a href="" class="delete-btn custombtn" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('my_delete_post_nonce') ?>">Xóa</a><a href="<?php echo home_url( 'in-hoa-don' ).'?id='.$Id;?>" class="btn prinforder" >In</a><?php echo $status_order_t;?></div>
 				          <div class="foot-action" data-show="od<?php the_ID(); ?>">
 				          	<select name="update_odstatus" class="update_odstatus">
 				          		<?php $stating = array(
@@ -1483,7 +1527,7 @@ class HappyShip_Login_Plugin {
 				          	<p class="tb-row"><span>Tth :</span><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></p>
 				          </div>
 
-				          <div class="status"> <span><?php echo  $ODtittle;?></span><a href="" class="delete-btn ft_delete_od" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('ft_delete_post_nonce') ?>">Xóa</a><?php echo $status_order_text;?></div>
+				          <div class="status"> <span><?php echo  $ODtittle;?></span><a href="" class="delete-btn ft_delete_od" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('ft_delete_post_nonce') ?>">Xóa</a><a href="<?php echo home_url( 'in-hoa-don' ).'?id='.$Id;?>" class="prinforder">In</a><?php echo $status_order_text;?></div>
 				          <div class="foot-action" data-show="od<?php the_ID(); ?>">
 				          	<select name="update_odstatus" class="update_odstatus">
 				          		<?php $stating = array(
@@ -1619,48 +1663,6 @@ class HappyShip_Login_Plugin {
 		<div class="wrap" id="page_shop_manager">
 			<h1> Danh sách shop </h1>
 			<hr>
-			<div class="filter_shop">
-	        	<button class="btn btn-filter"> Thống kê shop </button>
-	        	<form action="<?php menu_page_url('find_shop') ?>" name="formfilter" method="POST" id="form_filter">
-		        	<div class="filter_row">
-		        		<select class="sl_filter" name="type_report" id="type_report">
-		        			<option value="" selected>Chọn loại thống kê</option>
-		        			<option value="byshopname">Theo Tên shop</option>
-		        			<option value="byshopphone">Theo số điện thoại shop</option>
-		        		</select>
-		        		<div class="filter_content" data-show="byshopname">
-		        			<input type="text" name="shopname" id="autoshopname" value="" placeholder="Nhập tên shop"/>
-		        		</div>
-		        		<div class="filter_content" data-show="byshopphone">
-		        			<input type="text" name="shopphone" value="" placeholder="Nhập số đt shop"/>
-		        		</div>	
-		        	</div>
-		        	<div class="filter_row">
-		        		<select class="sl_filter" name="type_report" id="type_report">
-		        			<option value="" selected>Chọn loại thống kê</option>
-		        			<option value="bydate">Theo Ngày</option>
-		        			<option value="bymonth">Theo Tháng, Năm</option>
-		        		</select>
-		        		<div class="filter_content" data-show="bydate">
-		        			<input class="datepicker" name="reportdate" data-date-format="mm/dd/yyyy" placeholder="Kích chọn ngày">
-		        		</div>
-		        		<div class="filter_content" data-show="bymonth">
-		        			<input class="reportmonth" name="reportmonth" data-date-format="dd/yyyy" placeholder="Kích chọn tháng/năm">
-		        		</div>
-		        	</div>
-		        	<div class="filter_row reportmoney">
-		        		<select class="sl_filter" name="paid_status" id="paid_status">
-		        			<option value="all" selected> Tất cả</option>
-		        			<option value="unpaid">Chưa thanh toán</option>
-		        			<option value="paid">Đã thanh toán</option>
-	                    </select>
-		        	</div>
-		        	
-		        	<div class="filter_row filter-submit">
-		        		<button type="submit" id="" name="" class="btn btn-submit">Lọc</button>
-		        	</div>
-	        	</form>
-	        </div>
 			<div class="list-shop">
 				<table class="table table-shop">
 	                <thead>
@@ -1703,8 +1705,9 @@ class HappyShip_Login_Plugin {
 			<?php if($user_count > $shop_per_page):?>
 			<div class="pagination">
 			<?php
+			//$base = 
 			echo paginate_links( array(
-			    'base' => $base,
+			    'base' => @add_query_arg('p','%#%'),
 			    'format' => '&p=%#%',
 			    'prev_text' => __('&laquo;'),
 			    'next_text' => __('&raquo;'),

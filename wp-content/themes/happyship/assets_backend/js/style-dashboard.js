@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
       $that.prop("disabled", false);
     });
     $('#result_report .danhsach_ct').hide();
-    $('#result_report .btn-filter').on('click', function(){
+    $("#result_report").on("click","#showreport", function(){
       var kk = $(this).closest('.danhsach').find('.danhsach_ct').is(':hidden');
       if(kk){
         $(this).closest('.danhsach').find('.danhsach_ct').show();

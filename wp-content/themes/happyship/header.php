@@ -21,14 +21,14 @@
         <div class="container">
           <div class="header-bar-left">
             <ul class="contact show-destop">
-              <li><a href="tel: 0901231234"><span class="icon-phone"></span>0901231234</a></li>
-              <li><a href="" class='zalo-chat'><span class="icon-zalo"></span>0901231234</a></li>
+              <li><a href="tel: 0909070935"><span class="icon-phone"></span>0909.070.935</a></li>
+              <li><a href="" class='zalo-chat'><span class="icon-zalo"></span>0909.070.935</a></li>
             </ul>
           </div>
           <div class="header-bar-right">
             <ul class="social">
               <li class="facebook">
-                  <a href="#" target="_blank" rel="alternate" title="facebook.com/"><span class="icon-fa icon-facebook-circled"></span></a>
+                  <a href="https://www.facebook.com/giaohanghappy/" target="_blank" rel="alternate" title="facebook.com/"><span class="icon-fa icon-facebook-circled"></span></a>
               </li>
               
               <li class="instagram">

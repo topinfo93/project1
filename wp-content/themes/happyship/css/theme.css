@@ -615,3 +615,23 @@ form input.error,form select.error{
     line-height: 24px;
   }
 }
+/* member info page*/
+.content-area h2{
+  text-align: center;
+}
+.content-area .shop_info{
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #336246;
+}
+.content-area .shop_info p{
+  margin-bottom: 0;
+  border-bottom: 1px solid #F5F5F5;
+}
+.content-area .shop_info p:last-child{
+  border: 0;
+}
+.content-area .shop_info p strong{
+  margin-right: 10px;
+}

@@ -1249,13 +1249,14 @@ p.form-row{
 }
 .content-area{
     padding-top: 10px;
+    padding-bottom: 30px;
 }
 .main-content .content-area > p{
     margin-bottom: 0;
 }
 .nav-menu-dashboard {
     padding: 15px;
-    background: #8bc028;
+    background: #72982c;
 }
 .nav-menu-dashboard:after, .toolbar-wrap:after, .foot-action:after {
     content: '';

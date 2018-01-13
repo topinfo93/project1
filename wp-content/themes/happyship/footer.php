@@ -30,7 +30,7 @@
                                 <div id="widget_themesflat_socials-5" class="widget widget_themesflat_socials">
                                     <ul class="themesflat-shortcode-socials">
                                         <li class="facebook">
-                                            <a href="http://facebook.com/themesflat" target="_blank" rel="alternate" title="facebook.com/themesflat">
+                                            <a href="https://www.facebook.com/giaohanghappy/" target="_blank" rel="alternate" title="facebook.com/themesflat">
                                         <span class="icon-fa icon-facebook-circled"></span>
                                         Facebook
                                     </a>
@@ -86,7 +86,7 @@
                     <div class="container">
                             <div class="span12">
                                 <div class="copyright">
-                                    <p>Coyright <i class="fa fa-copyright"></i> 2017 <a href="#">CÔNG TY TNHH GIAO HÀNG HẠNH PHÚC</a></p>
+                                    <p>Coyright <i class="fa fa-copyright"></i> 2017 <a href="<?php echo home_url();?>">CÔNG TY TNHH GIAO HÀNG HẠNH PHÚC</a></p>
                                 </div>
                                 <a class="go-top show">
                                     <i class="fa fa-chevron-up"></i>
