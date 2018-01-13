@@ -486,6 +486,7 @@ form#form_filter{
 }
 #wpcontent .delete-btn{
     color: red;
+    display: none;
 }
 #wpcontent .btn.prinforder{
     padding-bottom: 0;
@@ -657,3 +658,15 @@ hr.lin_{
     margin: 5px 0;
     padding: 0 1%;
 }
+#menu-appearance,
+#menu-plugins,
+#menu-tools,
+#menu-settings,
+#menu-media,
+#menu-comments,
+#toplevel_page_wpcf7{
+    display: none;
+}
+
+
+
