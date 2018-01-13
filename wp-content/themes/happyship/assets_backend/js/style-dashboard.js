@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
     el.each(function() {
         el.hide();
     });
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({dateFormat: 'dd-mm-yy'});
     // filter order page
     $('#page_happy_ship .filter_order .btn-filter').click(function(event) {
       $(this).toggleClass('actived');
@@ -58,25 +58,19 @@ jQuery(document).ready(function($) {
         $(this).closest('.filter_row').find('.filter_content[data-show="'+show+'"]').show(400);
       }
     });
-    $('.reportmonth').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        dateFormat: 'dd/yy',
-        onClose: function(dateText, inst) { 
-            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-        },
-        beforeShow : function(input , inst) {
-          setTimeout(function() {
-               $('.ui-datepicker-calendar').hide();
-            });
-        }
-    })
     $('#page_happy_ship select.update_odstatus').on('change', function() {
-      var $that = $(this).closest('.foot-action').find('button.save_update_od');
+      var $that = $(this).closest('.foot-action').find('button');
       var valueth = $(this).val();
       $that.attr("data-status",valueth);
       $that.prop("disabled", false);
-      
+    });
+    $('#result_report .danhsach_ct').hide();
+    $('#result_report .btn-filter').on('click', function(){
+      var kk = $(this).closest('.danhsach').find('.danhsach_ct').is(':hidden');
+      if(kk){
+        $(this).closest('.danhsach').find('.danhsach_ct').show();
+      }else{
+        $(this).closest('.danhsach').find('.danhsach_ct').hide();
+      }
     });
 });

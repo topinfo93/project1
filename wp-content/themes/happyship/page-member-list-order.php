@@ -18,7 +18,7 @@ if ( !is_user_logged_in() ) {
     wp_get_current_user();
     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
     $author_query = array(
-      'posts_per_page' => '4',
+      'posts_per_page' => '12',
       'author' => $current_user->ID,
       'post_type'=> 'happyship',
       'paged' => $paged
@@ -77,26 +77,46 @@ if ( !is_user_logged_in() ) {
                                 $kh_goi = get_post_meta( $Id, 'kh_goi', true );
                                 $status_order = get_post_meta( $Id, 'status_order', true );
                                 $order_price = get_post_meta( $Id, 'order_price', true );
+                                switch ($status_order) {
+                                    case 'pending':
+                                        $status_ordertext = "đh mới";
+                                        break;
+                                    case 'step1':
+                                        $status_ordertext = "g.lần1";
+                                        break;
+                                    case 'step2':
+                                        $status_ordertext = "g.lần2";
+                                        break;
+                                    case 'procescod':
+                                        $status_ordertext = "đtt cod";
+                                        break;
+                                    case 'cancel':
+                                        $status_ordertext = "hủy";
+                                        break;
+                                    default:
+                                        $status_ordertext = "đh mới";
+                                        break;
+                                }
                                 ?>
                                 <div class="box-item <?php if($status_order =='cancel'){ echo "canceled";}?>">
                                     <div class="box-shop-name"><span>Người nhận:</span><?php echo $kh_ten;?>
                                     </div>
                                     <div class="to-info">
                                         <dl>
-                                            <dt>Điện thoại:</dt>
+                                            <dt>Đt:</dt>
                                             <dd><?php echo $kh_sdt;?></dd>
-                                            <dt>Địa chỉ:</dt>
+                                            <dt>Đ/c:</dt>
                                             <dd><?php echo $kh_dc;?></dd>
-                                            <dt>Quận/huyện:</dt>
+                                            <dt>Q/huyện:</dt>
                                             <dd><?php echo $kh_quan;?></dd>
-                                            <dt>Hàng hóa:</dt>
+                                            <dt>H.hóa:</dt>
                                             <dd><?php echo $kh_hanghoa;?></dd>
-                                            <dt>Khối lượng:</dt>
+                                            <dt>Klượng:</dt>
                                             <dd><?php echo $kh_kl;?></dd>
-                                            <dt>Tiền thu hộ:</dt>
+                                            <dt>Tiền hh:</dt>
                                             <dd><?php echo number_format($kh_tth);?></dd>
                                             <?php if($order_price){?>
-                                            <dt>Cước phí:</dt>
+                                            <dt>Phí:</dt>
                                             <dd><?php echo $order_price;?></dd>
                                             <?php } ?>
                                         </dl>
@@ -120,13 +140,13 @@ if ( !is_user_logged_in() ) {
                                         </p>
                                     </form>
                                     <?php else:?>
-                                        <div class="status"> <span><?php echo $ODtittle;?></span><?php echo $status_order;?></div>
+                                        <div class="status"> <span><?php echo $ODtittle;?></span><?php echo $status_ordertext;?></div>
                                     <?php endif;?>
                                 </div>
                                 
                             <?php endwhile;
                             endif; ?>
-                            <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 4) : ?>
+                            <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 12) : ?>
                             <nav class="pagination">
                                 <?php pagination_bar( $author_posts ); ?>
                             </nav>

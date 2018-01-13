@@ -153,6 +153,8 @@ function pagination_bar( $custom_query ) {
         echo paginate_links(array(
             'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
             'format' => '?paged=%#%',
+            'prev_text'          => __('«'),
+            'next_text'          => __('»'),
             'current' => $current_page,
             'total' => $total_pages,
         ));

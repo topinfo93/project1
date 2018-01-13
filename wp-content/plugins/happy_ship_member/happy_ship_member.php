@@ -49,6 +49,9 @@ class HappyShip_Login_Plugin {
 		add_action( 'wp_ajax_ft_xoa_don_hang', array( 'HappyShip_Login_Plugin','ft_xoa_don_hang' )  );
 		add_action( 'wp_ajax_nopriv_ft_cap_nhat_donhang', array( 'HappyShip_Login_Plugin','ft_cap_nhat_donhang' ) );
 		add_action( 'wp_ajax_ft_cap_nhat_donhang', array( 'HappyShip_Login_Plugin','ft_cap_nhat_donhang' )  );
+		// ajax auto name
+		add_action( 'wp_ajax_nopriv_auto_shop_name', array( 'HappyShip_Login_Plugin','auto_shop_name' ) );
+		add_action( 'wp_ajax_auto_shop_name', array( 'HappyShip_Login_Plugin','auto_shop_name' )  );
 		// add menu and submenu
 		add_action("admin_menu", array( "HappyShip_Login_Plugin","add_Happyship_Menu"));
 		add_action( 'admin_enqueue_scripts', array( 'HappyShip_Login_Plugin','load_custom_wp_admin_style' ) );
@@ -821,7 +824,6 @@ class HappyShip_Login_Plugin {
 	                	'pending'=> 'đang xử lý',
 	                	'step1'=> 'chuyển hàng lần 1',
 	                	'step2' => 'chuyển hàng lần 2',
-	                	'shipped' => 'Đã giao hàng',
 	                	'procescod' => 'Đã thanh toán COD',
 	                	'cancel' => 'Hủy đơn hàng'
 	                );
@@ -994,9 +996,8 @@ class HappyShip_Login_Plugin {
 	        			<option value="">Tất cả</option>
 	        			<?php $stating = array(
                             'pending'=> 'đang xử lý',
-		                	'step1'=> 'chuyển hàng lần 1',
-		                	'step2' => 'chuyển hàng lần 2',
-		                	'shipped' => 'Đã giao hàng',
+		                	'step1'=> 'giao lần 1',
+		                	'step2' => 'giao lần 2',
 		                	'procescod' => 'Đã thanh toán COD',
 		                	'cancel' => 'Hủy đơn hàng'
                         );
@@ -1020,7 +1021,6 @@ class HappyShip_Login_Plugin {
                         	$author_phone = get_user_meta($authorID ,'user_phone',true);
                         	$author_addr = get_user_meta($authorID ,'shop_address',true);
                         	$author_state = get_user_meta($authorID ,'shop_state',true);
-                        	//$author_state_full = get_user_meta($authorID ,'author_state_full',true);
                         	$Id = get_the_ID();
                             $ODtittle = get_the_title();
                             $kh_ten = get_post_meta( $Id, 'kh_ten', true );
@@ -1033,47 +1033,50 @@ class HappyShip_Login_Plugin {
                             $kh_tth = get_post_meta( $Id, 'kh_tth', true );
                             $kh_goi = get_post_meta( $Id, 'kh_goi', true );
                             $status_order = get_post_meta( $Id, 'status_order', true );
+                            switch ($status_order) {
+                            	case 'pending':
+                            		$status_order = "đh mới";
+                            		break;
+                            	case 'step1':
+                            		$status_order = "g.lần1";
+                            		break;
+                        		case 'step2':
+                            		$status_order = "g.lần2";
+                            		break;
+                        		case 'procescod':
+                            		$status_order = "đtt cod";
+                            		break;
+                        		case 'cancel':
+                            		$status_order = "hủy";
+                            		break;
+                            	default:
+                            		$status_order = "đh mới";
+                            		break;
+                            }
                         	?>
                         <div class="box-item <?php if($status_order =='cancel'){ echo "canceled";}?>">
 				          <div class="box-shop-name"><span>Tên shop: </span><?php echo $shop;?></div>
 				          <div class="shop-info">
-				            <dl>
-				              <dt>Điện thoại:</dt>
-				              <dd><?php echo $author_phone;?></dd>
-				              <dt>Địa chỉ:</dt>
-				              <dd><?php echo $author_phone;?></dd>
-				              <dt>Quận/huyện:</dt>
-				              <dd><?php echo $author_state;?></dd>
-				              <dt>Địa chỉ:</dt>
-				              <dd><?php echo $author_addr;?></dd>
-				            </dl>
+				          	<p class="tb-row"><span>Đt :</span><?php echo $author_phone;?></p>
+				          	<p class="tb-row"><span>Đc :</span><?php echo $author_addr;?></p>
+				          	<p class="tb-row"><span>Q/h :</span><?php echo $author_state;?></p>
 				          </div>
 				          <div class="to-info">
-				            <dl>
-				              <dt>Đến:</dt>
-				              <dd><?php echo $kh_ten;?></dd>
-				              <dt>Điện thoại:</dt>
-				              <dd><?php echo $kh_sdt;?></dd>
-				              <dt>Địa chỉ:</dt>
-				              <dd><?php echo $kh_dc;?></dd>
-				              <dt>Quận/huyện:</dt>
-				              <dd><?php echo $kh_quan;?></dd>
-				              <dt>Hàng hóa:</dt>
-				              <dd><?php echo $kh_hanghoa;?></dd>
-				              <dt>Khối lượng:</dt>
-				              <dd><?php echo $kh_kl;?></dd>
-				              <dt>tiền thu hộ:</dt>
-				              <dd><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></dd>
-				            </dl>
+				          	<p class="tb-row"><span>Đến :</span><?php echo $kh_ten;?></p>
+				          	<p class="tb-row"><span>Đt :</span><?php echo $kh_sdt;?></p>
+				          	<p class="tb-row"><span>Đc :</span><?php echo $kh_dc;?></p>
+				          	<p class="tb-row"><span>Qh :</span><?php echo $kh_quan;?></p>
+				          	<p class="tb-row"><span>Hh :</span><?php echo $kh_hanghoa;?></p>
+				          	<p class="tb-row"><span>Kl :</span><?php echo $kh_kl;?></p>
+				          	<p class="tb-row"><span>Tth :</span><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></p>
 				          </div>
 				          <div class="status"><span><?php echo  $ODtittle;?></span><a href="" class="delete-btn custombtn" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('my_delete_post_nonce') ?>">Xóa</a><?php echo $status_order;?></div>
 				          <div class="foot-action" data-show="od<?php the_ID(); ?>">
 				          	<select name="update_odstatus" class="update_odstatus">
 				          		<?php $stating = array(
 		                            'pending'=> 'đang xử lý',
-				                	'step1'=> 'chuyển hàng lần 1',
-				                	'step2' => 'chuyển hàng lần 2',
-				                	'shipped' => 'Đã giao hàng',
+				                	'step1'=> 'giao lần 1',
+				                	'step2' => 'giao lần 2',
 				                	'procescod' => 'Đã thanh toán COD',
 				                	'cancel' => 'Hủy đơn hàng'
 		                        );
@@ -1442,47 +1445,51 @@ class HappyShip_Login_Plugin {
                             $kh_tth = get_post_meta( $Id, 'kh_tth', true );
                             $kh_goi = get_post_meta( $Id, 'kh_goi', true );
                             $status_order = get_post_meta( $Id, 'status_order', true );
+                            switch ($status_order) {
+                            	case 'pending':
+                            		$status_order_text = "đh mới";
+                            		break;
+                            	case 'step1':
+                            		$status_order_text = "g.lần1";
+                            		break;
+                        		case 'step2':
+                            		$status_order_text = "g.lần2";
+                            		break;
+                        		case 'procescod':
+                            		$status_status_order_textorder = "đtt cod";
+                            		break;
+                        		case 'cancel':
+                            		$status_order_text = "hủy";
+                            		break;
+                            	default:
+                            		$status_order_text = "đh mới";
+                            		break;
+                            }
                         	?>
                         <div class="box-item <?php if($status_order =='cancel'){ echo "canceled";}?>">
 				          <div class="box-shop-name"><span>Tên shop: </span><?php echo $shop;?></div>
 				          <div class="shop-info">
-				            <dl>
-				              <dt>Điện thoại:</dt>
-				              <dd><?php echo $author_phone;?></dd>
-				              <dt>Địa chỉ:</dt>
-				              <dd><?php echo $author_phone;?></dd>
-				              <dt>Quận/huyện:</dt>
-				              <dd><?php echo $author_state;?></dd>
-				              <dt>Địa chỉ:</dt>
-				              <dd><?php echo $author_addr;?></dd>
-				            </dl>
+				          	<p class="tb-row"><span>Đt :</span><?php echo $author_phone;?></p>
+				          	<p class="tb-row"><span>Đc :</span><?php echo $author_addr;?></p>
+				          	<p class="tb-row"><span>Q/h :</span><?php echo $author_state;?></p>
 				          </div>
 				          <div class="to-info">
-				            <dl>
-				              <dt>Đến:</dt>
-				              <dd><?php echo $kh_ten;?></dd>
-				              <dt>Điện thoại:</dt>
-				              <dd><?php echo $kh_sdt;?></dd>
-				              <dt>Địa chỉ:</dt>
-				              <dd><?php echo $kh_dc;?></dd>
-				              <dt>Quận/huyện:</dt>
-				              <dd><?php echo $kh_quan;?></dd>
-				              <dt>Hàng hóa:</dt>
-				              <dd><?php echo $kh_hanghoa;?></dd>
-				              <dt>Khối lượng:</dt>
-				              <dd><?php echo $kh_kl;?></dd>
-				              <dt>tiền thu hộ:</dt>
-				              <dd><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></dd>
-				            </dl>
+				          	<p class="tb-row"><span>Đến :</span><?php echo $kh_ten;?></p>
+				          	<p class="tb-row"><span>Đt :</span><?php echo $kh_sdt;?></p>
+				          	<p class="tb-row"><span>Đc :</span><?php echo $kh_dc;?></p>
+				          	<p class="tb-row"><span>Qh :</span><?php echo $kh_quan;?></p>
+				          	<p class="tb-row"><span>Hh :</span><?php echo $kh_hanghoa;?></p>
+				          	<p class="tb-row"><span>Kl :</span><?php echo $kh_kl;?></p>
+				          	<p class="tb-row"><span>Tth :</span><?php echo (empty($kh_tth))?'0 đ': number_format($kh_tth).' đ';?></p>
 				          </div>
-				          <div class="status"> <span><?php echo  $ODtittle;?></span><a href="" class="delete-btn ft_delete_od" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('ft_delete_post_nonce') ?>">Xóa</a><?php echo $status_order;?></div>
+
+				          <div class="status"> <span><?php echo  $ODtittle;?></span><a href="" class="delete-btn ft_delete_od" data-id="<?php the_ID(); ?>" data-nonce="<?php echo wp_create_nonce('ft_delete_post_nonce') ?>">Xóa</a><?php echo $status_order_text;?></div>
 				          <div class="foot-action" data-show="od<?php the_ID(); ?>">
 				          	<select name="update_odstatus" class="update_odstatus">
 				          		<?php $stating = array(
 		                            'pending'=> 'đang xử lý',
 				                	'step1'=> 'chuyển hàng lần 1',
 				                	'step2' => 'chuyển hàng lần 2',
-				                	'shipped' => 'Đã giao hàng',
 				                	'procescod' => 'Đã thanh toán COD',
 				                	'cancel' => 'Hủy đơn hàng'
 		                        );
@@ -1614,45 +1621,44 @@ class HappyShip_Login_Plugin {
 			<hr>
 			<div class="filter_shop">
 	        	<button class="btn btn-filter"> Thống kê shop </button>
-	        	<form action="" name="formfilter" method="POST" id="form_filter">
-	        	<div class="filter_row">
-	        		<select class="sl_filter" name="type_report" id="type_report">
-	        			<option value="" selected>Chọn loại thống kê</option>
-	        			<option value="byshopname">Theo Tên shop</option>
-	        			<option value="byshopphone">Theo số điện thoại shop</option>
-	        		</select>
-	        		<div class="filter_content" data-show="byshopname">
-	        			<input type="text" name="shopname" value="" placeholder="Nhập tên shop"/>
-	        		</div>
-	        		<div class="filter_content" data-show="byshopphone">
-	        			<input type="text" name="shopphone" value="" placeholder="Nhập số đt shop"/>
-	        		</div>	
-	        	</div>
-	        	<div class="filter_row">
-	        		<select class="sl_filter" name="type_report" id="type_report">
-	        			<option value="" selected>Chọn loại thống kê</option>
-	        			<option value="bydate">Theo Ngày</option>
-	        			<option value="bymonth">Theo Tháng, Năm</option>
-	        		</select>
-	        		<div class="filter_content" data-show="bydate">
-	        			<input class="datepicker" name="reportdate" data-date-format="mm/dd/yyyy" placeholder="Kích chọn ngày">
-	        		</div>
-	        		<div class="filter_content" data-show="bymonth">
-	        			<input class="reportmonth" name="reportmonth" data-date-format="dd/yyyy" placeholder="Kích chọn tháng/năm">
-	        		</div>
-	        	</div>
-	        	<div class="filter_row reportmoney">
-	        		<select class="sl_filter" name="paid_status" id="paid_status">
-	        			<option value="all" selected> Tất cả</option>
-	        			<option value="unpaid">Chưa thanh toán</option>
-	        			<option value="paid">Đã thanh toán</option>
-                    </select>
-	        		
-	        	</div>
-	        	<input type="hidden" name="result_url" value="<?php menu_page_url('filter_result') ?>"/>
-	        	<div class="filter_row filter-submit">
-	        		<button type="submit" id="" name="" class="btn btn-submit">Lọc</button>
-	        	</div>
+	        	<form action="<?php menu_page_url('find_shop') ?>" name="formfilter" method="POST" id="form_filter">
+		        	<div class="filter_row">
+		        		<select class="sl_filter" name="type_report" id="type_report">
+		        			<option value="" selected>Chọn loại thống kê</option>
+		        			<option value="byshopname">Theo Tên shop</option>
+		        			<option value="byshopphone">Theo số điện thoại shop</option>
+		        		</select>
+		        		<div class="filter_content" data-show="byshopname">
+		        			<input type="text" name="shopname" id="autoshopname" value="" placeholder="Nhập tên shop"/>
+		        		</div>
+		        		<div class="filter_content" data-show="byshopphone">
+		        			<input type="text" name="shopphone" value="" placeholder="Nhập số đt shop"/>
+		        		</div>	
+		        	</div>
+		        	<div class="filter_row">
+		        		<select class="sl_filter" name="type_report" id="type_report">
+		        			<option value="" selected>Chọn loại thống kê</option>
+		        			<option value="bydate">Theo Ngày</option>
+		        			<option value="bymonth">Theo Tháng, Năm</option>
+		        		</select>
+		        		<div class="filter_content" data-show="bydate">
+		        			<input class="datepicker" name="reportdate" data-date-format="mm/dd/yyyy" placeholder="Kích chọn ngày">
+		        		</div>
+		        		<div class="filter_content" data-show="bymonth">
+		        			<input class="reportmonth" name="reportmonth" data-date-format="dd/yyyy" placeholder="Kích chọn tháng/năm">
+		        		</div>
+		        	</div>
+		        	<div class="filter_row reportmoney">
+		        		<select class="sl_filter" name="paid_status" id="paid_status">
+		        			<option value="all" selected> Tất cả</option>
+		        			<option value="unpaid">Chưa thanh toán</option>
+		        			<option value="paid">Đã thanh toán</option>
+	                    </select>
+		        	</div>
+		        	
+		        	<div class="filter_row filter-submit">
+		        		<button type="submit" id="" name="" class="btn btn-submit">Lọc</button>
+		        	</div>
 	        	</form>
 	        </div>
 			<div class="list-shop">
@@ -1682,6 +1688,7 @@ class HappyShip_Login_Plugin {
 	                        <td><?php echo $shop->shop_code; ?></td>
 	                        <td><a href="<?php  menu_page_url('shop_manager'); ?>&edit=<?php echo $shop->ID; ?>">Sửa</a>
 								<a href="<?php  menu_page_url('shop_manager'); ?>&delete=<?php echo $shop->ID; ?>" id="delete_shop" data-href="">Xóa</a>
+								<a href="<?php  menu_page_url('find_shop'); ?>&shop=<?php echo $shop->ID; ?>">Xem</a>
 	                        </td>
 	                    </tr>
 	                    <?php } ?>
@@ -1834,9 +1841,130 @@ class HappyShip_Login_Plugin {
 			}
 		}
 	}
-	// lọc shop
-	function find_shop_render(){
+	// auto shopname
+	function auto_shop_name(){
+		global $wpdb;
+		$return = array();
+		$date = $_REQUEST['date'];
+		$month = $_REQUEST['month'];
+		$payment = $_REQUEST['payment'];
+		$id = $_REQUEST['id'];
+		$args = array(
+		    'author' => $id,
+		    'post_type' => 'happyship',
+		    'post_status' => 'publish'
+		);
 
+		if(isset($date) && !empty($date)){
+			$datestr = explode("-",$date);
+    		$day = $datestr[0];
+    		$monthnum = $datestr[1];
+    		$year = $datestr[2];
+    		$args['day'] = intval($day);
+    		$args['monthnum'] = intval($monthnum);
+    		$args['year'] = 2018;
+		}
+		if(isset($month) && !empty($month)){
+			$datestr = explode("-",$_GET['month']);
+			$monthnum = $datestr[0];
+    		$year = $datestr[1];
+    		$args['monthnum'] = $monthnum;
+    		$args['year'] = $year;
+		}
+		if(isset($payment) && !empty($payment)){
+			if($payment == 'paid'){
+				$status_order = 'procescod';
+				$args['meta_query'] = array(
+	    	 	array(
+			         'key' => 'status_order',
+			         'value' => $status_order,
+			         'type' => 'CHAR',
+			         'compare' => '=',
+			       ),
+	    	 	);
+			}
+		}
+		$results_post = new WP_Query($args);
+		
+		if($results_post->have_posts()){
+			$return['count'] = $results_post->post_count;
+			$tongtien = 0;
+			$tiendagiao = 0;
+			$i=0;
+			while ( $results_post->have_posts() ) : $results_post->the_post();
+				$i++;
+				$pId = get_the_ID();
+                $tien_thu_ho = get_post_meta( $pId, 'kh_tth', true );
+                $trang_thai = get_post_meta( $pId, 'status_order', true );
+                $kh_ten = get_post_meta( $pId, 'kh_ten', true );
+                $kh_sdt = get_post_meta( $pId, 'kh_sdt', true );
+                $kh_dc = get_post_meta( $pId, 'kh_dc', true );
+                $ngaytao = get_the_date( 'j-m-y', $pId );
+                $oderlist = [];
+                array_push($oderlist,$kh_ten );
+                array_push($oderlist,$kh_sdt );
+                array_push($oderlist,$kh_dc );
+                array_push($oderlist,$ngaytao );
+                $return['danhsach'][$i] = $oderlist;
+                if($trang_thai){
+                	if($trang_thai == 'step2' && !empty($tien_thu_ho)){
+                		$tongtien = $tongtien + $tien_thu_ho;
+                	}
+                	if($trang_thai == 'procescod' && !empty($tien_thu_ho)){
+                		$tiendagiao += $tien_thu_ho;
+                	}
+                }
+			endwhile;
+			$return['tien_no_khach'] = $tongtien;
+			$return['tien_da_tra_khach'] = $tiendagiao;
+		}else{
+			$return["fail"]= 'fail';
+		}
+		wp_send_json($return);
+	    die();
+	}
+	// thống kê shop
+	function find_shop_render(){
+		if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
+			if(isset($_GET['shop']) && $_GET['shop']!=null ){
+				$idShop =  $_GET['shop'];
+				$shop_name = get_user_by("ID" , $idShop)->display_name;
+			}
+		}
+		?>
+		<div class="wrap" id="shop_report_page">
+			<a href="<?php menu_page_url('list_manager')?>">Quay lại danh sách shop</a>
+			<div class="report-content">
+				<h1 class="report-tittle">Thống kê shop <b>"<?php echo $shop_name;?>"</b></h1>
+				<hr>
+				<p>Chọn để xem chi tiết thống kê</p>
+				<form>
+	        	<div class="filter_row">
+	        		<select class="sl_filter" name="type_report" id="type_report">
+	        			<option value="" selected>Chọn loại thống kê</option>
+	        			<option value="bydate">Theo Ngày</option>
+	        			<option value="bymonth">Theo Tháng, Năm</option>
+	        		</select>
+	        		<div class="filter_content" data-show="bydate" style="display: none;">
+	        			<input class="datepicker" id="reportdate" name="reportdate" data-date-format="dd-mm-yyyy" placeholder="Kích chọn ngày">
+	        		</div>
+	        		<div class="filter_content" data-show="bymonth" style="display: none;">
+	        			<input  type="text" class="reportmonth" id="reportmonth" name="reportmonth" placeholder="Nhập tháng-năm ví dụ: 01-2018">
+	        		</div>
+	        	</div>
+	        	<div class="filter_row reportmoney">
+	        		<select class="sl_filter" name="paid_status" id="paid_status">
+	        			<option value="" selected> Tất cả</option>
+	        			<option value="unpaid">Chưa thanh toán</option>
+	        			<option value="paid">Đã thanh toán</option>
+                    </select>
+	        	</div>
+	        	<input type="hidden" id="report_shop_id" name="report_shop" value="<?php echo $idShop;?>"/>
+	        	</form>
+			</div>
+			<div id="result_report"></div>
+		</div>
+		<?php
 	}
 }
 $personalize_login_pages_plugin = new HappyShip_Login_Plugin();

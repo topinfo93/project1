@@ -212,8 +212,9 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
     margin-bottom: 25px;
 }
 .box-item {
-    width: 18%;
+    width: 23%;
     float: left;
+    position: relative;
     background: #d2fd82;
     box-sizing: border-box;
     font-size: 13px;
@@ -248,6 +249,12 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
 .onopen .box-shop-name:after,#wpbody-content .onopen .box-shop-name:after{
     content: "\25B2";
 }
+.box-item{
+    width: 23%;
+    float: left;
+    position: relative;
+    border: 1px solid #224c33;
+}
 .box-item span{
     display: inline-block;
     margin-right: 5px;
@@ -255,7 +262,22 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
 .shop-info{
     padding: 10px;
 }
-
+.box-item .tb-row{
+    padding: 0;
+    font-size: 13px;
+    margin: 0;
+    min-height: 24px;
+}
+.box-item .foot-action{
+    background: #224c33;
+    padding: 0px 10px 5px 10px;
+}
+.box-item .foot-action button{
+    float: right;
+}
+.box-item .tb-row span{
+    font-weight: bold;
+}
 .box-item dl dt{
     float: left;
     width: 45%;
@@ -275,6 +297,7 @@ a#log_out:hover,a#log_out:focus,a#log_out:active,a#log_out:visited{
     background: #8bc028; 
 }
 .box-item dl{
+    width: 100%;
     margin-bottom: 0;
 }
 .box-item dl dd select{
@@ -323,11 +346,9 @@ form.mem_update_storder .foot-action{
         font-size: 17px;
         line-height: 15px;
     }
-    .box-item{
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-    }
+    .order-list .box-item{
+        width: 48%;
+        }
     #btn-create-order,#btn-lis-order{
         position: fixed;
         text-indent: -9999px;
@@ -347,6 +368,9 @@ form.mem_update_storder .foot-action{
         text-indent: 0px;
         text-align: center;
     }
+    #wpbody select{
+        width: 120px;
+    }
     #btn-lis-order:after{
         content: '≡';
         width: 100%;
@@ -357,11 +381,27 @@ form.mem_update_storder .foot-action{
         text-indent: 0px;
         text-align: center;
     }
-    
+    #page_happy_ship form#form_filter .filter_row{
+        width: 100%!important;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 479px){
+    .order-list .box-item{
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px){
-    .box-item{
+    .order-list .box-item{
         width: 31.333%;
+    }
+    #wpbody select{
+        width: 135px;
+    }
+    #page_happy_ship form#form_filter .filter_row{
+        width: 50%!important;
     }
 }
 
@@ -379,6 +419,8 @@ form.mem_update_storder .foot-action{
     text-transform: uppercase;
     cursor: pointer;
     font-size: 14px;
+    padding: 8px 16px;
+    border: 0;
 }
 #page_happy_ship .filter_order .btn-filter.actived{
     background: #000;
@@ -499,7 +541,7 @@ div#edit_shop_page {
 #page_shop_manager .filter_row .filter_content{
     display: none;
 }
-#page_shop_manager .filter_row select{
+#page_shop_manager .filter_row select,#shop_report_page .filter_row select{
     line-height: 35px;
     height: 35px;
     margin: 10px 0;
@@ -532,4 +574,80 @@ div#edit_shop_page {
     cursor: no-drop;
     background: #93ab67;
     border: 1px solid #93ab67;
+    height: 28px;
+}
+#shop_report_page .filter_row{
+    width: 50%;
+    float: left;
+}
+#shop_report_page .filter_row.filter-submit{
+    width: 100%;
+    clear: both;
+    margin-top: 15px;
+}
+#shop_report_page .filter_row input{
+    width: 180px;
+}
+#shop_report_page .report-content{
+    padding-bottom: 20px; 
+}
+#shop_report_page .report-content:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+#result_report {
+    padding: 10px;
+    border: 1px solid;
+    background-color: #f5f5f5;
+}
+#result_report p strong {
+    margin-right: 10px;
+}
+#result_report p {
+    margin-bottom: 5px;
+    border-bottom: 2px solid #fff;
+}
+.danhsach .danhsach_ct{
+    padding-top: 20px;
+}
+.danhsach .box_{
+    width: 30%;
+    padding: 0 1%;
+    margin-right: 2%;
+    margin-bottom: 15px;
+    display: inline-block;
+    border-radius: 4px;
+    border: 2px solid #000;
+}
+@media(min-width: 767px) and (max-width: 1024px){
+    .danhsach .box_{
+        width: 45%;
+    }
+}
+@media(max-width: 767px){
+    .danhsach .box_{
+        width: 100%;
+    }
+}
+/* style in frontend */
+@media(min-width: 767px) and (max-width: 1024px){
+    .wrapper .grid-box-wrap .box-item{
+        width: 31%;
+    }
+}
+@media(max-width: 767px){
+    .wrapper .grid-box-wrap .box-item{
+        width: 48%;
+    }
+}
+@media(max-width: 479px){
+    .wrapper .grid-box-wrap .box-item{
+        width: 100%;
+    }
+}
+hr.lin_{
+    clear: both;
+    margin: 5px 0;
+    padding: 0 1%;
 }

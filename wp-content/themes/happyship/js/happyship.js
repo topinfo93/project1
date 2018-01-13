@@ -27,7 +27,38 @@ jQuery(document).ready(function ($) {
     setTimeout(function(){
        jQuery(".messenger_alert").fadeOut(800);
     }, 5000);
-    // $( 'select#kh_quan' ).change(function() {
-    //     $( 'select#kh_quan_full' ).val($(this).val());
-    // });
+    function autoGridBox(){
+        var ww = $(window).width();
+        var boxs = $(".row-fluid .grid-box-wrap").find('.box-item');
+        var n = boxs.lenght;
+        var inrow = 0;
+        var maxinrow = 0;
+        if(ww > 1024){
+            inrow = 4;
+        }else if(ww <=1204 && ww >=768){
+            inrow = 3;
+        }else if(ww <= 767 && ww >=480){
+            inrow = 2;
+        }else{
+            inrow = 1;
+        }
+        var i=0;
+        $.each(boxs,function() {
+            i++;var hasName = (name === 'true') ? 'Y' :'N';
+            maxinrow =($(this).height() > maxinrow) ? $(this).height() : maxinrow;
+            if(i == inrow && inrow!=1){
+                $(this).after('<hr class="lin_">');
+                i=0;
+                maxinrow=0;
+            }
+            console.log(maxinrow);
+        });
+    }
+    autoGridBox();
+    $( window ).resize(function() {
+        $('.grid-box-wrap').find('hr.lin_').each(function(index, el) {
+            $(this).remove();
+        });
+        autoGridBox();
+    });
 });

@@ -151,7 +151,6 @@ jQuery(document).ready(function($) {
                                     $.alert(result.success);
                                 }
                             }
-                            
                         });
                         //return false;
                     }
@@ -200,6 +199,7 @@ jQuery(document).ready(function($) {
                                     $.alert(result.error);
                                 }else{
                                     $.alert(result.success);
+                                    location.reload();
                                 }
                             }
                             
@@ -213,5 +213,88 @@ jQuery(document).ready(function($) {
                 }
             }
         });
+    });
+    // auto complete
+    $( "#autoshopname" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax( {
+          url: MyAjax.ajaxurl,
+          type: 'post',
+          dataType: "jsonp",
+          data: {
+            'action': 'auto_shop_name',
+            name: request.term
+          },
+          success: function( data ) {
+            console.log(data);
+            response( data );
+          }
+        });
+      },
+      minLength: 2,
+      select: function( event, ui ) {
+        log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      }
+    });
+    function showValues() {
+        var fields = $( "form" ).serializeArray();
+        var result =[];
+        jQuery.each( fields, function( i, field ) {
+            result.push(field.value);
+        });
+        var date = result[1];
+        var month = result[2];
+        var payment = result[3];
+        var id = result[4]
+        $.ajax( {
+            url: MyAjax.ajaxurl,
+            type: 'post',
+            data: {
+                'action': 'auto_shop_name',
+                date: date,
+                month: month,
+                payment:payment,
+                id: id
+            },
+            success: function( data ) {
+                console.log(data);
+                if(data.fail == 'fail'){
+                    $('#result_report').html('<p class="note"> Không có đơn hàng </p>')
+                }else{
+                    var danhsach = data.danhsach;
+                    console.log(danhsach);
+                    var html = '<p class="rp-total"><strong>Tổng Đơn hàng:</strong>'+ data.count +'</p><p class="tien_thieu"><strong>Tổng Số Tiền chưa thanh toán:</strong>'+ data.tien_no_khach +'</p>';
+                        html+='<p class="tien_tra"><strong> Tiền đã trả khách :</strong>'+ data.tien_da_tra_khach +'</p>';
+                        html+='<div class="danhsach"><button class="btn btn-filter">Danh sách</button><div class="danhsach_ct" style="display:none;">';
+                    $.each(danhsach, function(i, item) {
+
+                        var tennn = item[0];;
+                        var sdt = item[1];
+                        var dc = item[2];
+                        var ngay = item[3];
+                        html+='<div class="box_"><p><strong>đến :</strong>'+tennn+'</p><p><strong>Số đt</strong>'+sdt+'</p><p><strong>Đ/c:</strong>'+dc+'</p><p><strong>Ngày:</strong>'+ngay+'</p></div>';
+                    })
+                    html+='<div><div>';
+                    $('#result_report').html(html);
+                }
+            }
+        });
+    }
+    $( "select#paid_status, input#reportdate, input#reportmonth" ).on( "change", showValues );
+   
+    $('#type_report').on('change', function() {
+        var these = $(this);
+        var theseval = these.val();
+        if(theseval === 'bymonth'){
+            $('#reportdate').val('');
+        }else if(theseval === 'bydate'){
+            $('#reportmonth').val('');
+        }else{
+            $('#reportdate').val('');
+            $('#reportmonth').val('');
+            these.closest('.filter_row').find('.filter_content').each(function(index, el) {
+                $(this).hide();
+            });
+        }
     });
 });
