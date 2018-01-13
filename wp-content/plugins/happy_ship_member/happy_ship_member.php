@@ -1169,7 +1169,7 @@ class HappyShip_Login_Plugin {
                 </thead>
                 <tbody>
                     <?php 
-                        $results = $wpdb->get_results( 'SELECT * FROM wp_price_cod_n', OBJECT ); 
+                        $results = $wpdb->get_results( 'SELECT * FROM wp_price_COD_N', OBJECT ); 
                         foreach ($results as $key) { ?>
                     <tr>
                         <td>#<?php echo $key->id; ?></td>
@@ -1209,7 +1209,7 @@ class HappyShip_Login_Plugin {
                 </thead>
                 <tbody>
                     <?php 
-                        $results = $wpdb->get_results( 'SELECT * FROM wp_price_cod_d', OBJECT ); 
+                        $results = $wpdb->get_results( 'SELECT * FROM wp_price_COD_D', OBJECT ); 
                         foreach ($results as $key) { ?>
                     <tr>
                         <td>#<?php echo $key->id; ?></td>
@@ -1250,7 +1250,7 @@ class HappyShip_Login_Plugin {
                 </thead>
                 <tbody>
                     <?php 
-                        $results = $wpdb->get_results( 'SELECT * FROM wp_price_utt_m', OBJECT ); 
+                        $results = $wpdb->get_results( 'SELECT * FROM wp_price_UTT_M', OBJECT ); 
                         foreach ($results as $key) { ?>
                     <tr>
                         <td>#<?php echo $key->id; ?></td>
