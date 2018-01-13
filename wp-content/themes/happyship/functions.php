@@ -70,34 +70,34 @@ function my_login_stylesheet() {
 //     wp_enqueue_style( 'admin_css', get_template_directory_uri() . '/css/admin-style.css', false, '1.0.0' );
 // }
 
-function revcon_change_post_label() {
-    global $menu;
-    global $submenu;
-    $menu[5][0] = 'Vận đơn';
-    $submenu['edit.php'][5][0] = 'Vận đơn';
-    $submenu['edit.php'][10][0] = 'Tạo vận đơn';
-    $submenu['edit.php'][16][0] = 'News Tags';
-}
-function revcon_change_post_object() {
-    global $wp_post_types;
-    $labels = &$wp_post_types['post']->labels;
-    $labels->name = 'Vận đơn';
-    $labels->singular_name = 'Vận đơn';
-    $labels->add_new = 'Tạo vận đơn';
-    $labels->add_new_item = 'Tên hàng hóa'; 
-    $labels->edit_item = 'Edit News';
-    $labels->new_item = 'Vận đơn';
-    $labels->view_item = 'View News';
-    $labels->search_items = 'Search News';
-    $labels->not_found = 'No News found';
-    $labels->not_found_in_trash = 'No News found in Trash';
-    $labels->all_items = 'All News';
-    $labels->menu_name = 'Vận đơn';
-    $labels->name_admin_bar = 'Vận đơn';
-}
+// function revcon_change_post_label() {
+//     global $menu;
+//     global $submenu;
+//     $menu[5][0] = 'Vận đơn';
+//     $submenu['edit.php'][5][0] = 'Vận đơn';
+//     $submenu['edit.php'][10][0] = 'Tạo vận đơn';
+//     $submenu['edit.php'][16][0] = 'News Tags';
+// }
+// function revcon_change_post_object() {
+//     global $wp_post_types;
+//     $labels = &$wp_post_types['post']->labels;
+//     $labels->name = 'Vận đơn';
+//     $labels->singular_name = 'Vận đơn';
+//     $labels->add_new = 'Tạo vận đơn';
+//     $labels->add_new_item = 'Tên hàng hóa'; 
+//     $labels->edit_item = 'Edit News';
+//     $labels->new_item = 'Vận đơn';
+//     $labels->view_item = 'View News';
+//     $labels->search_items = 'Search News';
+//     $labels->not_found = 'No News found';
+//     $labels->not_found_in_trash = 'No News found in Trash';
+//     $labels->all_items = 'All News';
+//     $labels->menu_name = 'Vận đơn';
+//     $labels->name_admin_bar = 'Vận đơn';
+// }
  
-add_action( 'admin_menu', 'revcon_change_post_label' );
-add_action( 'init', 'revcon_change_post_object' );
+// add_action( 'admin_menu', 'revcon_change_post_label' );
+// add_action( 'init', 'revcon_change_post_object' );
 
 add_action('init', 'myStartSession', 1);
 function myStartSession() {
