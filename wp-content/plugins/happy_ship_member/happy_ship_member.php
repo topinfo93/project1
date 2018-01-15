@@ -116,9 +116,9 @@ class HappyShip_Login_Plugin {
 	    //create table
 	    global $wpdb;
 	    $charset_collate = $wpdb->get_charset_collate();
-	    $table_name = $wpdb->prefix . 'price_COD_N';
-	    $table_name1 = $wpdb->prefix . 'price_COD_D';
-	    $table_name2 = $wpdb->prefix . 'price_UTT_M';
+	    $table_name = $wpdb->prefix . 'price_cod_n';
+	    $table_name1 = $wpdb->prefix . 'price_cod_d';
+	    $table_name2 = $wpdb->prefix . 'price_utt_m';
 	    if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
 		    $sql = "CREATE TABLE $table_name (
 		        id int(9) NOT NULL AUTO_INCREMENT,
