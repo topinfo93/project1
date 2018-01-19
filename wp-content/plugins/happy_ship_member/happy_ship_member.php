@@ -569,6 +569,7 @@ class HappyShip_Login_Plugin {
 			<p><strong>Địa chỉ Shop:</strong><?php echo $dia_chi;?></p>
 			<p><strong>Quận Huyện:</strong><?php echo $dia_chi_qh;?></p>
 			<p><strong>Loại Shop:</strong><?php echo $loai_shop;?></p>
+			<p><a href="<?php echo esc_url( home_url( '/member-list-order/' ) ); ?>"><strong>Tới trang quản lý</strong></a></p>
 			
 		</div>
 		<?php
@@ -961,8 +962,9 @@ class HappyShip_Login_Plugin {
 	function my_menu_render() {
 		global $wpdb;
 		$paged = ( $_GET['paged'] ) ? $_GET['paged'] : 1;
+		$posts_per_page = 12;
 		$allorder_query = array(
-	      	'posts_per_page' => '12',
+	      	'posts_per_page' => $posts_per_page,
 	      	'post_type'=> 'happyship',
 	      	'paged' => $paged
 	    );
@@ -1134,7 +1136,7 @@ class HappyShip_Login_Plugin {
                	<?php endwhile;endif; ?>
 	        </div>
 	        <div class="clear"></div>
-	        <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 12) : ?>
+	        <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > $posts_per_page) : ?>
             <nav class="pagination">
                 <?php pagination_admin_bar( $happyships, $arr_params ); ?>
             </nav>
@@ -1415,8 +1417,9 @@ class HappyShip_Login_Plugin {
 	function list_filter_render(){
 		global $wpdb;
 		$paged = ( $_GET['paged'] ) ? $_GET['paged'] : 1;
+		$postperpage = 20;
 		$allorder_query = array(
-	      	'posts_per_page' => '20',
+	      	'posts_per_page' => $postperpage,
 	      	'post_type'=> 'happyship',
 	      	'paged' => $paged
 	    );
@@ -1547,7 +1550,7 @@ class HappyShip_Login_Plugin {
                	<?php endwhile;endif; ?>
 	        </div>
 	        <div class="clear"></div>
-	        <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > 20) : ?>
+	        <?php if(($count_posts = wp_count_posts( 'happyship' )->publish) > $postperpage) : ?>
             <nav class="pagination">
                 <?php pagination_admin_bar( $happyships); ?>
             </nav>
@@ -1903,11 +1906,13 @@ class HappyShip_Login_Plugin {
                 $kh_sdt = get_post_meta( $pId, 'kh_sdt', true );
                 $kh_dc = get_post_meta( $pId, 'kh_dc', true );
                 $ngaytao = get_the_date( 'j-m-y', $pId );
+                $cuocphi = get_post_meta( $pId, 'order_price', true );
                 $oderlist = [];
                 array_push($oderlist,$kh_ten );
                 array_push($oderlist,$kh_sdt );
                 array_push($oderlist,$kh_dc );
                 array_push($oderlist,$ngaytao );
+                array_push($oderlist,$cuocphi );
                 $return['danhsach'][$i] = $oderlist;
                 if($trang_thai){
                 	if($trang_thai == 'step2' && !empty($tien_thu_ho)){
