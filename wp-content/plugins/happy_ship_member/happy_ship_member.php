@@ -1081,22 +1081,22 @@ class HappyShip_Login_Plugin {
                             $status_order = get_post_meta( $Id, 'status_order', true );
                             switch ($status_order) {
                             	case 'pending':
-                            		$status_order_t = "đh mới";
+                            		$status_order_t = "Đơn hàng mới";
                             		break;
                             	case 'step1':
-                            		$status_order_t = "g.lần1";
+                            		$status_order_t = "Giao.lần1";
                             		break;
                         		case 'step2':
-                            		$status_order_t = "g.lần2";
+                            		$status_order_t = "Giao.lần2";
                             		break;
                         		case 'procescod':
-                            		$status_order_t = "đtt cod";
+                            		$status_order_t = "Đã thu COD";
                             		break;
                         		case 'cancel':
-                            		$status_order_t = "hủy";
+                            		$status_order_t = "Hủy";
                             		break;
                             	default:
-                            		$status_order_t = "đh mới";
+                            		$status_order_t = "Đơn hàng mới";
                             		break;
                             }
                         	?>
