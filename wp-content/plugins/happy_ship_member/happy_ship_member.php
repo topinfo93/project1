@@ -569,7 +569,6 @@ class HappyShip_Login_Plugin {
 			<p><strong>Địa chỉ Shop:</strong><?php echo $dia_chi;?></p>
 			<p><strong>Quận Huyện:</strong><?php echo $dia_chi_qh;?></p>
 			<p><strong>Loại Shop:</strong><?php echo $loai_shop;?></p>
-			<p><a href="<?php echo esc_url( home_url( '/member-list-order/' ) ); ?>"><strong>Tới trang quản lý</strong></a></p>
 			
 		</div>
 		<?php
@@ -931,7 +930,7 @@ class HappyShip_Login_Plugin {
 			$price = $results[0]->$kh_goi;
 		} 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) { 
-			echo number_format($price);
+			echo $price;
 		}
 		die();
 	}
@@ -1286,12 +1285,12 @@ class HappyShip_Login_Plugin {
 	            <div class="clearfix"></div>
 	            <div class="form-group">
 	                <label for="gia_thuong">Giá tiết kiệm:</label> <br>
-	                <input type="text" class="form-control" value="<?php echo $results[0]->gia_thuong; ?>" id="gia_thuong" name="gia_thuong">
+	                <input type="text" class="form-control digits" value="<?php echo $results[0]->gia_thuong; ?>" id="gia_thuong" name="gia_thuong">
 	            </div>
 	            <div class="clearfix"></div>
 	            <div class="form-group">
 	                <label for="gia_super">Giá nhanh:</label> <br>
-	                <input type="text" class="form-control" value="<?php echo $results[0]->gia_super; ?>" id="gia_super" name="gia_super">
+	                <input type="text" class="form-control digits" value="<?php echo $results[0]->gia_super; ?>" id="gia_super" name="gia_super">
 	            </div>
 	            <div class="clearfix"></div>
 	            <div class="clearfix"></div>
